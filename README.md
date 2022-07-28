@@ -17,7 +17,7 @@ revolution, worker strike, pandemic, and economic fall.
 
 Gameplay
 ---------
-
+`
 +---------------------------+
 |Date  |                    |
 |      |                    |
@@ -29,3 +29,5 @@ Gameplay
 |Cntry |                    |
 |Quit  |                    |
 +---------------------------+
+`
+( 
