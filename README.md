@@ -1,7 +1,7 @@
 hoiNcGame
 =========
 
-###About
+About
 ---------
 
 HoiNcGame is an ncurses game based on the grand strategy game _Hearts of Iron_. You're able 
@@ -15,7 +15,7 @@ Random events occur that can damage your country and include things such as
 revolution, worker strike, pandemic, and economic fall.
 
 
-###Gameplay
+Gameplay
 -----------
 A cycle of two seconds occurs that increases the status values
 for a struct country.
@@ -29,7 +29,7 @@ in a country to invade yours.
 Threads used to count with status vals along with random change for each country.
 
 
-####Difficulties
+**Difficulties**
 
 Difficulty affects 
 
@@ -50,8 +50,7 @@ Difficulty affects
 |Quit  |                    |
 +---------------------------+
 ```
-
-####Controls
+**Controls**
 
 (j k) (↑↓)
 ----------
