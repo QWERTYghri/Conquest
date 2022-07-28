@@ -50,7 +50,6 @@ Difficulty affects
 |Quit  |                    |
 +---------------------------+
 ```
-**Controls**
 
 (j k) (↑↓)
 ----------
