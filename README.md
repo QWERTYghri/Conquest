@@ -13,3 +13,19 @@ You have different values that set up your country and it's affect towards you.
 
 Random events occur that can damage your country and include things such as
 revolution, worker strike, pandemic, and economic fall.
+
+
+Gameplay
+---------
+
++---------------------------+
+|Date  |                    |
+|      |                    |
+|Ideo  |		    |
+|Reso  |   Map of countrys  |
+|Stat  |   		    |
+|War   |   + Pop up windows |
+|      |                    |
+|Cntry |                    |
+|Quit  |                    |
++---------------------------+

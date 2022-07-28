@@ -1,5 +1,7 @@
 #Shit git ignore
 
+./bin/*
+
 # Prerequisites
 *.d
 
