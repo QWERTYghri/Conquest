@@ -18,7 +18,7 @@ revolution, worker strike, pandemic, and economic fall.
 Gameplay
 -----------
 A cycle of two seconds occurs that increases the status values
-for a struct country.
+for a struct country. Difficulty affects the increase of values.
 
 There is also a random change every 5 minutes for a rate depending on difficulty of a country
 invading you.
