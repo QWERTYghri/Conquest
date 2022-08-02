@@ -36,5 +36,6 @@ obj: ./src/public/* ./src/private/*
 game.out: ./src/main.c ./bin/*.o
 	$(CC) $(CFLAGS) $(OFLAGS) -o $@ $^
 
+
 clean:
 	rm -r ./bin/*
