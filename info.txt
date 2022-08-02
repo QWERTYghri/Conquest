@@ -1,0 +1,112 @@
+==========================================
+This is a reference of notes to be used
+for specific details of the game structure
+and the ncurses panels and data structure.
+==========================================
+
+Fuck markdown rn
+
+NCURSES SCREEN
+==============
+
+I wanted to use colors in the display for the game
+which although would break some sense of compatability
+with terminals that don't support colors.
+
+Main Menu
+--------------
+stdscr will be blue
+
+A ratio screen will be made centered on the terminal size COLS and LINES.
+Size will be -30 cells less than the terminal size
+
+This window should be gray and boxes with black. A second backdrop window will be behind it and
+act as a shadow behind it.
+
+A center text menu will be made and will be highlighted with A_REVERSE A_BOLD and white colored
+You can circulate through the text options with arrow keys or [jk] [hl] or [up down] [left right].
+
+The center text should have a play option, help option, and exit
+
+implementation menu:
+        Have a function that prints in a specified location and circulates a char* array.
+        Everytime an arrow key or hjkl is pressed it prints the array and depending on a var int
+        that the arrow keys change, on a specific char it prints it differently to the attributes.
+
+        Depending on the int val that was used in the choice var it executes a function that
+        handles the label for it.
+
+        The play option prints over the grey window with difficulty options.
+        The difficulty choice loads different values into global vars that affect the increment.
+
+        Then it fires the game function to load the main game.
+        
+        The help function open a menu to view info on how the game works. You can press enter to close it.
+
+        Quit just calls an exit and endwin.
+
+Game val stats
+-------------
+Ideology:
+        Communism
+        Socialism
+
+        Nationalism
+        Facism
+
+        Liberalism
+        Democracy
+
+Resources:
+        Oil
+        Iron
+        Consumer Goods
+
+Stat:
+        money
+        stability
+        population
+        cities
+        motivation
+        political power
+
+War:
+        military personnel
+        unit power
+        units
+
+
+Gamemenu
+-------------
+
+
++---------------------------+
+|Date  |                    |
+|      |                    |
+|Ideo  |		    |
+|Reso  |   Map of countrys  |
+|Stat  |   		    |
+|War   |   + Pop up windows |
+|      |                    |
+|Cntry |                    |
+|Quit  |                    |
++---------------------------+
+
+The menu displays a side panel to move around up and down to select a different attribute to view. It follows the same set as
+the main menu function would be used to circulate the same detail sets. Pressing enter will open a prompt that is based on the
+behavior for the label. It can execute a function that displays relative info about ideologies and more.
+
+Date:
+        Print the current in-game date that increases every 5 minutes.
+
+Ideology:
+        List the current ideology and increase benefits, you can switch one by spending political power
+
+Resources:
+        List resources of country and trade between countries
+
+Stat:
+        List the current status values of the country
+
+War:
+        List options for invading countries, declaring war, what cities to take over, unit strength, and more.
