@@ -30,11 +30,11 @@ all: obj game.out
 
 
 obj: ./src/public/* ./src/private/*
-	$(CC) $(CFLAGS) $(OFLAGS) -c
-	mv *.o ./bin
+	$(CC) $(CFLAGS) $(OFLAGS) -c $^
+	mv *.o $(OUTDIR)
 
 game.out: ./src/main.c ./bin/*.o
-	$(CC) $(CFLAGS) $(OFLAGS) -o $@ $^
-
+	$(CC) $(CFLAGS) $(OFLAGS) $(LIBS) -o $@ $^
+	mv $@ $(OUTDIR)
 clean:
-	rm -r ./bin/*
+	rm -r $(OUTDIR)

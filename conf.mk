@@ -5,5 +5,5 @@ CFLAGS		:= -std=c90 -Wall -pedantic -pipe
 #OFLAGS		:= -Os
 OFLAGS		:= -g -O0
 
-LIBS		:= -lncurses -lpanels
+LIBS		:= -lncurses -lpanel
 OUTDIR		:= ./bin
