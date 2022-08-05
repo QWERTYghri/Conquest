@@ -33,7 +33,7 @@ obj: ./src/public/* ./src/private/*
 	$(CC) $(CFLAGS) $(OFLAGS) -c $^
 	mv *.o $(OUTDIR)
 
-game.out: ./src/main.c ./bin/*.o
+game.out: ./src/main.c ./bin/*.o ./src/public/*
 	$(CC) $(CFLAGS) $(OFLAGS) $(LIBS) -o $@ $^
 	mv $@ $(OUTDIR)
 clean:

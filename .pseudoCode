@@ -1,0 +1,56 @@
+;
+; pseudo code planning
+;
+;
+; I like my abusers, Haskell/Asm
+; but wtf why do I find this readable
+;
+
+%define NO_CURS 0
+
+struct: List :: str :: Func do
+	{ "Play", funcPlay },
+	{ "Help", helpFunc },
+	{ "End", exit ( 0 ) },
+	int set : max 3
+
+WINSET: var :: win1 :: win2 :: color
+
+printMenu :: -> List -> center do
+	while ( ch = ( getch () ) 
+		switch ch of
+			KEY_UP -> List.set++
+			KEY_DOWN -> List.set--
+			KEY_ENTER -> List.func ()
+
+		for i in range ( List ) do
+			if i == List.set then
+				printwattr ( A_REVERSE/BOLD, List.str[List.Set] )
+			printw ( print ( List.str[List.Set] )
+	end
+
+funcPlay do
+	WINSET 
+
+mainMenu do
+	WIN = stdY - 5, stdX - 5
+	WINMENU = win.Y - half, win.X - half, center ( WIN )
+	fill stdscr, black
+	set  stdY, stdX, ( center stdscr )
+	
+	call printMenu ( List, center WINMENU )
+
+main do
+	initFlags ()
+		: noecho
+		: curs_set | NO_CURS
+		: raw
+		: setlocale | LC_ALL | "c"
+	
+	initColors ()
+		: Blue
+		: Grey
+		: Black
+	
+	call mainMenu
+
