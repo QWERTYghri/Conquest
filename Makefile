@@ -27,7 +27,8 @@ include conf.mk
 
 all: obj game.out
 
-
+dir:
+	mkdir $(OUTDIR)
 
 obj: ./src/public/* ./src/private/*
 	$(CC) $(CFLAGS) $(OFLAGS) -c $^
