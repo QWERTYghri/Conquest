@@ -25,7 +25,7 @@
 /* local */
 #include "./src/public/resource.h"
 #include "./src/public/handler.h"
-
+#include "./src/public/util.h"
 
 /*=========Definitions=========*/
 

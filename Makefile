@@ -37,4 +37,5 @@ game.out: ./src/main.c ./bin/*.o ./src/public/*
 	$(CC) $(CFLAGS) $(OFLAGS) $(LIBS) -o $@ $^
 	mv $@ $(OUTDIR)
 clean:
+	rm -r *.o
 	rm -r $(OUTDIR)
