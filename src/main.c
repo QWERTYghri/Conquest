@@ -37,8 +37,9 @@
 /*=========Types and stuff=========*/
 typedef enum Color
 {
-        GREY = 1,
-        BLUE = 2
+         GREY = 1,
+         BLUE = 2,
+         BLACK = 3
 } Color;
 
 /*=========Functions=========*/
@@ -46,14 +47,30 @@ typedef enum Color
 /* mainMenu Functions */
 void mainMenu ( void )
 {
-       const char* optList[3] =
-                {
-                        "Play",
-                        "Help",
-                        "Exit"
-                };
+        const char* optList[3] =
+                 {
+                         "Play",
+                         "Help",
+                         "Exit"
+                 };
+        WINDOW* fWin, *bWin;
+        HOIWIN* wMain = initHoiWin ( fWin, bWin, GREY, BLACK, 1 );
+        uint32_t ch;
 
-       WINDOW* fWin, *bWin;
+        while ( ch = getch () )
+        {
+                switch ( ch )
+                {
+                        case KEY_UP:
+                                ch++;
+                                break;
+                        case KEY_DOWN:
+                                ch--;
+                                break;
+                }
+                if ( ch >= 2 )
+                        ch = 0;
+        }
 
 }
 
@@ -77,7 +94,7 @@ int initColors ( void )
 
         init_pair ( GREY, COLOR_WHITE, COLOR_BLACK );
         init_pair ( BLUE, COLOR_BLUE, COLOR_BLUE );
-
+        init_pair ( BLACK, COLOR_BLACK, COLOR_BLACK );
         return 0;
 }
 
@@ -91,9 +108,13 @@ int main ( void )
         initscr ();
         noecho ();
         raw ();
+        keypad ( stdscr, true );
         curs_set ( INVIS );
 
-        initColors ();
+        if ( initColors () )
+                exitHandle ();
+
+        mainMenu ();
         
         getch ();
         endwin ();

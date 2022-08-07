@@ -1,7 +1,9 @@
 /*
  *
  * Util.h for ncurses simplifications and stuff*
- *
+ * 
+ *  * 3D Window table display
+ *  * print menu input display function
  * @QWERTYghri
  *
 */
@@ -12,6 +14,9 @@
 
 #include <ncurses.h>
 #include <stdint.h>
+
+
+/*============="3d" WIN SET=============*/
 
 typedef struct HOIWIN
 {
@@ -29,4 +34,13 @@ HOIWIN* initHoiWin ( WINDOW* fWin, WINDOW* bWin,
 
 void delHoiWin ( HOIWIN* win );
 
+
+/*=================END================*/
+/*===============MENUOPT==============*/
+
+
+/* Menu option function to display a certain part of a option list given a set of arguments */
+/* char* scary */
+
+void display ( WINDOW* winSpot, uint32_t ch, char* optList, uint32_t attr );
 #endif
