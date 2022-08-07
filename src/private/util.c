@@ -13,15 +13,15 @@
 
 void drawHoiWin ( HOIWIN* win )
 {
-	wbkgd ( ( WINDOW* ) win -> fWin, win -> fWinCl );
-	wbkgd ( ( WINDOW * ) win -> bWin, win -> bWinCl );
+	wbkgd ( win -> fWin, win -> fWinCl );
+	wbkgd ( win -> bWin, win -> bWinCl );
 	
 	/* wtf  eh doesn't matter for now, it'd be annoying to use panels.h*/	
 	if ( win -> box == 0 )
-		box ( win -> fWin );
+		box ( win -> fWin, 0, 0 );
 	
-	wrefresh ( fWin );
-	wrefresh ( bWin );
+	wrefresh ( win -> fWin );
+	wrefresh ( win -> bWin );
 }
 
 HOIWIN* initHoiWin (  WINDOW* fWina, WINDOW* bWina, uint32_t fWinCla, uint32_t bWinCla, uint32_t boxa )
@@ -37,7 +37,6 @@ HOIWIN* initHoiWin (  WINDOW* fWina, WINDOW* bWina, uint32_t fWinCla, uint32_t b
 	return hWin;
 }
 
-void delHoiWin ( HOIWIN* win )
-{
+void delHoiWin ( HOIWIN* win ) {
 	free ( win );
 }

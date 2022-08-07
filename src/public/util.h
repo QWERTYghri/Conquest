@@ -28,3 +28,5 @@ HOIWIN* initHoiWin ( WINDOW* fWin, WINDOW* bWin,
 		  uint32_t box );
 
 void delHoiWin ( HOIWIN* win );
+
+#endif

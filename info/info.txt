@@ -2,9 +2,13 @@
 This is a reference of notes to be used
 for specific details of the game structure
 and the ncurses panels and data structure.
-g=========================================
+=========================================
 
-Fuck markdown rn
+GIT BRANCHES
+===========================================
+main : Final shit like your typical main
+dev-build : Design optimization build
+pro-build : Prototyping build, literally playing with code until it works
 
 NCURSES SCREEN
 ==============
