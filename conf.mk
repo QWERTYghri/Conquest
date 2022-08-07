@@ -1,7 +1,7 @@
 #Config list for gcc flags, bin dirs, and install dirs
 
 CC		:= gcc
-CFLAGS		:= -std=c90 -Wall -pedantic -pipe
+CFLAGS		:= -std=gnu90 -Wall -pedantic -pipe
 #OFLAGS		:= -Os
 OFLAGS		:= -g -O0
 
