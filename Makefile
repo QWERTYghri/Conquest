@@ -25,7 +25,7 @@
 
 include conf.mk
 
-all: obj game.out
+all: dir obj game.out
 
 dir:
 	mkdir $(OUTDIR)

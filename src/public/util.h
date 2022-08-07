@@ -15,7 +15,7 @@
 
 typedef struct HOIWIN
 {
-	WINDOW* fWin, bWin;
+	WINDOW* fWin, *bWin;
 	uint32_t fWinCl, bWinCl, box;
 } HOIWIN;
 

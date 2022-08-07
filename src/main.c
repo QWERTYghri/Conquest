@@ -53,7 +53,8 @@ void mainMenu ( void )
                         "Exit"
                 };
 
-       WINDOW* fWin, bWin;
+       WINDOW* fWin, *bWin;
+
 }
 
 /* gamePlay function */

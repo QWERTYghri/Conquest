@@ -24,8 +24,11 @@ void drawHoiWin ( HOIWIN* win )
 	wrefresh ( win -> bWin );
 }
 
-HOIWIN* initHoiWin (  WINDOW* fWina, WINDOW* bWina, uint32_t fWinCla, uint32_t bWinCla, uint32_t boxa )
+HOIWIN* initHoiWin (  WINDOW* fWina, WINDOW* bWina,
+                      uint32_t fWinCla, uint32_t bWinCla, 
+                      uint32_t boxa )
 {
+
 	HOIWIN* hWin = malloc ( sizeof ( HOIWIN ) );
 	
 	hWin -> fWin	= fWina;
