@@ -34,6 +34,10 @@
 #define INIVS ( ( int32_t ) 0 )
 #define CLEAR ( ( int32_t ) 1 )
 
+/* Window size */
+#define MLINES   ( ( int32_t ) LINES - 4 );
+#define MCOLUMN  ( ( int32_t ) COLS - 2 );
+
 /*=========Types and stuff=========*/
 typedef enum Color
 {
@@ -53,23 +57,34 @@ void mainMenu ( void )
                          "Help",
                          "Exit"
                  };
+                 clear
+        
         WINDOW* fWin, *bWin;
-        HOIWIN* wMain = initHoiWin ( fWin, bWin, GREY, BLACK, 1 );
-        uint32_t ch;
+        
+        /* Init WINDOW */
+        fWin = newwin ( MLINES, MCOLUMN, ( LINES - MLINES ) / 2, ( COLS - MCOLUMN ) / 2 );
+
+        HOIWIN* wMain   = initHoiWin ( fWin, bWin, GREY, BLACK, 1 );
+        uint32_t ch     = 0;
+        uint32_t inCh   = 0;
 
         while ( ch = getch () )
         {
                 switch ( ch )
                 {
                         case KEY_UP:
-                                ch++;
+                                inCh++;
                                 break;
                         case KEY_DOWN:
-                                ch--;
+                                inCh--;
                                 break;
                 }
-                if ( ch >= 2 )
-                        ch = 0;
+                
+                /* Movement set */
+                if ( inCh > 2 )
+                        inCh = 0;
+                else if ( inCh < 0 )
+                        inCh = 2;
         }
 
 }

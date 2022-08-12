@@ -1,6 +1,13 @@
 #Shit git ignore
 
-./bin/*
+./bin/
+
+
+
+# ***********
+# C GITIGNORE TEMPLATE
+#
+# ***********
 
 # Prerequisites
 *.d
