@@ -25,10 +25,10 @@
 
 include conf.mk
 
-all: dir obj game.out
+all: dir obj
 
 dir:
-	mkdir $(OUTDIR)
+	-mkdir $(OUTDIR)
 
 obj: ./src/public/* ./src/private/*
 	$(CC) $(CFLAGS) $(OFLAGS) -c $^
@@ -36,6 +36,5 @@ obj: ./src/public/* ./src/private/*
 
 game.out: ./src/main.c ./bin/*.o ./src/public/*
 	$(CC) $(CFLAGS) $(OFLAGS) $(LIBS) -o $@ $^
-	mv $@ $(OUTDIR)
 clean:
-	rm -r *.o $(OUTDIR)
+	-rm -r *.out *.o $(OUTDIR)

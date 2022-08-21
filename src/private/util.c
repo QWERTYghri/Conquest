@@ -29,7 +29,7 @@ HOIWIN* initHoiWin (  WINDOW* fWina, WINDOW* bWina,
                       uint32_t boxa )
 {
 
-	HOIWIN* hWin = malloc ( sizeof ( HOIWIN ) );
+	HOIWIN* hWin = calloc ( 1, sizeof ( HOIWIN ) );
 	
 	hWin -> fWin	= fWina;
 	hWin -> bWin	= bWina;
@@ -42,4 +42,12 @@ HOIWIN* initHoiWin (  WINDOW* fWina, WINDOW* bWina,
 
 void delHoiWin ( HOIWIN* win ) {
 	free ( win );
+}
+
+void display ( WINDOW* winSpot, uint32_t ch, char* optList, uint32_t attr )
+{
+	int32_t YS, XS;
+	
+	getmaxyx ( winSpot, YS, XS );
+	
 }

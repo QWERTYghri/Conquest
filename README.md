@@ -1,4 +1,4 @@
-hoiNcGame
+fhoiNcGame
 =========
 
 About
@@ -62,3 +62,11 @@ will open a prompt for its purpose
 Cycle through different countries. Countries
 that aren't yours have read only values and cannot
 press enter on a specific value to change it.
+
+Compilation
+----------------------------
+Use the Make utility to compile executable
+Use `conf.mk` to change compilation flags and other stuff
+
+1. `make`
+2. `make game.out`

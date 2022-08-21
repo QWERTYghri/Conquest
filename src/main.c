@@ -35,9 +35,12 @@
 #define CLEAR ( ( int32_t ) 1 )
 
 /* Window size */
-#define MLINES   ( ( int32_t ) LINES - 4 );
-#define MCOLUMN  ( ( int32_t ) COLS - 2 );
+#define MLINES   ( ( int32_t ) LINES - 4 )
+#define MCOLUMN  ( ( int32_t ) COLS - 2 )
 
+/* Array sizes */
+#define MOPTMAX	 ( ( int32_t ) 3 )
+#define GMOPTMAX ( ( int32_t ) 10 )
 /*=========Types and stuff=========*/
 typedef enum Color
 {
@@ -51,7 +54,7 @@ typedef enum Color
 /* mainMenu Functions */
 void mainMenu ( void )
 {
-        const char* optList[3] =
+        const char* optList[MOPTMAX] =
                  {
                          "Play",
                          "Help",
@@ -63,7 +66,6 @@ void mainMenu ( void )
         
         /* Init WINDOW */
         fWin = newwin ( MLINES, MCOLUMN, ( LINES - MLINES ) / 2, ( COLS - MCOLUMN ) / 2 );
-
         HOIWIN* wMain   = initHoiWin ( fWin, bWin, GREY, BLACK, 1 );
         uint32_t ch     = 0;
         uint32_t inCh   = 0;
@@ -85,6 +87,7 @@ void mainMenu ( void )
                         inCh = 0;
                 else if ( inCh < 0 )
                         inCh = 2;
+                for ( uint32_t i = 0; i < 
         }
 
 }

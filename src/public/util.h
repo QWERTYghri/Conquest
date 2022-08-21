@@ -34,7 +34,6 @@ HOIWIN* initHoiWin ( WINDOW* fWin, WINDOW* bWin,
 
 void delHoiWin ( HOIWIN* win );
 
-
 /*=================END================*/
 /*===============MENUOPT==============*/
 
