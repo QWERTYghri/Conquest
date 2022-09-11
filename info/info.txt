@@ -50,7 +50,7 @@ implementation menu:
         Quit just calls an exit and endwin.
 
 Game val stats
--------------
+--------------
 Ideology:
         Communism
         Socialism
@@ -79,6 +79,66 @@ War:
         unit power
         units
 
+Game Countries
+--------------
+Initial Values
+
+Satania:
+        Ideology : Communism
+        
+        Resources :\
+                Oil : 1000 units / 10+ inital increase rate
+                Iron : 500 units / 5+ init increase rate
+                ConGoods : 250 / 10+ init increase rate
+        Stat :\
+                Money : 1,000,000
+                Stability : 50%
+                Population : 5,000,000
+                cities : 5
+                motivation : 15%
+                Political Power : 50
+        War :\
+                Military Personnel : 100,000
+                Unit Power : 50%
+                Units : 5
+
+Pastern:
+        Ideology : Socialism
+        
+        Resources :\
+                Oil : 500 units / 10+ inital increase rate
+                Iron : 500 units / 5+ init increase rate
+                ConGoods : 500 / 10+ init increase rate
+        Stat :\
+                Money : 1,500,000
+                Stability : 40%
+                Population : 5,500,000
+                cities : 3
+                motivation : 30%
+                Political Power : 65
+        War :\
+                Military Personnel : 400,000
+                Unit Power : 30%
+                Units : 5
+
+Satania:
+        Ideology : Communism
+        
+        Resources :\
+                Oil : 1000 units / 10+ inital increase rate
+                Iron : 500 units / 5+ init increase rate
+                ConGoods : 250 / 10+ init increase rate
+        Stat :\
+                Money : 1,000,000
+                Stability : 50%
+                Population : 5,000,000
+                cities : 5
+                motivation : 15%
+                Political Power : 50
+        War :\
+                Military Personnel : 100,000
+                Unit Power : 50%
+                Units : 5
 
 Gamemenu
 -------------

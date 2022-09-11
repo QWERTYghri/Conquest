@@ -1,6 +1,4 @@
 /*
- * main.c
- *
  * The main file for the game.
  *
  * @QWERTYghri
@@ -31,23 +29,24 @@
 /*=========Definitions=========*/
 
 /* Cursor options | curs_set () */
-#define INIVS ( ( int32_t ) 0 )
-#define CLEAR ( ( int32_t ) 1 )
+#define INIVS 0
+#define CLEAR 0
 
 /* Window size */
-#define MLINES   ( ( int32_t ) LINES - 4 )
-#define MCOLUMN  ( ( int32_t ) COLS - 2 )
+#define MLINES   ( LINES - 4 )
+#define MCOLUMN  ( COLS - 2 )
 
 /* Array sizes */
-#define MOPTMAX	 ( ( int32_t ) 3 )
-#define GMOPTMAX ( ( int32_t ) 10 )
+#define MOPTMAX	 ( 3 )
+#define GMOPTMAX ( 10 )
 /*=========Types and stuff=========*/
-typedef enum Color
+
+enum Color
 {
          GREY = 1,
          BLUE = 2,
          BLACK = 3
-} Color;
+};
 
 /*=========Functions=========*/
 
@@ -60,7 +59,6 @@ void mainMenu ( void )
                          "Help",
                          "Exit"
                  };
-                 clear
         
         WINDOW* fWin, *bWin;
         

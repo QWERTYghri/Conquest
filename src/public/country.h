@@ -10,6 +10,9 @@
 
 #include <stdint.h>
 
+
+enum 
+
 typedef struct Country
 {
 	uint32_t Ideology;
@@ -37,7 +40,6 @@ typedef struct Country
 			unitPower,
 			units;
 	} War;
-} Country;
-
+} Country; 
 
 #endif

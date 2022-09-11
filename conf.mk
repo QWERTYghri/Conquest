@@ -1,4 +1,4 @@
-#Config list for gcc flags, bin dirs, and install dirs
+#Config list for flags, bin dirs, and install dirs
 
 CC		:= gcc
 CFLAGS		:= -std=gnu99 -Wall -pedantic -pipe

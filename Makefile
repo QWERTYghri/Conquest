@@ -34,7 +34,7 @@ obj: ./src/public/* ./src/private/*
 	$(CC) $(CFLAGS) $(OFLAGS) -c $^
 	mv *.o $(OUTDIR)
 
-game.out: ./src/main.c ./bin/*.o ./src/public/*
+game.out: ./src/main.c ./bin/*.o ./src/public/*.h
 	$(CC) $(CFLAGS) $(OFLAGS) $(LIBS) -o $@ $^
 clean:
 	-rm -r *.out *.o $(OUTDIR)
