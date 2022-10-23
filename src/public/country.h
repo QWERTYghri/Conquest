@@ -10,21 +10,18 @@
 
 #include <stdint.h>
 
-
-enum 
-
 typedef struct Country
 {
 	uint32_t Ideology;
 	
-	typedef struct Resources
+	struct Resources
 	{
 		int32_t Oil,
 			Iron,
 			ConGoods;
-	} Resources;
+	} Res;
 	
-	typedef struct Stat
+	struct Stat
 	{
 		int32_t Money,
 			Stability,
@@ -34,7 +31,7 @@ typedef struct Country
 			PolPower;
 	} Stat;
 	
-	typedef struct War
+	struct War
 	{
 		int32_t milPersonnel,
 			unitPower,

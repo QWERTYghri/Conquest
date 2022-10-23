@@ -42,4 +42,5 @@ void delHoiWin ( HOIWIN* win );
 /* char* scary */
 
 void display ( WINDOW* winSpot, uint32_t ch, char* optList, uint32_t attr );
+
 #endif

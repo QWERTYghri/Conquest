@@ -61,33 +61,15 @@ void mainMenu ( void )
                  };
         
         WINDOW* fWin, *bWin;
+        HOIWIN* set;
         
         /* Init WINDOW */
         fWin = newwin ( MLINES, MCOLUMN, ( LINES - MLINES ) / 2, ( COLS - MCOLUMN ) / 2 );
-        HOIWIN* wMain   = initHoiWin ( fWin, bWin, GREY, BLACK, 1 );
-        uint32_t ch     = 0;
-        uint32_t inCh   = 0;
+        bWin = newwin ( MLINES, MCOLUMN, ( LINES - MLINES + 1 ) / 2, ( COLS - MCOLUMN + 1 ) / 2 );
 
-        while ( ch = getch () )
-        {
-                switch ( ch )
-                {
-                        case KEY_UP:
-                                inCh++;
-                                break;
-                        case KEY_DOWN:
-                                inCh--;
-                                break;
-                }
-                
-                /* Movement set */
-                if ( inCh > 2 )
-                        inCh = 0;
-                else if ( inCh < 0 )
-                        inCh = 2;
-                for ( uint32_t i = 0; i < 
-        }
+        set = initHoiWin ( fWin, bWin, GREY, BLACK, 1 );
 
+        drawHoiWin ( set );
 }
 
 /* gamePlay function */
@@ -111,6 +93,7 @@ int initColors ( void )
         init_pair ( GREY, COLOR_WHITE, COLOR_BLACK );
         init_pair ( BLUE, COLOR_BLUE, COLOR_BLUE );
         init_pair ( BLACK, COLOR_BLACK, COLOR_BLACK );
+
         return 0;
 }
 
@@ -118,7 +101,7 @@ int initColors ( void )
 
 int main ( void )
 {
-	setlocale ( LC_ALL, "c" );
+	setlocale ( LC_ALL, "" );
         
         /* Ncurses init */
         initscr ();
