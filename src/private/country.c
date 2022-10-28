@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "../public/country.h"
 
-Country* cntryInit ()
+Country* cntryInit ( void )
 {
         Country* link = calloc ( 1, sizeof ( Country ) );
+}

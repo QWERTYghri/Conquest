@@ -15,34 +15,34 @@
 /* posix */
 #define _POSIX_C_SOURCE 200809L
 
-#include <pthreads.h>
+//#include <pthreads.h>
 
 /* ncurses*/
 #include <ncurses.h>
 #include <panel.h>
 
 /* local */
-#include "./src/public/resource.h"
-#include "./src/public/handler.h"
-#include "./src/public/util.h"
+#include "./public/resource.h"
+#include "./public/handler.h"
+#include "./public/util.h"
 
 /*=========Definitions=========*/
 
-/* Cursor options | curs_set () */
-#define INIVS 0
-#define CLEAR 0
-
 /* Window size */
-#define MLINES   ( LINES - 4 )
-#define MCOLUMN  ( COLS - 2 )
+#define MLINES   ( LINES - 10 )
+#define MCOLUMN  ( COLS - 10 )
 
 /* Array sizes */
 #define MOPTMAX	 ( 3 )
 #define GMOPTMAX ( 10 )
 /*=========Types and stuff=========*/
 
-enum Color
-{
+enum Curs {
+        C_INVIS = 0,
+        C_CLEAR = 1
+};
+
+enum Color {
          GREY = 1,
          BLUE = 2,
          BLACK = 3
@@ -67,15 +67,17 @@ void mainMenu ( void )
         fWin = newwin ( MLINES, MCOLUMN, ( LINES - MLINES ) / 2, ( COLS - MCOLUMN ) / 2 );
         bWin = newwin ( MLINES, MCOLUMN, ( LINES - MLINES + 1 ) / 2, ( COLS - MCOLUMN + 1 ) / 2 );
 
-        set = initHoiWin ( fWin, bWin, GREY, BLACK, 1 );
+        bkgd ( COLOR_PAIR ( BLUE ) );
+        refresh ();
 
+        set = initHoiWin ( fWin, bWin, GREY, BLACK, 1 );
         drawHoiWin ( set );
 }
 
 /* gamePlay function */
 
 /* Function close for endwin given an error */
-void exitHandle ( const char* msg, int32_t exFlag )
+void exitFunc ( const char* msg, int32_t exFlag )
 {
         perror ( msg );
         endwin ();
@@ -108,10 +110,10 @@ int main ( void )
         noecho ();
         raw ();
         keypad ( stdscr, true );
-        curs_set ( INVIS );
+        curs_set ( C_INVIS );
 
         if ( initColors () )
-                exitHandle ();
+                exitFunc ( "ERROR: No terminal color support", EXIT_SUCCESS );
 
         mainMenu ();
         

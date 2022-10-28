@@ -58,7 +58,6 @@ Ideology:
         Nationalism
         Facism
 
-        Liberalism
         Democracy
 
 Resources:
@@ -103,7 +102,7 @@ Satania:
                 Units : 5
 
 Pastern:
-        Ideology : Socialism
+        Ideology : Democracy
         
         Resources :\
                 Oil : 500 units / 10+ inital increase rate
@@ -121,8 +120,8 @@ Pastern:
                 Unit Power : 30%
                 Units : 5
 
-Satania:
-        Ideology : Communism
+Atifan:
+        Ideology : Facist
         
         Resources :\
                 Oil : 1000 units / 10+ inital increase rate
