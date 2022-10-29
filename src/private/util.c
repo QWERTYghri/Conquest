@@ -43,10 +43,17 @@ void delHoiWin ( HOIWIN* win ) {
 	free ( win );
 }
 
-void display ( WINDOW* winSpot, uint32_t ch, char** optList, uint32_t attr )
+int32_t display ( WINDOW* winSpot, uint32_t posY, uint32_t posX,
+                uint32_t ch, char** optList, func* list[], uint32_t attr, uint32_t strn )
 {
-	int32_t YS, XS;
-	
-	getmaxyx ( winSpot, YS, XS );
-	
+        uint32_t y, x;
+
+        getmaxyx ( winSpot, y, x );
+
+        if ( strn > y ) 
+                return -1
+
+        while ( 
+
+        return 0;
 }

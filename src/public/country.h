@@ -12,31 +12,31 @@
 
 enum Satania {
         /* Start off goods */
-        Oil     = 1000,
-        Iron    = 500,
-        ConGood = 250,
+        s_oil     = 1000,
+        s_iron    = 500,
+        s_conGood = 250,
         
         /* Initial rate increase */
-        OilInc  = 10,
-        IronInc = 5,
-        ConInc  = 10,
+        s_oilInc  = 10,
+        s_ironInc = 5,
+        s_conInc  = 10,
 
         /* Stat init */
-        Money           = 1000000,
-        Stable          = 50,
-        Population      = 5000000,
-        Cities          = 5,
-        Motivation      = 15, /* Percent of of the population */
+        s_money           = 1000000,
+        s_stable          = 50,
+        s_population      = 5000000,
+        s_cities          = 5,
+        s_motivation      = 15, /* Percent of of the population */
         
         /* war */
-        Personnel       = 100000,
-        Unit Power      = 50, /* Percentage damage */ 
-        Units           = 5, /* Units are divided into 5 and splitted into all cities */
+        s_Personnel       = 100000,
+        s_unitPower      = 50, /* Percentage damage */ 
+        s_units           = 5, /* Units are divided into 5 and splitted into all cities */
 };
 
-typedef struct BorderPoint {
+typedef struct {
         uint32_t x, y;
-};
+} BorderPoint;
 
 typedef struct Country
 {

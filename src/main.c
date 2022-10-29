@@ -22,7 +22,7 @@
 #include <panel.h>
 
 /* local */
-#include "./public/resource.h"
+#include "./public/country.h"
 #include "./public/handler.h"
 #include "./public/util.h"
 

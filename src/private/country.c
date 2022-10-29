@@ -11,5 +11,5 @@
 
 Country* cntryInit ( void )
 {
-        Country* link = calloc ( 1, sizeof ( Country ) );
+        return calloc ( 1, sizeof ( Country ) );
 }
