@@ -24,7 +24,6 @@ typedef struct HOIWIN
 	uint32_t fWinCl, bWinCl, box;
 } HOIWIN;
 
-typedef void ( *func ) ( void );
 
 /* Requires start_color to be called */
 void drawHoiWin ( HOIWIN* win );
@@ -41,7 +40,7 @@ void delHoiWin ( HOIWIN* win );
 
 /* Menu option function to display a certain part of a option list given a set of arguments */
 /* char* scary */
-void display ( WINDOW* winSpot, uint32_t posY, uint32_t posX,
-                uint32_t ch, char** optList, func* list[], uint32_t attr, uint32_t strn );
+
+void display ( WINDOW* winSpot, uint32_t ch, char** optList, uint32_t attr );
 
 #endif
