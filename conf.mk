@@ -6,4 +6,3 @@ CFLAGS		:= -std=gnu99 -Wall -pedantic -pipe
 OFLAGS		:= -g -O0
 
 LIBS		:= -lncurses -lpanel -lpthread
-OUTDIR		:= ./bin
