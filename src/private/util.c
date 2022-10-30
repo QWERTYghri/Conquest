@@ -43,10 +43,28 @@ void delHoiWin ( HOIWIN* win ) {
 	free ( win );
 }
 
-void display ( WINDOW* winSpot, uint32_t ch, char** optList, uint32_t attr )
+void display ( WINDOW* winSpot, uint32_t posY, uint32_t posX,
+                char** optList, uint32_t strAmt, uint32_t attr )
 {
-	int32_t YS, XS;
-	
-	getmaxyx ( winSpot, YS, XS );
-	
+        uint32_t y, x, valIn, opt = 0;
+
+        getmaxyx ( winSpot, y, x );
+
+        if ( strAmt > y )
+                return -1; /* Error since window overlap, BUT I AIN'T DOING THE STR LEN FOR EACH ONE */
+
+        while ( valIn = wgetch ( winSpot ) )
+        {
+                if ( valIn == KEY_UP || valIn == 'k' ) {
+                        if ( opt <= 0 )
+                                opt = strAmt;
+                        else
+                                opt--;
+                } else if ( valIn == KEY_DOWN || valIn == 'j' ) {
+                        if ( opt >= strAmt )
+                                opt = 0;
+                        else
+                                opt++;
+                }
+        }
 }

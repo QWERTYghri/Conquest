@@ -41,6 +41,7 @@ void delHoiWin ( HOIWIN* win );
 /* Menu option function to display a certain part of a option list given a set of arguments */
 /* char* scary */
 
-void display ( WINDOW* winSpot, uint32_t ch, char** optList, uint32_t attr );
+void display ( WINDOW* winSpot, uint32_t posY, uint32_t posX,
+                char** optList, uint32_t strAmt, uint32_t attr );
 
 #endif
