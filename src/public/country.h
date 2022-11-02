@@ -10,30 +10,6 @@
 
 #include <stdint.h>
 
-enum Satania {
-        /* Start off goods */
-        Oil     = 1000,
-        Iron    = 500,
-        ConGood = 250,
-        
-        /* Initial rate increase */
-        OilInc  = 10,
-        IronInc = 5,
-        ConInc  = 10,
-
-        /* Stat init */
-        Money           = 1000000,
-        Stable          = 50,
-        Population      = 5000000,
-        Cities          = 5,
-        Motivation      = 15, /* Percent of of the population */
-        
-        /* war */
-        Personnel       = 100000,
-        Unit Power      = 50, /* Percentage damage */ 
-        Units           = 5, /* Units are divided into 5 and splitted into all cities */
-};
-
 typedef struct BorderPoint {
         uint32_t x, y;
 };
