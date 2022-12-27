@@ -1,9 +1,16 @@
-#Config list for flags, bin dirs, and install dirs
+# Compilation config file
+#
+# Specify different compile flags and values
+#
+# @QWERTYghri
 
-CC		:= gcc
-CFLAGS		:= -std=gnu99 -Wall -pedantic -pipe
-#OFLAGS		:= -Os
-OFLAGS		:= -g -O0
+CC	 := gcc
+CFLAGS	 := -std=gnu99 -pedantic -Wall -Wextra -pipe
+CPPFLAGS := -D_POSIX_C_SOURCE=200809L
+LIB	 := -lncurses -lpanels
 
-# I am way to fucking lazy to learn menus and forms
-LIBS		:= -lncurses -lpanel -lpthread
+#Optimization flag
+OFLAG	 := -g -O0
+#OFLAG	 := -Os
+
+VERSION  := "Version 1.0R: Please help I'm rewriting all my shit code"
