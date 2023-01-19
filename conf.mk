@@ -13,4 +13,4 @@ LIB	 := -lncurses -lpanels
 OFLAG	 := -g -O0
 #OFLAG	 := -Os
 
-VERSION  := "Version 1.0R: Please help I'm rewriting all my shit code"
+VERSION  := "Version 1.0R: Please help I'm rewriting all my code"

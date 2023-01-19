@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <locale.h>
+#include <string.h>
+#include <signal.h>
 
 /* Posix */
 #include <unistd.h>
@@ -32,6 +34,10 @@ enum {
         ColorBlue,
         ColorGrey
 };
+
+/* Global Vars */
+
+WINDOW* fWin, *bWin;
 
 /* Functions */
 static int32_t
@@ -85,20 +91,44 @@ readInput ( int argc, char** argv )
 }
 
 static void
-game ( void )
+baseSetUp ( void )
 {
-        WINDOW* fWin, *bWin;
-
         fWin = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, ( LINES - GAME_WINDOW_Y ) / 2, ( COLS - GAME_WINDOW_X ) / 2 );
         bWin = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, ( LINES - GAME_WINDOW_Y ) / 2 + 1, ( COLS - GAME_WINDOW_X ) / 2 + 1 );
 
-        box ( bWin, 0, 0 );
+        wbkgd ( bWin, COLOR_PAIR ( ColorBlack ) );
+        wbkgd ( fWin, COLOR_PAIR ( ColorGrey ) );
+        bkgd ( COLOR_PAIR ( ColorBlue ) );
+
         box ( fWin, 0, 0 );
 
+        refresh ();
         wrefresh ( bWin );
         wrefresh ( fWin );
+}
+
+static void
+baseMenu ( void )
+{
+        int32_t winY, winX;
+        char* tmp = "set";
+
+        getmaxyx ( fWin, winY, winX );
+
+        mvwprintw ( fWin, winY / 2, winX - strlen ( tmp ), "%s", tmp );
+        refresh ();
+        wrefresh ( fWin );
+}
+
+static void
+game ( void )
+{
+        baseSetUp ();
 
         getch ();
+
+        delwin ( fWin );
+        delwin ( bWin );
 }
 
 int
