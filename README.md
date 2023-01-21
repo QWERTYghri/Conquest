@@ -1,10 +1,10 @@
-fhoiNcGame
+Conquest
 =========
 
 About
 ---------
 
-HoiNcGame is an ncurses game based on the grand strategy game _Hearts of Iron_. You're able 
+Conquest is an ncurses game based on the grand strategy game _Hearts of Iron_. You're able 
 select a country to control and follow a different political ideology to benefit yourself.
 You're able to get taxes from the people and control resources to other countries. You can
 invade other countries as well for their money and resources.
@@ -23,9 +23,6 @@ for a struct country. Difficulty affects the increase of values.
 There is also a random change every 5 minutes for a rate depending on difficulty of a country
 invading you.
 
-Invasion is based randomly for a 1/4 chance every3 minutes for a military unit
-in a country to invade yours.
-
 Threads used to count with status vals along with random change for each country.
 
 
@@ -41,9 +38,9 @@ Difficulty affects
 +---------------------------+
 |Date  |                    |
 |      |                    |
-|Ideo  |		    |
+|Ideo  |		            |
 |Reso  |   Map of countrys  |
-|Stat  |   		    |
+|Stat  |   		            |
 |War   |   + Pop up windows |
 |      |                    |
 |Cntry |                    |
@@ -68,5 +65,4 @@ Compilation
 Use the Make utility to compile executable
 Use `conf.mk` to change compilation flags and other stuff
 
-1. `make`
-2. `make game.out`
+Run `make` to compile binary

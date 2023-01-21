@@ -23,6 +23,9 @@
 #define GAME_WINDOW_X ( COLS - 10 )
 #define GAME_WINDOW_Y ( LINES - 10 )
 
+#define VERSION ("Version 1.0R\n\n")
+#define HELPSTR ("About:\n\t 
+
 /* Enums */
 enum {
         CursVis, 
@@ -36,7 +39,6 @@ enum {
 };
 
 /* Global Vars */
-
 WINDOW* fWin, *bWin;
 
 /* Functions */
@@ -87,7 +89,30 @@ initNc ( void )
 static void
 readInput ( int argc, char** argv )
 {
-        
+        int32_t optIndex        = 0;
+        int32_t retVal          = 0;
+        static struct option lngOpt[] =
+        {
+                { "help", no_argument, 0, 'h' },
+                { "ver", no_argument, 0, 'v' },
+                { 0, 0, 0, 0 }
+        };
+
+        while ( ( retVal = getopt_long ( argc, argv, "hv", lngOpt, &optIndex ) ) != EOF )
+        {
+                switch ( retVal )
+                {
+                        case 'h':
+                                printf ( "c" );
+                                break;
+                        case 'v':
+                                errMsg ( VERSION );
+                                break;
+                        default:
+                                errMsg ( "Unknown getopt return\n\n" )
+                                break;
+                }
+        }
 }
 
 static void
@@ -136,7 +161,7 @@ main ( int argc, char** argv )
 {
         setlocale ( LC_ALL, "" );
         initNc ();
-
+        
         readInput ( argc, argv );
         game ();
 

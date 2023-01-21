@@ -10,7 +10,7 @@ include conf.mk
 all: extra game.out
 
 extra:
-	@echo -e "\033[31;1;1mHearts of Iron Ncurses\033[0m" 
+	@echo -e "\033[31;1;1mConquest Ncurses\033[0m" 
 	@echo -e $(VERSION)
 	@echo -e "Thanks for playing <3\n\n\n"
 
