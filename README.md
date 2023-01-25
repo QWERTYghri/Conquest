@@ -48,13 +48,13 @@ Difficulty affects
 +---------------------------+
 ```
 
-(j k) (↑↓)
+(w s) (↑↓)
 ----------
 Cycle through panel options, press enter
 to open a panel in the left panel side which
 will open a prompt for its purpose
 
-(h k) (←→)
+(a d) (←→)
 ----------
 Cycle through different countries. Countries
 that aren't yours have read only values and cannot

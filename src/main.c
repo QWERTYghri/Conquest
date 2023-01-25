@@ -23,13 +23,16 @@
 #define GAME_WINDOW_X ( COLS - 10 )
 #define GAME_WINDOW_Y ( LINES - 10 )
 
-#define VERSION ("Version 1.0R\n\n")
-#define HELPSTR ("About:\n\t 
+#define HELP ("About:\n\tConquest is a Grand Strategy type game in which you invade other countries and increase your economy through trade and more.\n\n")
+#define VERS ("Version: 1.0R\n\n")
+
+/* Size index */
+#define TITLE_ARR ( 7 )
 
 /* Enums */
-enum {
-        CursVis, 
-        CursInvis
+enum { 
+        CursInvis,
+        CursVis
 };
 
 enum {
@@ -69,7 +72,7 @@ static void
 errMsg ( const char* msg, int32_t code )
 {
         exitNc ();
-        perror ( msg );
+        fprintf ( stderr, "%s",  msg );
         exit ( code );
 }
 
@@ -94,25 +97,31 @@ readInput ( int argc, char** argv )
         static struct option lngOpt[] =
         {
                 { "help", no_argument, 0, 'h' },
-                { "ver", no_argument, 0, 'v' },
+                { "version", no_argument, 0, 'v' },
                 { 0, 0, 0, 0 }
         };
 
         while ( ( retVal = getopt_long ( argc, argv, "hv", lngOpt, &optIndex ) ) != EOF )
         {
+                if ( retVal == - 1 )
+                        break;
+
                 switch ( retVal )
                 {
                         case 'h':
-                                printf ( "c" );
+                                errMsg ( HELP, EXIT_SUCCESS );
                                 break;
                         case 'v':
-                                errMsg ( VERSION );
+                                errMsg ( VERS, EXIT_SUCCESS );
                                 break;
                         default:
-                                errMsg ( "Unknown getopt return\n\n" )
+                                errMsg ( "Unknown argument\n\nArgs:\n\t--help\n\t--Version\n", EXIT_SUCCESS );
                                 break;
                 }
         }
+
+        if ( optind < argc )
+                errMsg ( "No argument or unformatted argument\n\n", EXIT_SUCCESS );
 }
 
 static void
@@ -135,13 +144,27 @@ baseSetUp ( void )
 static void
 baseMenu ( void )
 {
-        int32_t winY, winX;
-        char* tmp = "set";
+        char* str[TITLE_ARR] =
+        {    " ____                                  _  ",
+             "/ ___|___  _ __   __ _ _   _  ___  ___| |_",
+             "| |   / _ \\| '_ \\ / _` | | | |/ _ \\/ __| __|",
+             "| |__| (_) | | | | (_| | |_| |  __/\\__ \\ |_ ",
+             " \\____\\___/|_| |_|\\__, |\\__,_|\\___||___/\\__|",
+             "                     |_|                    ",
+             "Made by QWERTYghri"
+        };
 
+        int32_t winY, winX;
+        int32_t xInc = 0;
         getmaxyx ( fWin, winY, winX );
 
-        mvwprintw ( fWin, winY / 2, winX - strlen ( tmp ), "%s", tmp );
-        refresh ();
+        /* Center title and lel */
+        for ( int32_t i = 0; i < TITLE_ARR; i++ )
+        {
+                mvwprintw ( fWin,  5 + xInc, ( COLS / 2 ) - ( strlen ( str[i] ) / 2 ) - 5, "%s", str[i] );
+                xInc++;
+        }
+
         wrefresh ( fWin );
 }
 
@@ -149,6 +172,7 @@ static void
 game ( void )
 {
         baseSetUp ();
+        baseMenu ();
 
         getch ();
 
