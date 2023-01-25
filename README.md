@@ -34,20 +34,6 @@ Difficulty affects
 * Medium	: Country vals increase with med rates and a 1/6 chance of invasion with each country
 * Hard		: Country vals increase with low rates and a 1/4 chance of invasion with each country.
 
-```
-+---------------------------+
-|Date  |                    |
-|      |                    |
-|Ideo  |		                |
-|Reso  |   Map of countrys  |
-|Stat  |   		              |
-|War   |   + Pop up windows |
-|      |                    |
-|Cntry |                    |
-|Quit  |                    |
-+---------------------------+
-```
-
 (w s) (↑↓)
 ----------
 Cycle through panel options, press enter
