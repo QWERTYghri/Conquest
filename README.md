@@ -28,8 +28,6 @@ Threads used to count with status vals along with random change for each country
 
 **Difficulties**
 
-Difficulty affects 
-
 * Easy		: Country vals increase with high rates and no countries declare war
 * Medium	: Country vals increase with med rates and a 1/6 chance of invasion with each country
 * Hard		: Country vals increase with low rates and a 1/4 chance of invasion with each country.
