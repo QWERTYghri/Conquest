@@ -38,9 +38,9 @@ Difficulty affects
 +---------------------------+
 |Date  |                    |
 |      |                    |
-|Ideo  |		            |
+|Ideo  |		                |
 |Reso  |   Map of countrys  |
-|Stat  |   		            |
+|Stat  |   		              |
 |War   |   + Pop up windows |
 |      |                    |
 |Cntry |                    |
