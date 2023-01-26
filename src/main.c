@@ -27,7 +27,11 @@
 #define VERS ("Version: 1.0R\n\n")
 
 /* Size index */
-#define TITLE_ARR ( 7 )
+#define TITLE_ARR       ( 9 )
+#define OPT_ARR         ( 3 )
+
+#define TITLE_OFFSET    ( 5 )
+#define MENU_OFFSET     ( TITLE_OFFSET + 10 )
 
 /* Enums */
 enum { 
@@ -38,7 +42,10 @@ enum {
 enum {
         ColorBlack,
         ColorBlue,
-        ColorGrey
+        ColorGrey,
+        
+        ColorTextRed,
+        ColorSelect,
 };
 
 /* Global Vars */
@@ -56,7 +63,10 @@ initColor ( void )
         init_pair ( ColorBlack, COLOR_BLACK, COLOR_BLACK );
         init_pair ( ColorBlue, COLOR_BLUE, COLOR_BLUE );
         init_pair ( ColorGrey, COLOR_BLACK, COLOR_WHITE );
+        init_pair ( ColorTextRed, COLOR_RED, COLOR_BLACK );
 
+        init_pair ( ColorSelect, COLOR_PAIR ( ColorGrey ), COLOR_RED );
+       
         return 0;
 }
 
@@ -80,8 +90,9 @@ static void
 initNc ( void )
 {
         initscr ();
-        raw ();
+        //raw ();
         noecho ();
+        nonl ();
         keypad ( stdscr, TRUE );
         curs_set ( CursInvis );
 
@@ -141,38 +152,107 @@ baseSetUp ( void )
         wrefresh ( fWin );
 }
 
-static void
-baseMenu ( void )
+static int32_t
+centerStr ( WINDOW* win, char* str, int32_t offset )
 {
-        char* str[TITLE_ARR] =
-        {    " ____                                  _  ",
+        int32_t yLen, xLen;
+
+        getmaxyx ( win, yLen, xLen );
+
+        return ( xLen / 2 ) - ( strlen ( str ) / 2 ) - offset;
+}
+
+static void
+titleMenu ( void )
+{
+        char* title[TITLE_ARR] =
+        { 
+             "---------------------------------------------------------------",
+             " ____                                  _  ",
              "/ ___|___  _ __   __ _ _   _  ___  ___| |_",
              "| |   / _ \\| '_ \\ / _` | | | |/ _ \\/ __| __|",
              "| |__| (_) | | | | (_| | |_| |  __/\\__ \\ |_ ",
              " \\____\\___/|_| |_|\\__, |\\__,_|\\___||___/\\__|",
              "                     |_|                    ",
-             "Made by QWERTYghri"
+             "Made by QWERTYghri",
+             "---------------------------------------------------------------"
         };
 
-        int32_t winY, winX;
-        int32_t xInc = 0;
+        char* optNames[OPT_ARR] =
+        {
+                "Play Game",
+                "End Game",
+                "test"
+        };
+
+        int32_t winY,
+                winX;
+
+        int32_t xInc    = 0,
+                inVal,
+                optInc  = 0;
+
         getmaxyx ( fWin, winY, winX );
 
+        
+
         /* Center title and lel */
-        for ( int32_t i = 0; i < TITLE_ARR; i++ )
-        {
-                mvwprintw ( fWin,  5 + xInc, ( COLS / 2 ) - ( strlen ( str[i] ) / 2 ) - 5, "%s", str[i] );
+        wattron ( fWin, COLOR_PAIR ( ColorTextRed ) );
+
+        for ( int32_t i = 0; i < TITLE_ARR; i++ ) {
+                mvwprintw ( fWin,  TITLE_OFFSET + xInc, centerStr ( stdscr, title[i], TITLE_OFFSET ), "%s", title[i] );
                 xInc++;
         }
 
+        wattroff ( fWin, COLOR_PAIR ( ColorTextRed ) );
         wrefresh ( fWin );
+
+        for ( int32_t i = 0; i < OPT_ARR; i++ ) {
+                if ( i == optInc )
+                        attron ( COLOR_PAIR ( ColorSelect ) );
+
+                mvwprintw ( fWin, MENU_OFFSET + i, centerStr ( stdscr, optNames[i], TITLE_OFFSET ), "%s", optNames[i] );
+                attroff ( COLOR_PAIR ( ColorSelect ) );
+        }
+        wrefresh ( fWin );
+
+        while ( ( inVal = getch () ) != EOF )
+        {
+
+                for ( int32_t i = 0; i < OPT_ARR; i++ ) {
+                        if ( i == optInc )
+                                attron ( COLOR_PAIR ( ColorSelect ) );
+
+                        mvwprintw ( fWin, MENU_OFFSET + i, centerStr ( stdscr, optNames[i], TITLE_OFFSET ), "%s", optNames[i] );
+                        attroff ( COLOR_PAIR ( ColorSelect ) );
+                }
+
+                wrefresh ( fWin );
+
+                switch ( inVal )
+                {
+                        case KEY_UP:
+                                optInc--;
+                                break;
+                        case KEY_DOWN:
+                                optInc++;
+                                break;
+                }
+
+                if ( optInc < 0 )
+                        optInc = 1;
+                else if ( optInc > 2 )
+                        optInc = 2;
+        }
+
 }
 
 static void
 game ( void )
 {
         baseSetUp ();
-        baseMenu ();
+        titleMenu ();
+        
 
         getch ();
 
