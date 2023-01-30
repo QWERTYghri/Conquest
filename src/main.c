@@ -28,10 +28,13 @@
 
 /* Size index */
 #define TITLE_ARR       ( 9 )
+#define EXPLOSION_ARR   ( 11 )
 #define OPT_ARR         ( 3 )
 
-#define TITLE_OFFSET    ( 5 )
-#define MENU_OFFSET     ( TITLE_OFFSET + 10 )
+
+#define TITLE_OFFSET     ( 6 )
+#define MENU_OFFSET      ( TITLE_OFFSET + 10 )
+#define EXPLOSION_OFFSET ( 15 )
 
 /* Enums */
 enum { 
@@ -167,15 +170,30 @@ titleMenu ( void )
 {
         char* title[TITLE_ARR] =
         { 
-             "---------------------------------------------------------------",
-             " ____                                  _  ",
-             "/ ___|___  _ __   __ _ _   _  ___  ___| |_",
-             "| |   / _ \\| '_ \\ / _` | | | |/ _ \\/ __| __|",
-             "| |__| (_) | | | | (_| | |_| |  __/\\__ \\ |_ ",
-             " \\____\\___/|_| |_|\\__, |\\__,_|\\___||___/\\__|",
-             "                     |_|                    ",
-             "Made by QWERTYghri",
-             "---------------------------------------------------------------"
+		"---------------------------------------------------------------",
+		" ____                                  _  ",
+		"/ ___|___  _ __   __ _ _   _  ___  ___| |_",
+		"| |   / _ \\| '_ \\ / _` | | | |/ _ \\/ __| __|",
+		"| |__| (_) | | | | (_| | |_| |  __/\\__ \\ |_ ",
+         	" \\____\\___/|_| |_|\\__, |\\__,_|\\___||___/\\__|",
+        	"                     |_|                    ",
+        	"Made by QWERTYghri",
+        	"---------------------------------------------------------------"
+        };
+
+        char* explosion[EXPLOSION_ARR] =
+        {
+		"     _.-^^---....,,--       ",
+		" _--                  --_   ",
+		"<                        >) ",
+		"|                         | ",
+		" \\._                   _./  ",
+		"    ```--. . , ; .--'''     ",
+	        "	  | |   |            ",
+		"       .-=||  | |=-.        ",
+		"       `-=#$%&%$#=-'        ",
+		"	  | ;  :|            ",
+		"  _____.,-#%&$@%#&#~,._____ "
         };
 
         char* optNames[OPT_ARR] =
@@ -194,19 +212,19 @@ titleMenu ( void )
 
         getmaxyx ( fWin, winY, winX );
 
-        
-
-        /* Center title and lel */
-        wattron ( fWin, COLOR_PAIR ( ColorTextRed ) );
-
         for ( int32_t i = 0; i < TITLE_ARR; i++ ) {
                 mvwprintw ( fWin,  TITLE_OFFSET + xInc, centerStr ( stdscr, title[i], TITLE_OFFSET ), "%s", title[i] );
                 xInc++;
         }
+        xInc = 0;
+        for ( int32_t i = 0; i < EXPLOSION_ARR; i++ ) {
+                mvwprintw ( fWin, EXPLOSION_OFFSET + xInc, centerStr ( stdscr, explosion[i], EXPLOSION_OFFSET ), "%s", explosion[i] );
+                xInc++;
+        }
 
-        wattroff ( fWin, COLOR_PAIR ( ColorTextRed ) );
         wrefresh ( fWin );
 
+        /* Menu Stuff */
         for ( int32_t i = 0; i < OPT_ARR; i++ ) {
                 if ( i == optInc )
                         attron ( COLOR_PAIR ( ColorSelect ) );
