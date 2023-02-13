@@ -31,7 +31,6 @@
 #define EXPLOSION_ARR   ( 11 )
 #define OPT_ARR         ( 3 )
 
-
 #define TITLE_OFFSET     ( 6 )
 #define MENU_OFFSET      ( TITLE_OFFSET + 10 )
 #define EXPLOSION_OFFSET ( 15 )
