@@ -28,12 +28,12 @@
 
 /* Size index */
 #define TITLE_ARR       ( 9 )
-#define EXPLOSION_ARR   ( 11 )
+#define NUKE_ARR        ( 11 )
 #define OPT_ARR         ( 3 )
 
 #define TITLE_OFFSET     ( 6 )
 #define MENU_OFFSET      ( TITLE_OFFSET + 10 )
-#define EXPLOSION_OFFSET ( 15 )
+#define NUKE_OFFSET      ( 15 )
 
 /* Enums */
 enum { 
@@ -154,8 +154,9 @@ baseSetUp ( void )
         wrefresh ( fWin );
 }
 
+/* Calculates an appropriate offset for a string to be placed in the center */
 static int32_t
-centerStr ( WINDOW* win, char* str, int32_t offset )
+xCenterStr ( WINDOW* win, char* str, int32_t offset )
 {
         int32_t yLen, xLen;
 
@@ -180,7 +181,7 @@ titleMenu ( void )
         	"---------------------------------------------------------------"
         };
 
-        char* explosion[EXPLOSION_ARR] =
+        char* nuke[EXPLOSION_ARR] =
         {
 		"     _.-^^---....,,--       ",
 		" _--                  --_   ",
@@ -205,20 +206,24 @@ titleMenu ( void )
         int32_t winY,
                 winX;
 
-        int32_t xInc    = 0,
+        int32_t yInc    = 0,
                 inVal,
                 optInc  = 0;
 
         getmaxyx ( fWin, winY, winX );
 
+        /* Printing Title Arr */
         for ( int32_t i = 0; i < TITLE_ARR; i++ ) {
-                mvwprintw ( fWin,  TITLE_OFFSET + xInc, centerStr ( stdscr, title[i], TITLE_OFFSET ), "%s", title[i] );
-                xInc++;
+                mvwprintw ( fWin,  TITLE_OFFSET + yInc, xCenterStr ( stdscr, title[i], TITLE_OFFSET ), "%s", title[i] );
+                yInc++;
         }
-        xInc = 0;
-        for ( int32_t i = 0; i < EXPLOSION_ARR; i++ ) {
-                mvwprintw ( fWin, EXPLOSION_OFFSET + xInc, centerStr ( stdscr, explosion[i], EXPLOSION_OFFSET ), "%s", explosion[i] );
-                xInc++;
+
+        yInc = 0;
+
+        /* Print Nuke */
+        for ( int32_t i = 0; i < NUKE_ARR; i++ ) {
+                mvwprintw ( fWin, NUKE_OFFSET + yInc, xCenterStr ( stdscr, nuke[i], NUKE_OFFSET ), "%s", nuke[i] );
+                yInc++;
         }
 
         wrefresh ( fWin );
@@ -228,7 +233,7 @@ titleMenu ( void )
                 if ( i == optInc )
                         attron ( COLOR_PAIR ( ColorSelect ) );
 
-                mvwprintw ( fWin, MENU_OFFSET + i, centerStr ( stdscr, optNames[i], TITLE_OFFSET ), "%s", optNames[i] );
+                mvwprintw ( fWin, MENU_OFFSET + i, xCenterStr ( stdscr, optNames[i], TITLE_OFFSET ), "%s", optNames[i] );
                 attroff ( COLOR_PAIR ( ColorSelect ) );
         }
         wrefresh ( fWin );
@@ -240,7 +245,7 @@ titleMenu ( void )
                         if ( i == optInc )
                                 attron ( COLOR_PAIR ( ColorSelect ) );
 
-                        mvwprintw ( fWin, MENU_OFFSET + i, centerStr ( stdscr, optNames[i], TITLE_OFFSET ), "%s", optNames[i] );
+                        mvwprintw ( fWin, MENU_OFFSET + i, xCenterStr ( stdscr, optNames[i], TITLE_OFFSET ), "%s", optNames[i] );
                         attroff ( COLOR_PAIR ( ColorSelect ) );
                 }
 
