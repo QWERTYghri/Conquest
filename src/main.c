@@ -23,17 +23,21 @@
 #define GAME_WINDOW_X ( COLS - 10 )
 #define GAME_WINDOW_Y ( LINES - 10 )
 
-#define HELP ("About:\n\tConquest is a Grand Strategy type game in which you invade other countries and increase your economy through trade and more.\n\n")
-#define VERS ("Version: 1.0R\n\n")
+#define HELP            ("About:\n\tConquest is a Grand Strategy type game in which you invade other countries and increase your economy through trade and more.\n\n")
+#define VERS            ("Version: 1.0R\n\n")
 
 /* Size index */
 #define TITLE_ARR       ( 9 )
 #define NUKE_ARR        ( 11 )
 #define OPT_ARR         ( 3 )
 
-#define TITLE_OFFSET     ( 6 )
-#define MENU_OFFSET      ( TITLE_OFFSET + 10 )
-#define NUKE_OFFSET      ( 25 )
+/* Y offsets */
+#define TITLE_Y_OFFSET  ( 6 )
+#define MENU_Y_OFFSET   ( TITLE_OFFSET + 10 )
+#define NUKE_Y_OFFSET   ( 25 )
+
+/* X offset */
+#define OFFSET_X        ( 6 ) 
 
 /* Enums */
 enum { 
@@ -156,13 +160,13 @@ baseSetUp ( void )
 
 /* Calculates an appropriate offset for a string to be placed in the center */
 static int32_t
-xCenterStr ( WINDOW* win, char* str, int32_t offset )
+xCenterStr ( WINDOW* win, char* str )
 {
         int32_t yLen, xLen;
 
         getmaxyx ( win, yLen, xLen );
 
-        return ( xLen / 2 ) - ( strlen ( str ) / 2 ) - offset;
+        return ( xLen / 2 ) - ( strlen ( str ) / 2 ) - OFFSET_X;
 }
 
 static void
@@ -237,7 +241,7 @@ titleMenu ( void )
         /* xCenterStr's offsets don't make sense but I was lazy */
         /* Printing Title Arr */
         for ( int32_t i = 0; i < TITLE_ARR; i++ ) {
-                mvwprintw ( fWin,  TITLE_OFFSET + yInc, xCenterStr ( stdscr, title[i], TITLE_OFFSET ), "%s", title[i] );
+                mvwprintw ( fWin,  TITLE_Y_OFFSET + yInc, xCenterStr ( stdscr, title[i] ), "%s", title[i] );
                 yInc++;
         }
 
@@ -245,7 +249,7 @@ titleMenu ( void )
 
         /* Print Nuke */
         for ( int32_t i = 0; i < NUKE_ARR; i++ ) {
-                mvwprintw ( fWin, NUKE_OFFSET + yInc, xCenterStr ( stdscr, nuke[i], 6 ), "%s", nuke[i] );
+                mvwprintw ( fWin, NUKE_Y_OFFSET + yInc, xCenterStr ( stdscr, nuke[i] ), "%s", nuke[i] );
                 yInc++;
         }
         wrefresh ( fWin );
