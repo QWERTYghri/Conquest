@@ -180,7 +180,23 @@ menuHandler ()
 
         while ( ( input = getch () ) != EOF )
         {
-                wprintw ( fWin, "test" );
+                switch ( input )
+                {
+                        case KEY_UP:
+                                optInc++;
+                                if ( optInc == 3 )
+                                        optInc = 0;
+
+                                break;
+                        case KEY_DOWN:
+                                if ( optInc < 0 )
+                                        optInc = 2; /* Why the fuck isn't it changing for negatives? */
+                                optInc--;
+
+                                break;
+                }
+
+                wprintw ( fWin, "%d", optInc );
                 wrefresh ( fWin );
         }
 }
