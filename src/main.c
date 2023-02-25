@@ -33,7 +33,7 @@
 
 #define TITLE_OFFSET     ( 6 )
 #define MENU_OFFSET      ( TITLE_OFFSET + 10 )
-#define NUKE_OFFSET      ( 15 )
+#define NUKE_OFFSET      ( 25 )
 
 /* Enums */
 enum { 
@@ -166,6 +166,26 @@ xCenterStr ( WINDOW* win, char* str, int32_t offset )
 }
 
 static void
+menuHandler ()
+{
+        char* optNames[OPT_ARR] =
+        {
+                "Play Game",
+                "End Game",
+                "test"
+        };
+
+        uint32_t        optInc  = 0,
+                        input   = 0;
+
+        while ( ( input = getch () ) != EOF )
+        {
+                wprintw ( fWin, "test" );
+                wrefresh ( fWin );
+        }
+}
+
+static void
 titleMenu ( void )
 {
         char* title[TITLE_ARR] =
@@ -181,7 +201,7 @@ titleMenu ( void )
         	"---------------------------------------------------------------"
         };
 
-        char* nuke[EXPLOSION_ARR] =
+        char* nuke[NUKE_ARR] =
         {
 		"     _.-^^---....,,--       ",
 		" _--                  --_   ",
@@ -189,29 +209,16 @@ titleMenu ( void )
 		"|                         | ",
 		" \\._                   _./  ",
 		"    ```--. . , ; .--'''     ",
-	        "	  | |   |            ",
+	        "	   | |   |            ",
 		"       .-=||  | |=-.        ",
 		"       `-=#$%&%$#=-'        ",
-		"	  | ;  :|            ",
+		"          | ;  :|            ",
 		"  _____.,-#%&$@%#&#~,._____ "
         };
 
-        char* optNames[OPT_ARR] =
-        {
-                "Play Game",
-                "End Game",
-                "test"
-        };
+        int32_t yInc    = 0;
 
-        int32_t winY,
-                winX;
-
-        int32_t yInc    = 0,
-                inVal,
-                optInc  = 0;
-
-        getmaxyx ( fWin, winY, winX );
-
+        /* xCenterStr's offsets don't make sense but I was lazy */
         /* Printing Title Arr */
         for ( int32_t i = 0; i < TITLE_ARR; i++ ) {
                 mvwprintw ( fWin,  TITLE_OFFSET + yInc, xCenterStr ( stdscr, title[i], TITLE_OFFSET ), "%s", title[i] );
@@ -222,51 +229,12 @@ titleMenu ( void )
 
         /* Print Nuke */
         for ( int32_t i = 0; i < NUKE_ARR; i++ ) {
-                mvwprintw ( fWin, NUKE_OFFSET + yInc, xCenterStr ( stdscr, nuke[i], NUKE_OFFSET ), "%s", nuke[i] );
+                mvwprintw ( fWin, NUKE_OFFSET + yInc, xCenterStr ( stdscr, nuke[i], 6 ), "%s", nuke[i] );
                 yInc++;
         }
-
         wrefresh ( fWin );
 
-        /* Menu Stuff */
-        for ( int32_t i = 0; i < OPT_ARR; i++ ) {
-                if ( i == optInc )
-                        attron ( COLOR_PAIR ( ColorSelect ) );
-
-                mvwprintw ( fWin, MENU_OFFSET + i, xCenterStr ( stdscr, optNames[i], TITLE_OFFSET ), "%s", optNames[i] );
-                attroff ( COLOR_PAIR ( ColorSelect ) );
-        }
-        wrefresh ( fWin );
-
-        while ( ( inVal = getch () ) != EOF )
-        {
-
-                for ( int32_t i = 0; i < OPT_ARR; i++ ) {
-                        if ( i == optInc )
-                                attron ( COLOR_PAIR ( ColorSelect ) );
-
-                        mvwprintw ( fWin, MENU_OFFSET + i, xCenterStr ( stdscr, optNames[i], TITLE_OFFSET ), "%s", optNames[i] );
-                        attroff ( COLOR_PAIR ( ColorSelect ) );
-                }
-
-                wrefresh ( fWin );
-
-                switch ( inVal )
-                {
-                        case KEY_UP:
-                                optInc--;
-                                break;
-                        case KEY_DOWN:
-                                optInc++;
-                                break;
-                }
-
-                if ( optInc < 0 )
-                        optInc = 1;
-                else if ( optInc > 2 )
-                        optInc = 2;
-        }
-
+        menuHandler ();
 }
 
 static void
