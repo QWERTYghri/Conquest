@@ -9,17 +9,11 @@
 
 #include <stdint.h>
 
-/* Represent current trade */
-typedef struct
-{
-        
-} Trade;
 
 typedef struct
 {
-        typedef struct
+        struct War
         {
-                char*           warCountries[];
                 uint32_t        deaths,
                                 soldiers,
                                 tanks,
@@ -27,9 +21,12 @@ typedef struct
                                 conscriptMode,
                                 skill,
                                 manPower;
+                
+                /* Pedantic error rn */
+                char*           warCountries[];
         } War;
 
-        typedef struct
+        struct General
         {
                 uint32_t        money,
                                 income,
@@ -37,12 +34,12 @@ typedef struct
                                 stability,
                                 polPower,
                                 polIdeo,
-                                taxIncome
+                                taxIncome;
         } General;
 
-        typedef struct
+        struct Trade
         {
-                char*           tradeCountries
+                char*           tradeCountries;
         } Trade;
 } Country;
 

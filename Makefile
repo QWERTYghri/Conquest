@@ -14,8 +14,8 @@ extra:
 	@echo -e $(VERSION)
 	@echo -e "Thanks for playing <3\n\n\n"
 
-game.out: ./src/public/*.h ./src/private/*.c ./src/main.c
-	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $^
+game.out: ./src/Public/*.h ./src/Private/*.c ./src/main.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(LIB) -o $@ $^
 
 clean:
 	-rm -r *.o *.out

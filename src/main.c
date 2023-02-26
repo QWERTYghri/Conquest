@@ -19,6 +19,9 @@
 /* Curses */
 #include <ncurses.h>
 
+/* Local Includes */
+#include "./Public/handler.h"
+
 /* Macros */
 #define GAME_WINDOW_X ( COLS - 10 )
 #define GAME_WINDOW_Y ( LINES - 10 )
@@ -33,7 +36,7 @@
 
 /* Y offsets */
 #define TITLE_Y_OFFSET  ( 6 )
-#define MENU_Y_OFFSET   ( TITLE_OFFSET + 10 )
+#define MENU_Y_OFFSET   ( TITLE_Y_OFFSET + 10 )
 #define NUKE_Y_OFFSET   ( 25 )
 
 /* X offset */
@@ -170,17 +173,32 @@ xCenterStr ( WINDOW* win, char* str )
 }
 
 static void
+printMenuDp (   int32_t y, int32_t x,
+                char* optName[], int32_t optLen,
+                int32_t optIndex )
+{
+        for ( int32_t i = 0; i < optLen; i++ )
+        {
+                wprintw ( fWin, optName[i] );
+        }
+
+        wrefresh ( fWin );
+}
+
+static void
 menuHandler ()
 {
         char* optNames[OPT_ARR] =
         {
                 "Play Game",
-                "End Game",
-                "test"
+                "About",
+                "End Game"
         };
 
-        uint32_t        optInc  = 0,
+        int32_t         optInc  = 0,
                         input   = 0;
+
+        printMenuDp ( MENU_Y_OFFSET, COLS / 2, optNames, OPT_ARR, optInc );
 
         while ( ( input = getch () ) != EOF )
         {
@@ -193,15 +211,19 @@ menuHandler ()
 
                                 break;
                         case KEY_DOWN:
-                                if ( optInc < 0 )
-                                        optInc = 2; /* Why the fuck isn't it changing for negatives? */
+                                if ( optInc <= 0 ) {
+                                        optInc = 2;
+                                        break;
+                                }
+
                                 optInc--;
+                                break;
+                        case KEY_ENTER:
 
                                 break;
                 }
 
-                wprintw ( fWin, "%d", optInc );
-                wrefresh ( fWin );
+                printMenuDp ( MENU_Y_OFFSET, COLS / 2, optNames, OPT_ARR, optInc );
         }
 }
 
@@ -229,7 +251,7 @@ titleMenu ( void )
 		"|                         | ",
 		" \\._                   _./  ",
 		"    ```--. . , ; .--'''     ",
-	        "	   | |   |            ",
+	        "          | |   |            ",
 		"       .-=||  | |=-.        ",
 		"       `-=#$%&%$#=-'        ",
 		"          | ;  :|            ",
@@ -253,7 +275,6 @@ titleMenu ( void )
                 yInc++;
         }
         wrefresh ( fWin );
-
         menuHandler ();
 }
 
@@ -263,7 +284,6 @@ game ( void )
         baseSetUp ();
         titleMenu ();
         
-
         getch ();
 
         delwin ( fWin );
