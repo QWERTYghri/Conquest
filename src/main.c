@@ -26,8 +26,8 @@
 #define GAME_WINDOW_X ( COLS - 10 )
 #define GAME_WINDOW_Y ( LINES - 10 )
 
-#define HELP            ("About:\n\tConquest is a Grand Strategy type game in which you invade other countries and increase your economy through trade and more.\n\n")
-#define VERS            ("Version: 1.0R\n\n")
+#define HELP            ( "About:\n\tConquest is a Grand Strategy type game in which you invade other countries and increase your economy through trade and more.\n\n" )
+#define VERS            ( "Version: 1.0R\n\n" )
 
 /* Size index */
 #define TITLE_ARR       ( 9 )
@@ -74,7 +74,7 @@ initColor ( void )
         init_pair ( ColorGrey, COLOR_BLACK, COLOR_WHITE );
         init_pair ( ColorTextRed, COLOR_RED, COLOR_BLACK );
 
-        init_pair ( ColorSelect, COLOR_PAIR ( ColorGrey ), COLOR_RED );
+        init_pair ( ColorSelect, COLOR_WHITE, COLOR_BLUE );
        
         return 0;
 }
@@ -179,7 +179,11 @@ printMenuDp (   int32_t y, int32_t x,
 {
         for ( int32_t i = 0; i < optLen; i++ )
         {
-                wprintw ( fWin, optName[i] );
+                if ( i == optIndex )
+                        wattron ( fWin, COLOR_PAIR ( ColorSelect ) );
+
+                mvwaddstr ( fWin, y + i, xCenterStr ( fWin, optName[i] ), optName[i] );
+                wattroff ( fWin, COLOR_PAIR ( ColorSelect ) );
         }
 
         wrefresh ( fWin );
@@ -204,13 +208,13 @@ menuHandler ()
         {
                 switch ( input )
                 {
-                        case KEY_UP:
+                        case KEY_DOWN:
                                 optInc++;
                                 if ( optInc == 3 )
                                         optInc = 0;
 
                                 break;
-                        case KEY_DOWN:
+                        case KEY_UP:
                                 if ( optInc <= 0 ) {
                                         optInc = 2;
                                         break;
@@ -263,7 +267,7 @@ titleMenu ( void )
         /* xCenterStr's offsets don't make sense but I was lazy */
         /* Printing Title Arr */
         for ( int32_t i = 0; i < TITLE_ARR; i++ ) {
-                mvwprintw ( fWin,  TITLE_Y_OFFSET + yInc, xCenterStr ( stdscr, title[i] ), "%s", title[i] );
+                mvwaddstr ( fWin,  TITLE_Y_OFFSET + yInc, xCenterStr ( stdscr, title[i] ), title[i] );
                 yInc++;
         }
 
@@ -271,9 +275,10 @@ titleMenu ( void )
 
         /* Print Nuke */
         for ( int32_t i = 0; i < NUKE_ARR; i++ ) {
-                mvwprintw ( fWin, NUKE_Y_OFFSET + yInc, xCenterStr ( stdscr, nuke[i] ), "%s", nuke[i] );
+                mvwaddstr ( fWin, NUKE_Y_OFFSET + yInc, xCenterStr ( stdscr, nuke[i] ), nuke[i] );
                 yInc++;
         }
+
         wrefresh ( fWin );
         menuHandler ();
 }
