@@ -39,9 +39,6 @@
 #define MENU_Y_OFFSET   ( TITLE_Y_OFFSET + 10 )
 #define NUKE_Y_OFFSET   ( 25 )
 
-/* X offset */
-#define OFFSET_X        ( 6 ) 
-
 /* Enums */
 enum { 
         CursInvis,
@@ -166,24 +163,24 @@ static int32_t
 xCenterStr ( WINDOW* win, char* str )
 {
         int32_t yLen, xLen;
-
         getmaxyx ( win, yLen, xLen );
 
-        return ( xLen / 2 ) - ( strlen ( str ) / 2 ) - OFFSET_X;
+        return ( xLen / 2 ) - ( strlen ( str ) / 2 );
 }
 
 static void
-printMenuDp (   int32_t y, int32_t x,
+printMenuDp (   WINDOW* win,
+                int32_t y, int32_t x,
                 char* optName[], int32_t optLen,
                 int32_t optIndex )
 {
         for ( int32_t i = 0; i < optLen; i++ )
         {
                 if ( i == optIndex )
-                        wattron ( fWin, COLOR_PAIR ( ColorSelect ) );
+                        wattron ( win, COLOR_PAIR ( ColorSelect ) );
 
-                mvwaddstr ( fWin, y + i, xCenterStr ( fWin, optName[i] ), optName[i] );
-                wattroff ( fWin, COLOR_PAIR ( ColorSelect ) );
+                mvwaddstr ( win, y + i, xCenterStr ( fWin, optName[i] ), optName[i] );
+                wattroff ( win, COLOR_PAIR ( ColorSelect ) );
         }
 
         wrefresh ( fWin );
@@ -202,7 +199,7 @@ menuHandler ()
         int32_t         optInc  = 0,
                         input   = 0;
 
-        printMenuDp ( MENU_Y_OFFSET, COLS / 2, optNames, OPT_ARR, optInc );
+        printMenuDp ( fWin, MENU_Y_OFFSET, COLS / 2, optNames, OPT_ARR, optInc );
 
         while ( ( input = getch () ) != EOF )
         {
@@ -227,7 +224,7 @@ menuHandler ()
                                 break;
                 }
 
-                printMenuDp ( MENU_Y_OFFSET, COLS / 2, optNames, OPT_ARR, optInc );
+                printMenuDp ( fWin, MENU_Y_OFFSET, COLS / 2, optNames, OPT_ARR, optInc );
         }
 }
 
@@ -267,7 +264,7 @@ titleMenu ( void )
         /* xCenterStr's offsets don't make sense but I was lazy */
         /* Printing Title Arr */
         for ( int32_t i = 0; i < TITLE_ARR; i++ ) {
-                mvwaddstr ( fWin,  TITLE_Y_OFFSET + yInc, xCenterStr ( stdscr, title[i] ), title[i] );
+                mvwaddstr ( fWin,  TITLE_Y_OFFSET + yInc, xCenterStr ( fWin, title[i] ), title[i] );
                 yInc++;
         }
 
@@ -275,7 +272,7 @@ titleMenu ( void )
 
         /* Print Nuke */
         for ( int32_t i = 0; i < NUKE_ARR; i++ ) {
-                mvwaddstr ( fWin, NUKE_Y_OFFSET + yInc, xCenterStr ( stdscr, nuke[i] ), nuke[i] );
+                mvwaddstr ( fWin, NUKE_Y_OFFSET + yInc, xCenterStr ( fWin, nuke[i] ), nuke[i] );
                 yInc++;
         }
 
