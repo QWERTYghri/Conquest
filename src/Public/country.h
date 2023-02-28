@@ -12,20 +12,6 @@
 
 typedef struct
 {
-        struct War
-        {
-                uint32_t        deaths,
-                                soldiers,
-                                tanks,
-                                planes,
-                                conscriptMode,
-                                skill,
-                                manPower;
-                
-                /* Pedantic error rn */
-                char*           warCountries[];
-        } War;
-
         struct General
         {
                 uint32_t        money,
@@ -41,6 +27,17 @@ typedef struct
         {
                 char*           tradeCountries;
         } Trade;
+
+        struct War
+        {
+                uint32_t        deaths,
+                                soldiers,
+                                tanks,
+                                planes,
+                                conscriptMode,
+                                skill,
+                                manPower;
+        } War;
 } Country;
 
 #endif /* END */

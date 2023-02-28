@@ -5,9 +5,9 @@
 # @QWERTYghri
 
 CC	 := gcc
-CFLAGS	 := -std=gnu99 -pedantic -Wall -Wextra -pipe
+CFLAGS	 := -std=c99 -pedantic -Wall -Wextra -pipe
 CPPFLAGS := -D_POSIX_C_SOURCE=200809L
-LIB	 := -lncurses -lpanels
+LIB	 := -lncurses
 
 #Optimization flag
 OFLAG	 := -g -O0
