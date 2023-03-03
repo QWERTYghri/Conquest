@@ -170,7 +170,8 @@ xCenterStr ( WINDOW* win, char* str )
 
 static void
 printMenuDp (   WINDOW* win,
-                int32_t y, int32_t x,
+                int32_t y,
+                int32_t hlSize,
                 char* optName[], int32_t optLen,
                 int32_t optIndex )
 {
@@ -179,11 +180,11 @@ printMenuDp (   WINDOW* win,
                 if ( i == optIndex )
                         wattron ( win, COLOR_PAIR ( ColorSelect ) );
 
-                mvwaddstr ( win, y + i, xCenterStr ( fWin, optName[i] ), optName[i] );
+                mvwaddstr ( win, y + i, xCenterStr ( win, optName[i] ), optName[i] );
                 wattroff ( win, COLOR_PAIR ( ColorSelect ) );
         }
 
-        wrefresh ( fWin );
+        wrefresh ( win );
 }
 
 static void
@@ -199,7 +200,7 @@ menuHandler ()
         int32_t         optInc  = 0,
                         input   = 0;
 
-        printMenuDp ( fWin, MENU_Y_OFFSET, COLS / 2, optNames, OPT_ARR, optInc );
+        printMenuDp ( fWin, MENU_Y_OFFSET, 10, optNames, OPT_ARR, optInc );
 
         while ( ( input = getch () ) != EOF )
         {
@@ -219,12 +220,15 @@ menuHandler ()
 
                                 optInc--;
                                 break;
-                        case KEY_ENTER:
+                        case 'e':
+                                wprintw ( fWin, "test" );
+                                wrefresh ( fWin );
+                                menuJmpTab[optInc] ();
 
                                 break;
                 }
 
-                printMenuDp ( fWin, MENU_Y_OFFSET, COLS / 2, optNames, OPT_ARR, optInc );
+                printMenuDp ( fWin, MENU_Y_OFFSET, 10, optNames, OPT_ARR, optInc );
         }
 }
 
