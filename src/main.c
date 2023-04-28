@@ -20,7 +20,8 @@
 #include <ncurses.h>
 
 /* Local Includes */
-#include "./Public/handler.h"
+#include "./Public/util.h"
+#include "./Public/decal.h"
 
 /* Macros */
 #define GAME_WINDOW_X ( COLS - 10 )
@@ -30,8 +31,6 @@
 #define VERS            ( "Version: 1.0R\n\n" )
 
 /* Size index */
-#define TITLE_ARR       ( 9 )
-#define NUKE_ARR        ( 11 )
 #define OPT_ARR         ( 3 )
 
 /* Y offsets */
@@ -39,73 +38,10 @@
 #define MENU_Y_OFFSET   ( TITLE_Y_OFFSET + 10 )
 #define NUKE_Y_OFFSET   ( 25 )
 
-/* Enums */
-enum { 
-        CursInvis,
-        CursVis
-};
-
-enum {
-        ColorBlack,
-        ColorBlue,
-        ColorGrey,
-        
-        ColorTextRed,
-        ColorSelect,
-};
-
 /* Global Vars */
 WINDOW* fWin, *bWin;
 
 /* Functions */
-static int32_t
-initColor ( void )
-{
-        if ( has_colors () )
-                start_color ();
-        else
-                return -1;
-
-        init_pair ( ColorBlack, COLOR_BLACK, COLOR_BLACK );
-        init_pair ( ColorBlue, COLOR_BLUE, COLOR_BLUE );
-        init_pair ( ColorGrey, COLOR_BLACK, COLOR_WHITE );
-        init_pair ( ColorTextRed, COLOR_RED, COLOR_BLACK );
-
-        init_pair ( ColorSelect, COLOR_WHITE, COLOR_BLUE );
-       
-        return 0;
-}
-
-static void
-exitNc ( void )
-{
-        erase ();
-        refresh ();
-        endwin ();
-}
-
-static void
-errMsg ( const char* msg, int32_t code )
-{
-        exitNc ();
-        fprintf ( stderr, "%s",  msg );
-        exit ( code );
-}
-
-static void
-initNc ( void )
-{
-        initscr ();
-        //raw ();
-        noecho ();
-        nonl ();
-        keypad ( stdscr, TRUE );
-        curs_set ( CursInvis );
-
-        if ( initColor () != 0 )
-                errMsg ( "Error: Colors are not supported by terminal\nExitting...\n", EXIT_FAILURE );
-}
-
 static void
 readInput ( int argc, char** argv )
 {
@@ -132,7 +68,7 @@ readInput ( int argc, char** argv )
                                 errMsg ( VERS, EXIT_SUCCESS );
                                 break;
                         default:
-                                errMsg ( "Unknown argument\n\nArgs:\n\t--help\n\t--Version\n", EXIT_SUCCESS );
+                                errMsg ( "Unknown argument\n\nArgs:\n\t--help\n\t--version\n", EXIT_SUCCESS );
                                 break;
                 }
         }
@@ -142,49 +78,22 @@ readInput ( int argc, char** argv )
 }
 
 static void
-baseSetUp ( void )
+playGame ()
 {
-        fWin = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, ( LINES - GAME_WINDOW_Y ) / 2, ( COLS - GAME_WINDOW_X ) / 2 );
-        bWin = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, ( LINES - GAME_WINDOW_Y ) / 2 + 1, ( COLS - GAME_WINDOW_X ) / 2 + 1 );
-
-        wbkgd ( bWin, COLOR_PAIR ( ColorBlack ) );
-        wbkgd ( fWin, COLOR_PAIR ( ColorGrey ) );
-        bkgd ( COLOR_PAIR ( ColorBlue ) );
-
-        box ( fWin, 0, 0 );
-
-        refresh ();
-        wrefresh ( bWin );
-        wrefresh ( fWin );
-}
-
-/* Calculates an appropriate offset for a string to be placed in the center */
-static int32_t
-xCenterStr ( WINDOW* win, char* str )
-{
-        int32_t yLen, xLen;
-        getmaxyx ( win, yLen, xLen );
-
-        return ( xLen / 2 ) - ( strlen ( str ) / 2 );
+        wprintw ( fWin, "test" );
 }
 
 static void
-printMenuDp (   WINDOW* win,
-                int32_t y,
-                int32_t hlSize,
-                char* optName[], int32_t optLen,
-                int32_t optIndex )
+aboutMsg ()
 {
-        for ( int32_t i = 0; i < optLen; i++ )
-        {
-                if ( i == optIndex )
-                        wattron ( win, COLOR_PAIR ( ColorSelect ) );
+        wprintw ( fWin, "test1" );
+}
 
-                mvwaddstr ( win, y + i, xCenterStr ( win, optName[i] ), optName[i] );
-                wattroff ( win, COLOR_PAIR ( ColorSelect ) );
-        }
-
-        wrefresh ( win );
+static void
+endGame ()
+{
+        exitNc ();
+        exit ( EXIT_SUCCESS );
 }
 
 static void
@@ -221,13 +130,21 @@ menuHandler ()
                                 optInc--;
                                 break;
                         case 'e':
-                                wprintw ( fWin, "test" );
-                                wrefresh ( fWin );
-                                menuJmpTab[optInc] ();
+                                switch ( optInc )
+                                {
+                                        case 0:
+                                                playGame ();
+                                                break;
+                                        case 1:
+                                                aboutMsg ();
+                                                break;
+                                        case 2:
+                                                endGame ();
+                                                break;
+                                }
 
                                 break;
                 }
-
                 printMenuDp ( fWin, MENU_Y_OFFSET, 10, optNames, OPT_ARR, optInc );
         }
 }
@@ -235,34 +152,6 @@ menuHandler ()
 static void
 titleMenu ( void )
 {
-        char* title[TITLE_ARR] =
-        { 
-		"---------------------------------------------------------------",
-		" ____                                  _  ",
-		"/ ___|___  _ __   __ _ _   _  ___  ___| |_",
-		"| |   / _ \\| '_ \\ / _` | | | |/ _ \\/ __| __|",
-		"| |__| (_) | | | | (_| | |_| |  __/\\__ \\ |_ ",
-         	" \\____\\___/|_| |_|\\__, |\\__,_|\\___||___/\\__|",
-        	"                     |_|                    ",
-        	"Made by QWERTYghri",
-        	"---------------------------------------------------------------"
-        };
-
-        char* nuke[NUKE_ARR] =
-        {
-		"     _.-^^---....,,--       ",
-		" _--                  --_   ",
-		"<                        >) ",
-		"|                         | ",
-		" \\._                   _./  ",
-		"    ```--. . , ; .--'''     ",
-	        "          | |   |            ",
-		"       .-=||  | |=-.        ",
-		"       `-=#$%&%$#=-'        ",
-		"          | ;  :|            ",
-		"  _____.,-#%&$@%#&#~,._____ "
-        };
-
         int32_t yInc    = 0;
 
         /* xCenterStr's offsets don't make sense but I was lazy */
@@ -281,7 +170,23 @@ titleMenu ( void )
         }
 
         wrefresh ( fWin );
-        menuHandler ();
+}
+
+static void
+baseSetUp ( void )
+{
+        fWin = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, ( LINES - GAME_WINDOW_Y ) / 2, ( COLS - GAME_WINDOW_X ) / 2 );
+        bWin = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, ( LINES - GAME_WINDOW_Y ) / 2 + 1, ( COLS - GAME_WINDOW_X ) / 2 + 1 );
+
+        wbkgd ( bWin, COLOR_PAIR ( ColorBlack ) );
+        wbkgd ( fWin, COLOR_PAIR ( ColorGrey ) );
+        bkgd ( COLOR_PAIR ( ColorBlue ) );
+
+        box ( fWin, 0, 0 );
+
+        refresh ();
+        wrefresh ( bWin );
+        wrefresh ( fWin );
 }
 
 static void
@@ -289,7 +194,7 @@ game ( void )
 {
         baseSetUp ();
         titleMenu ();
-        
+        menuHandler ();
         getch ();
 
         delwin ( fWin );
