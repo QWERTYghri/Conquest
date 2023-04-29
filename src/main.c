@@ -24,11 +24,11 @@
 #include "./Public/decal.h"
 
 /* Macros */
-#define GAME_WINDOW_X ( COLS - 10 )
 #define GAME_WINDOW_Y ( LINES - 10 )
+#define GAME_WINDOW_X ( COLS - 10 )
 
-#define HELP            ( "About:\n\tConquest is a Grand Strategy type game in which you invade other countries and increase your economy through trade and more.\n\n" )
-#define VERS            ( "Version: 1.0R\n\n" )
+#define ABOUT_WINDOW_Y ( GAME_WINDOW_Y - 30 )
+#define ABOUT_WINDOW_X ( GAME_WINDOW_X - 30 )
 
 /* Size index */
 #define OPT_ARR         ( 3 )
@@ -40,6 +40,34 @@
 
 /* Global Vars */
 WINDOW* fWin, *bWin;
+
+char* title[TITLE_ARR] =
+{ 
+	"---------------------------------------------------------------",
+	" ____                                  _  ",
+	"/ ___|___  _ __   __ _ _   _  ___  ___| |_",
+	"| |   / _ \\| '_ \\ / _` | | | |/ _ \\/ __| __|",
+	"| |__| (_) | | | | (_| | |_| |  __/\\__ \\ |_ ",
+        " \\____\\___/|_| |_|\\__, |\\__,_|\\___||___/\\__|",
+        "                     |_|                    ",
+        "Made by QWERTYghri",
+        "---------------------------------------------------------------"
+};
+
+char* nuke[NUKE_ARR] =
+{
+	"     _.-^^---....,,--       ",
+	" _--                  --_   ",
+	"<                        >) ",
+	"|                         | ",
+	" \\._                   _./  ",
+	"    ```--. . , ; .--'''     ",
+	"          | |   |            ",
+	"       .-=||  | |=-.        ",
+	"       `-=#$%&%$#=-'        ",
+	"          | ;  :|            ",
+	"  _____.,-#%&$@%#&#~,._____ "
+};
 
 /* Functions */
 static void
@@ -68,35 +96,16 @@ readInput ( int argc, char** argv )
                                 errMsg ( VERS, EXIT_SUCCESS );
                                 break;
                         default:
-                                errMsg ( "Unknown argument\n\nArgs:\n\t--help\n\t--version\n", EXIT_SUCCESS );
+                                errMsg ( UKN_ARG, EXIT_SUCCESS );
                                 break;
                 }
         }
 
         if ( optind < argc )
-                errMsg ( "No argument or unformatted argument\n\n", EXIT_SUCCESS );
+                errMsg ( NO_ARG, EXIT_SUCCESS );
 }
 
-static void
-playGame ()
-{
-        wprintw ( fWin, "test" );
-}
-
-static void
-aboutMsg ()
-{
-        wprintw ( fWin, "test1" );
-}
-
-static void
-endGame ()
-{
-        exitNc ();
-        exit ( EXIT_SUCCESS );
-}
-
-static void
+static int32_t
 menuHandler ()
 {
         char* optNames[OPT_ARR] =
@@ -109,15 +118,14 @@ menuHandler ()
         int32_t         optInc  = 0,
                         input   = 0;
 
-        printMenuDp ( fWin, MENU_Y_OFFSET, 10, optNames, OPT_ARR, optInc );
-
+        printMenuDp ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR, optInc );
         while ( ( input = getch () ) != EOF )
         {
                 switch ( input )
                 {
                         case KEY_DOWN:
                                 optInc++;
-                                if ( optInc == 3 )
+                                if ( optInc == OPT_ARR )
                                         optInc = 0;
 
                                 break;
@@ -130,23 +138,12 @@ menuHandler ()
                                 optInc--;
                                 break;
                         case 'e':
-                                switch ( optInc )
-                                {
-                                        case 0:
-                                                playGame ();
-                                                break;
-                                        case 1:
-                                                aboutMsg ();
-                                                break;
-                                        case 2:
-                                                endGame ();
-                                                break;
-                                }
-
-                                break;
+                        	return optInc;
                 }
-                printMenuDp ( fWin, MENU_Y_OFFSET, 10, optNames, OPT_ARR, optInc );
+                printMenuDp ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR, optInc );
         }
+        
+        return 0; /* That way if something fails it just exits with no description*/
 }
 
 static void
@@ -172,11 +169,18 @@ titleMenu ( void )
         wrefresh ( fWin );
 }
 
+/* change to inline once you can fix the problem with it */
+int32_t
+centerPos ( int32_t baseVal, int32_t size )
+{
+	return ( baseVal - size ) / 2;
+}
+
 static void
 baseSetUp ( void )
 {
-        fWin = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, ( LINES - GAME_WINDOW_Y ) / 2, ( COLS - GAME_WINDOW_X ) / 2 );
-        bWin = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, ( LINES - GAME_WINDOW_Y ) / 2 + 1, ( COLS - GAME_WINDOW_X ) / 2 + 1 );
+        fWin = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, centerPos ( LINES, GAME_WINDOW_Y ), centerPos ( COLS, GAME_WINDOW_X ) );
+        bWin = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, centerPos ( LINES, GAME_WINDOW_Y ) + 1, centerPos ( COLS, GAME_WINDOW_X ) + 1 );
 
         wbkgd ( bWin, COLOR_PAIR ( ColorBlack ) );
         wbkgd ( fWin, COLOR_PAIR ( ColorGrey ) );
@@ -190,12 +194,44 @@ baseSetUp ( void )
 }
 
 static void
+playGame ()
+{
+        
+}
+
+static void
+aboutMsg ()
+{
+	WINDOW* aboutWin = newwin ( ABOUT_WINDOW_Y, ABOUT_WINDOW_X, centerPos ( LINES, ABOUT_WINDOW_Y ), centerPos ( COLS, ABOUT_WINDOW_X ) );
+	
+        werase ( fWin );
+        box ( fWin, 0, 0 );
+        box ( aboutWin, 0, 0 );
+        wbkgd ( aboutWin, COLOR_PAIR ( ColorGrey ) );
+        
+        wprintw ( aboutWin, "help" );
+        
+        wrefresh ( fWin );
+        wrefresh ( aboutWin );
+        delwin ( aboutWin );
+}
+
+static void
+endGame ()
+{
+        exitNc ();
+        errMsg ( THANK_YOU, EXIT_SUCCESS );
+}
+
+static void
 game ( void )
 {
+	void ( *optList[OPT_ARR] ) ( void ) = { playGame, aboutMsg, endGame };
+
         baseSetUp ();
         titleMenu ();
-        menuHandler ();
-        getch ();
+        optList[menuHandler ()] ();
+        
 
         delwin ( fWin );
         delwin ( bWin );
@@ -209,7 +245,7 @@ main ( int argc, char** argv )
         
         readInput ( argc, argv );
         game ();
-
+        
         exitNc ();
 
         return 0;

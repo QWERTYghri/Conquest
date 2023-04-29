@@ -28,7 +28,6 @@ extern int32_t xCenterStr ( WINDOW* win, char* str );
 /* Used in menuhandler to switch between highlighting different choices */
 extern void printMenuDp (   WINDOW* win,
                 int32_t y,
-                int32_t hlSize,
                 char* optName[], int32_t optLen,
                 int32_t optIndex );
 

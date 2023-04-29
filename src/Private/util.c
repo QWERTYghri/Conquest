@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "../Public/util.h"
+#include "../Public/decal.h"
 
 /* Calculates an appropriate offset for a string to be placed in the center */
 extern int32_t
@@ -24,7 +25,6 @@ xCenterStr ( WINDOW* win, char* str )
 extern void
 printMenuDp (   WINDOW* win,
                 int32_t y,
-                int32_t hlSize,
                 char* optName[], int32_t optLen,
                 int32_t optIndex )
 {
@@ -85,6 +85,6 @@ initNc ( void )
         curs_set ( CursInvis );
 
         if ( initColor () != 0 )
-                errMsg ( "Error: Colors are not supported by terminal\nExitting...\n", EXIT_FAILURE );
+                errMsg ( ERR_COLOR, EXIT_FAILURE );
 }
 
