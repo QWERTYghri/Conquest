@@ -70,6 +70,8 @@ char* nuke[NUKE_ARR] =
 };
 
 /* Functions */
+
+/* Handles argument inputs */
 static void
 readInput ( int argc, char** argv )
 {
@@ -105,6 +107,7 @@ readInput ( int argc, char** argv )
                 errMsg ( NO_ARG, EXIT_SUCCESS );
 }
 
+/* Handles the initial menu option choices  * Perhaps we can change this to something more portable instead * */
 static int32_t
 menuHandler ()
 {
@@ -142,7 +145,6 @@ menuHandler ()
                 }
                 printMenuDp ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR, optInc );
         }
-        
         return 0; /* That way if something fails it just exits with no description*/
 }
 
@@ -169,8 +171,8 @@ titleMenu ( void )
         wrefresh ( fWin );
 }
 
-/* change to inline once you can fix the problem with it */
-int32_t
+/* wtf inline not inline?*/
+static int32_t
 centerPos ( int32_t baseVal, int32_t size )
 {
 	return ( baseVal - size ) / 2;
@@ -205,11 +207,11 @@ aboutMsg ()
 	WINDOW* aboutWin = newwin ( ABOUT_WINDOW_Y, ABOUT_WINDOW_X, centerPos ( LINES, ABOUT_WINDOW_Y ), centerPos ( COLS, ABOUT_WINDOW_X ) );
 	
         werase ( fWin );
+        wbkgd ( aboutWin, COLOR_PAIR ( ColorGrey ) );
+        mvwprintw ( aboutWin, 1, 1, ABOUTSTR );
+        
         box ( fWin, 0, 0 );
         box ( aboutWin, 0, 0 );
-        wbkgd ( aboutWin, COLOR_PAIR ( ColorGrey ) );
-        
-        wprintw ( aboutWin, "help" );
         
         wrefresh ( fWin );
         wrefresh ( aboutWin );
@@ -231,7 +233,7 @@ game ( void )
         baseSetUp ();
         titleMenu ();
         optList[menuHandler ()] ();
-        
+        getch ();
 
         delwin ( fWin );
         delwin ( bWin );
