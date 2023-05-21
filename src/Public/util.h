@@ -34,7 +34,7 @@ extern void printMenuDp (   WINDOW* win,
 /* Functions used in setting up ncurses and errors */
 int32_t initColor ( void );
 void exitNc ( void );
-void errMsg ( const char* msg, int32_t code );
+void errMsg ( int32_t code, const char* format, ... );
 void initNc ( void );
 
 #endif /* END */

@@ -67,17 +67,25 @@ exitNc ( void )
 }
 
 extern void
-errMsg ( const char* msg, int32_t code )
+errMsg ( int32_t code, const char* format, ... )
 {
-        exitNc ();
-        fprintf ( stderr, "%s",  msg );
-        exit ( code );
+	va_list set;
+	va_start ( set, format );
+	vfprintf ( stderr, format, set );
+
+	exitNc ();
+	va_end ( set );
+	exit ( code );
 }
 
 extern void
 initNc ( void )
-{
+{		
         initscr ();
+        
+        if ( LINES < MIN_LINES && COLS < MIN_COLS )
+		errMsg ( EXIT_FAILURE, WIN_SIZE );
+	 
         //raw ();
         noecho ();
         nonl ();
@@ -85,6 +93,6 @@ initNc ( void )
         curs_set ( CursInvis );
 
         if ( initColor () != 0 )
-                errMsg ( ERR_COLOR, EXIT_FAILURE );
+                errMsg ( EXIT_FAILURE, ERR_COLOR );
 }
 

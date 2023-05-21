@@ -92,19 +92,19 @@ readInput ( int argc, char** argv )
                 switch ( retVal )
                 {
                         case 'h':
-                                errMsg ( HELP, EXIT_SUCCESS );
+                                errMsg ( EXIT_SUCCESS, HELP );
                                 break;
                         case 'v':
-                                errMsg ( VERS, EXIT_SUCCESS );
+                                errMsg ( EXIT_SUCCESS, VERS );
                                 break;
                         default:
-                                errMsg ( UKN_ARG, EXIT_SUCCESS );
+                                errMsg ( EXIT_SUCCESS, UKN_ARG );
                                 break;
                 }
         }
 
         if ( optind < argc )
-                errMsg ( NO_ARG, EXIT_SUCCESS );
+                errMsg ( EXIT_FAILURE, NO_ARG );
 }
 
 /* Handles the initial menu option choices  * Perhaps we can change this to something more portable instead * */
@@ -222,17 +222,18 @@ static void
 endGame ()
 {
         exitNc ();
-        errMsg ( THANK_YOU, EXIT_SUCCESS );
+        errMsg ( EXIT_SUCCESS, THANK_YOU );
 }
 
 static void
 game ( void )
 {
 	void ( *optList[OPT_ARR] ) ( void ) = { playGame, aboutMsg, endGame };
-
+	
         baseSetUp ();
         titleMenu ();
         optList[menuHandler ()] ();
+        
         getch ();
 
         delwin ( fWin );
