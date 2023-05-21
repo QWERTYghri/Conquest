@@ -18,10 +18,12 @@
 #define NO_ARG		( "Error: No argument or unformatted argument\n" )
 #define ERR_COLOR	( "Error: Colors are not supported by terminal\nExitting...\n" )
 #define WIN_SIZE	( "Error: LINES and COLS are less than the requirement ( 62, 239 ). Can't use other screens because of the ASCII art\n" )
-#define THANK_YOU	( "Thanks for playing, I need to stop doing projects like these and start doing like ones that I can actually get something in return.\n\n * Visit my Roblox, \"mrgameybean17\"\n\n\n" )
+#define THANK_YOU	( "Thanks for playing, I need to stop doing projects like these and start doing like ones that I can actually get something in return.\n\n * Visit my Roblox, \"mrgameybean17\"\n" )
+#define MENU_FAIL	( "Possible failure in menuHandler function\n" )
 
 
-
-#define ABOUTSTR	( "Conquest:\n    This is a grand strategy type of game based on the game Hearts of Iron. It's focused on making it towards world domination by invading\n    other countries" )
+#define ABOUTSTR	( "Conquest:\n\tThis is a grand strategy type of game based on the game Hearts of Iron. It's focused on making it towards world domination by invading\n\tother countries. " \
+			  "You can control where to place troops in the area and also work on trade between other countries. Use the cursor\n\tto click on troops to move them to a point in the map " \
+			  "Use the arrow keys and the enter key to navigate the screen." )
 
 #endif /* End file */

@@ -30,6 +30,9 @@
 #define ABOUT_WINDOW_Y ( GAME_WINDOW_Y - 30 )
 #define ABOUT_WINDOW_X ( GAME_WINDOW_X - 30 )
 
+#define PLAY_WINDOW_Y ( GAME_WINDOW_Y - 60 )
+#define PLAY_WINDOW_X ( GAME_WINDOW_X - 60 )
+
 /* Size index */
 #define OPT_ARR         ( 3 )
 
@@ -195,13 +198,21 @@ baseSetUp ( void )
         wrefresh ( fWin );
 }
 
-static void
+static int32_t
 playGame ()
 {
-        
+	WINDOW* playWin	= newwin ( PLAY_WINDOW_Y, PLAY_WINDOW_X, centerPos ( LINES, PLAY_WINDOW_Y ), centerPos ( LINES, PLAY_WINDOW_Y ) );
+	werase ( fWin );
+	
+	box ( playWin, 0, 0 );
+	
+	wrefresh ( playWin );
+	wrefresh ( fWin );
+	
+        return 0;
 }
 
-static void
+static int32_t
 aboutMsg ()
 {
 	WINDOW* aboutWin = newwin ( ABOUT_WINDOW_Y, ABOUT_WINDOW_X, centerPos ( LINES, ABOUT_WINDOW_Y ), centerPos ( COLS, ABOUT_WINDOW_X ) );
@@ -216,23 +227,29 @@ aboutMsg ()
         wrefresh ( fWin );
         wrefresh ( aboutWin );
         delwin ( aboutWin );
+        getch ();
+        
+        return 1;
 }
 
-static void
+static int32_t
 endGame ()
 {
         exitNc ();
         errMsg ( EXIT_SUCCESS, THANK_YOU );
+        
+        return 2;
 }
 
 static void
 game ( void )
 {
-	void ( *optList[OPT_ARR] ) ( void ) = { playGame, aboutMsg, endGame };
-	
+	int32_t ( *optList[OPT_ARR] ) ( void ) = { playGame, aboutMsg, endGame };
+_reset:
         baseSetUp ();
         titleMenu ();
-        optList[menuHandler ()] ();
+        if ( optList[menuHandler ()] () < 2 )
+        	goto _reset;
         
         getch ();
 
