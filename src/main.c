@@ -30,8 +30,8 @@
 #define ABOUT_WINDOW_Y ( GAME_WINDOW_Y - 30 )
 #define ABOUT_WINDOW_X ( GAME_WINDOW_X - 30 )
 
-#define PLAY_WINDOW_Y ( GAME_WINDOW_Y - 60 )
-#define PLAY_WINDOW_X ( GAME_WINDOW_X - 60 )
+#define PLAY_WINDOW_Y ( GAME_WINDOW_Y - 30 )
+#define PLAY_WINDOW_X ( GAME_WINDOW_X - 90 )
 
 /* Size index */
 #define OPT_ARR         ( 3 )
@@ -123,7 +123,7 @@ menuHandler ()
 
         int32_t         optInc  = 0,
                         input   = 0;
-
+	
         printMenuDp ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR, optInc );
         while ( ( input = getch () ) != EOF )
         {
@@ -143,12 +143,13 @@ menuHandler ()
 
                                 optInc--;
                                 break;
-                        case 'e':
+                        case KEY_ENTER:
                         	return optInc;
                 }
                 printMenuDp ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR, optInc );
         }
-        return 0; /* That way if something fails it just exits with no description*/
+
+        return 0; /* That way if something fails it just exits with no description because menuHandler closes it*/
 }
 
 static void
@@ -201,13 +202,18 @@ baseSetUp ( void )
 static int32_t
 playGame ()
 {
-	WINDOW* playWin	= newwin ( PLAY_WINDOW_Y, PLAY_WINDOW_X, centerPos ( LINES, PLAY_WINDOW_Y ), centerPos ( LINES, PLAY_WINDOW_Y ) );
+	WINDOW* playWin	= newwin ( PLAY_WINDOW_Y, PLAY_WINDOW_X, centerPos ( LINES, PLAY_WINDOW_Y ), centerPos ( COLS, PLAY_WINDOW_X ) );
+	
 	werase ( fWin );
-	
+ 	wbkgd ( playWin, COLOR_PAIR ( ColorGrey ) );
+ 	
 	box ( playWin, 0, 0 );
+	box ( fWin, 0, 0 );
 	
-	wrefresh ( playWin );
 	wrefresh ( fWin );
+	wrefresh ( playWin );
+	
+	delwin ( playWin );
 	
         return 0;
 }
@@ -248,7 +254,7 @@ game ( void )
 _reset:
         baseSetUp ();
         titleMenu ();
-        if ( optList[menuHandler ()] () < 2 )
+        if ( optList[menuHandler ()] () == 1 )
         	goto _reset;
         
         getch ();
