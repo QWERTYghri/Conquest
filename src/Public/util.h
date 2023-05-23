@@ -22,8 +22,9 @@ enum {
         CursVis
 };
 
-/* Calculates an appropriate offset for a string to be placed in the center */
+/* Used to calculate positions to center out a strings or windows*/
 int32_t xCenterStr ( WINDOW* win, char* str );
+int32_t centerPos ( int32_t baseVal, int32_t size );
 
 /* Used in menuhandler to switch between highlighting different choices */
 void printMenu ( WINDOW* win,
@@ -31,11 +32,14 @@ void printMenu ( WINDOW* win,
                 char* optName[],
                 int32_t optLen,
                 int32_t optIndex );
-                
+
 int32_t menuOption ( WINDOW* obj,
 		     int32_t yPos,
 		     char* optName[],
 		     int32_t maxName );
+
+/* Misc for drawing ascii art */
+void printArt ( WINDOW* obj, int32_t yPos, char* str[], int32_t strMax );
 
 /* Functions used in setting up ncurses and errors */
 int32_t initColor ( void );

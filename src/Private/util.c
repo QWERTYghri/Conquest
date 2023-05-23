@@ -21,6 +21,13 @@ xCenterStr ( WINDOW* win, char* str )
         return ( xLen / 2 ) - ( strlen ( str ) / 2 );
 }
 
+/* wtf inline not inline?*/
+int32_t
+centerPos ( int32_t baseVal, int32_t size )
+{
+	return ( baseVal - size ) / 2;
+}
+
 /* Used in menuhandler to switch between highlighting different choices */
 void
 printMenu (   WINDOW* win,
@@ -74,6 +81,17 @@ menuOption ( WINDOW* obj,
 	}
 	
 	return 0;
+}
+
+void
+printArt ( WINDOW* obj, int32_t yPos, char* str[], int32_t strMax )
+{
+	int32_t yInc = 0;
+	
+	for ( int32_t i = 0; i < strMax; i++ ) {
+		mvwaddstr ( obj, yPos + yInc, xCenterStr ( obj, str[i] ), str[i] );
+		yInc++;
+	}
 }
 
 int32_t

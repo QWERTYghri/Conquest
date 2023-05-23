@@ -23,24 +23,6 @@
 #include "./Public/util.h"
 #include "./Public/decal.h"
 
-/* Macros */
-#define GAME_WINDOW_Y ( LINES - 10 )
-#define GAME_WINDOW_X ( COLS - 10 )
-
-#define ABOUT_WINDOW_Y ( GAME_WINDOW_Y - 30 )
-#define ABOUT_WINDOW_X ( GAME_WINDOW_X - 30 )
-
-#define PLAY_WINDOW_Y ( GAME_WINDOW_Y - 15 )
-#define PLAY_WINDOW_X ( GAME_WINDOW_X - 120 )
-
-/* Size index */
-#define OPT_ARR         ( 3 )
-
-/* Y offsets */
-#define TITLE_Y_OFFSET  ( 6 )
-#define MENU_Y_OFFSET   ( TITLE_Y_OFFSET + 10 )
-#define NUKE_Y_OFFSET   ( 25 )
-
 /* Global Vars */
 WINDOW* fWin, *bWin;
 
@@ -70,6 +52,17 @@ char* nuke[NUKE_ARR] =
 	"       `-=#$%&%$#=-'        ",
 	"          | ;  :|            ",
 	"  _____.,-#%&$@%#&#~,._____ "
+};
+
+char* tank[TANK_ARR] =
+{
+	"============================",
+	"_____",
+	"         ___(  *  )=======:: =>",
+	"/~~~~T-72~~~~\\",
+	"\\O.O.O.O.O.O/",
+	"============================",
+	"Choose a level difficulty"
 };
 
 /* Functions */
@@ -127,31 +120,10 @@ menuHandler ()
 static void
 titleMenu ( void )
 {
-        int32_t yInc    = 0;
-
-        /* xCenterStr's offsets don't make sense but I was lazy */
-        /* Printing Title Arr */
-        for ( int32_t i = 0; i < TITLE_ARR; i++ ) {
-                mvwaddstr ( fWin,  TITLE_Y_OFFSET + yInc, xCenterStr ( fWin, title[i] ), title[i] );
-                yInc++;
-        }
-
-        yInc = 0;
-
-        /* Print Nuke */
-        for ( int32_t i = 0; i < NUKE_ARR; i++ ) {
-                mvwaddstr ( fWin, NUKE_Y_OFFSET + yInc, xCenterStr ( fWin, nuke[i] ), nuke[i] );
-                yInc++;
-        }
+	printArt ( fWin, TITLE_Y_OFFSET, title, TITLE_ARR );
+	printArt ( fWin, NUKE_Y_OFFSET, nuke, NUKE_ARR );
 
         wrefresh ( fWin );
-}
-
-/* wtf inline not inline?*/
-static int32_t
-centerPos ( int32_t baseVal, int32_t size )
-{
-	return ( baseVal - size ) / 2;
 }
 
 static void
@@ -178,21 +150,25 @@ playGame ()
 	{
 		"Easy",
 		"Medium",
-		"Hard"
+		"Hard",
+		"Return to Menu"
 	};
-
+	
+	int32_t retVal = 0;
 	WINDOW* playWin	= newwin ( PLAY_WINDOW_Y, PLAY_WINDOW_X, centerPos ( LINES, PLAY_WINDOW_Y ), centerPos ( COLS, PLAY_WINDOW_X ) );
 	
 	werase ( fWin );
  	wbkgd ( playWin, COLOR_PAIR ( ColorGrey ) );
- 	
 	box ( playWin, 0, 0 );
 	box ( fWin, 0, 0 );
+	
+	#define PLAY_TANK_OFFSET ( 2 )
+	printArt ( playWin, 2, tank, TANK_ARR );
 	
 	wrefresh ( fWin );
 	wrefresh ( playWin );	
 	
-	menuOption ( playWin, PLAY_WINDOW_Y / 2, optName, LVL_MAX );
+	menuOption ( playWin, ( PLAY_WINDOW_Y / 2 ) - ( LVL_MAX - 1 ), optName, LVL_MAX );
 	
 	delwin ( playWin );
 	
@@ -203,6 +179,7 @@ static int32_t
 aboutMsg ()
 {
 	WINDOW* aboutWin = newwin ( ABOUT_WINDOW_Y, ABOUT_WINDOW_X, centerPos ( LINES, ABOUT_WINDOW_Y ), centerPos ( COLS, ABOUT_WINDOW_X ) );
+	int32_t ret;
 	
         werase ( fWin );
         wbkgd ( aboutWin, COLOR_PAIR ( ColorGrey ) );
@@ -214,7 +191,8 @@ aboutMsg ()
         wrefresh ( fWin );
         wrefresh ( aboutWin );
         delwin ( aboutWin );
-        getch ();
+        
+        while ( ( ret = getch () ) != 'e' && ret != EOF );
         
         return 1;
 }
