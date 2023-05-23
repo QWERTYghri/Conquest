@@ -43,7 +43,9 @@ typedef struct
 
 typedef struct
 {
+	char playerName[PLAYER_NAME];
 	Country* countries[MAX_COUNTRY];
+	int32_t score;
 } GameStat;
 
 #endif /* END */
