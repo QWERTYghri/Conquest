@@ -117,15 +117,7 @@ menuHandler ()
 	return menuOption ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR );
 }
 
-static void
-titleMenu ( void )
-{
-	printArt ( fWin, TITLE_Y_OFFSET, title, TITLE_ARR );
-	printArt ( fWin, NUKE_Y_OFFSET, nuke, NUKE_ARR );
-
-        wrefresh ( fWin );
-}
-
+/*Set up back windows */
 static void
 baseSetUp ( void )
 {
@@ -137,12 +129,15 @@ baseSetUp ( void )
         bkgd ( COLOR_PAIR ( ColorBlue ) );
 
         box ( fWin, 0, 0 );
+	printArt ( fWin, TITLE_Y_OFFSET, title, TITLE_ARR );
+	printArt ( fWin, NUKE_Y_OFFSET, nuke, NUKE_ARR );
 
         refresh ();
         wrefresh ( bWin );
         wrefresh ( fWin );
 }
 
+/* Sets up windows and levels to play game */
 static int32_t
 playGame ()
 {
@@ -154,6 +149,8 @@ playGame ()
 		"Return to Menu"
 	};
 	
+//	int32_t ( *optList[OPT_ARR] ) ( void ) = { };
+	
 	int32_t retVal = 0;
 	WINDOW* playWin	= newwin ( PLAY_WINDOW_Y, PLAY_WINDOW_X, centerPos ( LINES, PLAY_WINDOW_Y ), centerPos ( COLS, PLAY_WINDOW_X ) );
 	
@@ -162,19 +159,22 @@ playGame ()
 	box ( playWin, 0, 0 );
 	box ( fWin, 0, 0 );
 	
-	#define PLAY_TANK_OFFSET ( 2 )
 	printArt ( playWin, 2, tank, TANK_ARR );
 	
 	wrefresh ( fWin );
 	wrefresh ( playWin );	
 	
-	menuOption ( playWin, ( PLAY_WINDOW_Y / 2 ) - ( LVL_MAX - 1 ), optName, LVL_MAX );
+	retVal = menuOption ( playWin, ( PLAY_WINDOW_Y / 2 ) - ( LVL_MAX - 1 ), optName, LVL_MAX );
+	
+	if ( retVal == 3 )
+		return 1;
 	
 	delwin ( playWin );
 	
         return 0;
 }
 
+/* Display an about msg */
 static int32_t
 aboutMsg ()
 {
@@ -197,6 +197,7 @@ aboutMsg ()
         return 1;
 }
 
+/* Exit the game */
 static int32_t
 endGame ()
 {
@@ -212,7 +213,6 @@ game ( void )
 	int32_t ( *optList[OPT_ARR] ) ( void ) = { playGame, aboutMsg, endGame };
 _reset:
         baseSetUp ();
-        titleMenu ();
         if ( optList[menuHandler ()] () == 1 )
         	goto _reset;
         

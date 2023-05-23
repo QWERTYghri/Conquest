@@ -7,6 +7,7 @@
 #include <ncurses.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 
 #include "../Public/util.h"
 #include "../Public/decal.h"
@@ -135,6 +136,8 @@ errMsg ( int32_t code, const char* format, ... )
 void
 initNc ( void )
 {		
+        setlocale ( LC_ALL, "" );
+
         initscr ();
         
         if ( LINES < MIN_LINES && COLS < MIN_COLS )
