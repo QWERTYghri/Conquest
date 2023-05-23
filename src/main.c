@@ -20,8 +20,12 @@
 #include <ncurses.h>
 
 /* Local Includes */
+#include "./Public/game.h"
 #include "./Public/util.h"
 #include "./Public/decal.h"
+
+/* Types */
+
 
 /* Global Vars */
 WINDOW* fWin, *bWin;
@@ -137,9 +141,31 @@ baseSetUp ( void )
         wrefresh ( fWin );
 }
 
+static void
+levelSetUp ( int32_t lvl )
+{
+
+}
+
+static void
+playGame ( void )
+{
+	WINDOW* optPlay = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, 0, 0 );
+
+	werase ( fWin );
+	
+	box ( optPlay, 0, 0 );
+	wbkgd ( optPlay, COLOR_PAIR ( ColorGrey ) );
+	wrefresh ( fWin );
+	wrefresh ( optPlay );
+	
+	delwin ( optPlay );
+	getch ();
+}
+
 /* Sets up windows and levels to play game */
 static int32_t
-playGame ()
+playLvl ()
 {
 	char* optName[LVL_MAX] =
 	{
@@ -149,10 +175,8 @@ playGame ()
 		"Return to Menu"
 	};
 	
-//	int32_t ( *optList[OPT_ARR] ) ( void ) = { };
-	
 	int32_t retVal = 0;
-	WINDOW* playWin	= newwin ( PLAY_WINDOW_Y, PLAY_WINDOW_X, centerPos ( LINES, PLAY_WINDOW_Y ), centerPos ( COLS, PLAY_WINDOW_X ) );
+	WINDOW* playWin	= newwin ( DIFF_WINDOW_Y, DIFF_WINDOW_X, centerPos ( LINES, DIFF_WINDOW_Y ), centerPos ( COLS, DIFF_WINDOW_X ) );
 	
 	werase ( fWin );
  	wbkgd ( playWin, COLOR_PAIR ( ColorGrey ) );
@@ -164,11 +188,12 @@ playGame ()
 	wrefresh ( fWin );
 	wrefresh ( playWin );	
 	
-	retVal = menuOption ( playWin, ( PLAY_WINDOW_Y / 2 ) - ( LVL_MAX - 1 ), optName, LVL_MAX );
-	
+	retVal = menuOption ( playWin, ( DIFF_WINDOW_Y / 2 ) - ( LVL_MAX - 1 ), optName, LVL_MAX );
 	if ( retVal == 3 )
 		return 1;
-	
+		
+	levelSetUp ( retVal );
+	playGame ();
 	delwin ( playWin );
 	
         return 0;
@@ -201,6 +226,9 @@ aboutMsg ()
 static int32_t
 endGame ()
 {
+	delwin ( fWin );
+        delwin ( bWin );
+
         exitNc ();
         errMsg ( EXIT_SUCCESS, THANK_YOU );
         
@@ -210,7 +238,7 @@ endGame ()
 static void
 game ( void )
 {
-	int32_t ( *optList[OPT_ARR] ) ( void ) = { playGame, aboutMsg, endGame };
+	int32_t ( *optList[OPT_ARR] ) ( void ) = { playLvl, aboutMsg, endGame };
 _reset:
         baseSetUp ();
         if ( optList[menuHandler ()] () == 1 )
@@ -225,7 +253,6 @@ _reset:
 int
 main ( int argc, char** argv )
 {
-        setlocale ( LC_ALL, "" );
         initNc ();
         
         readInput ( argc, argv );

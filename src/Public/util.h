@@ -1,4 +1,7 @@
-/* Utility declration functions for main.c */
+/*
+ * Utility declration functions for main.c
+ * Functions for initialization ncurses or calculating window positions.
+ */
 
 #ifndef UTIL_H
 #define UTIL_H

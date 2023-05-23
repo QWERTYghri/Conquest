@@ -92,17 +92,53 @@ The game features 7 different political ideologies with their own benefits and n
 
 Countries
 ---------
-### Pasternak
-Pasternak is a country that would be equivalent to the Soviet Union. It defaults to Communism
-It has a lot of soldiers but have the lowest skill.
+Discusses starter abilties
 
-It has a lot of resources.
+High	= 100,000
+Low	=  10,000
+Med	=  50,000
+
+### Pasternak
+Pasternak is a big country that would be equivalent to the Soviet Union. It defaults to Communism
+It has a lot of soldiers but all default to the lowest skill.
+
+It has a lot of resources:
+	* Phosphate
+	* Iron
+	* Titanium
+	* Oil
 
 ### Atifa
-A country similiar towards Germany and defaults to Nationalism. It has high military skill
+A medium country similiar towards Germany and defaults to Nationalism. It has high military skill
 but a medium amount of soldiers.
 
-### 
+It has a low amount of resources:
+	* Gold
+	* Copper
+
+### Oceania
+A big country similiar to the US and defaults to democracy, military skill is medium with a high amount of soldiers
+
+It has a medium amount of resources:
+	* Gold
+	* Copper
+	* Iron
+
+### Kubo
+A small country similiar to Japan and defaults to liberalism, military skill is medium with a medium amount of soldiers
+
+It has a low amount of resources:
+	* Aluminum
+	* Oil
+
+### Zanton
+A small country similiar to Yugoslavia and defaults to Socialism, it's military skill is low, with medium amount of soldiers
+
+It has a high amount of resources:
+	* Gold
+	* Copper
+	* Aluminum
+	* Titanium
 
 Notes
 ------

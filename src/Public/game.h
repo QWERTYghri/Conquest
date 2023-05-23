@@ -4,11 +4,12 @@
  * File describing the countries in the game.
  */
 
-#ifndef COUNTRY_H
-#define COUNTRY_H
+#ifndef GAME_H
+#define GAME_H
 
 #include <stdint.h>
 
+#include "./decal.h"
 
 typedef struct
 {
@@ -39,5 +40,10 @@ typedef struct
                                 manPower;
         } War;
 } Country;
+
+typedef struct
+{
+	Country* countries[MAX_COUNTRY];
+} GameStat;
 
 #endif /* END */
