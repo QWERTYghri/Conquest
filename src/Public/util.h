@@ -23,13 +23,19 @@ enum {
 };
 
 /* Calculates an appropriate offset for a string to be placed in the center */
-extern int32_t xCenterStr ( WINDOW* win, char* str );
+int32_t xCenterStr ( WINDOW* win, char* str );
 
 /* Used in menuhandler to switch between highlighting different choices */
-extern void printMenuDp (   WINDOW* win,
+void printMenu ( WINDOW* win,
                 int32_t y,
-                char* optName[], int32_t optLen,
+                char* optName[],
+                int32_t optLen,
                 int32_t optIndex );
+                
+int32_t menuOption ( WINDOW* obj,
+		     int32_t yPos,
+		     char* optName[],
+		     int32_t maxName );
 
 /* Functions used in setting up ncurses and errors */
 int32_t initColor ( void );

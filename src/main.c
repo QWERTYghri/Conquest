@@ -30,8 +30,8 @@
 #define ABOUT_WINDOW_Y ( GAME_WINDOW_Y - 30 )
 #define ABOUT_WINDOW_X ( GAME_WINDOW_X - 30 )
 
-#define PLAY_WINDOW_Y ( GAME_WINDOW_Y - 30 )
-#define PLAY_WINDOW_X ( GAME_WINDOW_X - 90 )
+#define PLAY_WINDOW_Y ( GAME_WINDOW_Y - 15 )
+#define PLAY_WINDOW_X ( GAME_WINDOW_X - 120 )
 
 /* Size index */
 #define OPT_ARR         ( 3 )
@@ -120,36 +120,8 @@ menuHandler ()
                 "About",
                 "End Game"
         };
-
-        int32_t         optInc  = 0,
-                        input   = 0;
-	
-        printMenuDp ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR, optInc );
-        while ( ( input = getch () ) != EOF )
-        {
-                switch ( input )
-                {
-                        case KEY_DOWN:
-                                optInc++;
-                                if ( optInc == OPT_ARR )
-                                        optInc = 0;
-
-                                break;
-                        case KEY_UP:
-                                if ( optInc <= 0 ) {
-                                        optInc = 2;
-                                        break;
-                                }
-
-                                optInc--;
-                                break;
-                        case KEY_ENTER:
-                        	return optInc;
-                }
-                printMenuDp ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR, optInc );
-        }
-
-        return 0; /* That way if something fails it just exits with no description because menuHandler closes it*/
+                        
+	return menuOption ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR );
 }
 
 static void
@@ -202,6 +174,13 @@ baseSetUp ( void )
 static int32_t
 playGame ()
 {
+	char* optName[LVL_MAX] =
+	{
+		"Easy",
+		"Medium",
+		"Hard"
+	};
+
 	WINDOW* playWin	= newwin ( PLAY_WINDOW_Y, PLAY_WINDOW_X, centerPos ( LINES, PLAY_WINDOW_Y ), centerPos ( COLS, PLAY_WINDOW_X ) );
 	
 	werase ( fWin );
@@ -211,7 +190,9 @@ playGame ()
 	box ( fWin, 0, 0 );
 	
 	wrefresh ( fWin );
-	wrefresh ( playWin );
+	wrefresh ( playWin );	
+	
+	menuOption ( playWin, PLAY_WINDOW_Y / 2, optName, LVL_MAX );
 	
 	delwin ( playWin );
 	

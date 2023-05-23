@@ -6,6 +6,7 @@
 /* Definitions for sizes */
 #define TITLE_ARR       ( 9 )
 #define NUKE_ARR        ( 11 )
+#define LVL_MAX		( 3 )
 
 #define MIN_LINES	( 50 )
 #define MIN_COLS	( 190 )

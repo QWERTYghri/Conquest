@@ -12,7 +12,7 @@
 #include "../Public/decal.h"
 
 /* Calculates an appropriate offset for a string to be placed in the center */
-extern int32_t
+int32_t
 xCenterStr ( WINDOW* win, char* str )
 {
         int32_t yLen, xLen;
@@ -22,8 +22,8 @@ xCenterStr ( WINDOW* win, char* str )
 }
 
 /* Used in menuhandler to switch between highlighting different choices */
-extern void
-printMenuDp (   WINDOW* win,
+void
+printMenu (   WINDOW* win,
                 int32_t y,
                 char* optName[], int32_t optLen,
                 int32_t optIndex )
@@ -40,7 +40,43 @@ printMenuDp (   WINDOW* win,
         wrefresh ( win );
 }
 
-extern int32_t
+int32_t 
+menuOption ( WINDOW* obj,
+	     int32_t yPos,
+	     char* optName[],
+	     int32_t maxName )
+{
+	int32_t		optInc = 0,
+			input = 0;
+	
+	printMenu ( obj, yPos, optName, maxName, optInc );
+	while ( ( input = getch () ) != EOF )
+	{
+		switch ( input )
+		{
+			case KEY_DOWN:
+				optInc++;
+				if ( optInc == maxName )
+					optInc = 0;
+				break;
+			case KEY_UP:
+				if ( optInc <= 0 ) {
+					optInc = maxName - 1;
+					break;
+				}
+				
+				optInc--;
+				break;
+			case 'e':
+				return optInc;
+		}
+		printMenu ( obj, yPos, optName, maxName, optInc );
+	}
+	
+	return 0;
+}
+
+int32_t
 initColor ( void )
 {
         if ( has_colors () )
@@ -58,7 +94,7 @@ initColor ( void )
         return 0;
 }
 
-extern void
+void
 exitNc ( void )
 {
         erase ();
@@ -66,7 +102,7 @@ exitNc ( void )
         endwin ();
 }
 
-extern void
+void
 errMsg ( int32_t code, const char* format, ... )
 {
 	va_list set;
@@ -78,7 +114,7 @@ errMsg ( int32_t code, const char* format, ... )
 	exit ( code );
 }
 
-extern void
+void
 initNc ( void )
 {		
         initscr ();
