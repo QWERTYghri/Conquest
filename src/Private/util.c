@@ -139,6 +139,7 @@ initNc ( void )
         setlocale ( LC_ALL, "" );
 
         initscr ();
+        
         if ( LINES < MIN_LINES && COLS < MIN_COLS )
 		errMsg ( EXIT_FAILURE, WIN_SIZE );
 	 
