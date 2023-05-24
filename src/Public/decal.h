@@ -13,16 +13,16 @@
 
 
 /* WINDOW BUFFER SIZES */
-#define GAME_WINDOW_Y ( LINES - 10 )
-#define GAME_WINDOW_X ( COLS - 10 )
+#define GAME_WINDOW_Y	( LINES - 10 )
+#define GAME_WINDOW_X	( COLS - 10 )
 
-#define ABOUT_WINDOW_Y ( GAME_WINDOW_Y - 30 )
-#define ABOUT_WINDOW_X ( GAME_WINDOW_X - 30 )
+#define ABOUT_WINDOW_Y	( GAME_WINDOW_Y - 30 )
+#define ABOUT_WINDOW_X	( GAME_WINDOW_X - 30 )
 
-#define DIFF_WINDOW_Y ( GAME_WINDOW_Y - 15 )
-#define DIFF_WINDOW_X ( GAME_WINDOW_X - 120 )
+#define DIFF_WINDOW_Y	( GAME_WINDOW_Y - 15 )
+#define DIFF_WINDOW_X	( GAME_WINDOW_X - 120 )
 
-#define PLAY_WINDOW_X ( 10 )
+#define PLAY_WINDOW_X	( 10 )
 
 /**********************************************************************/
 
