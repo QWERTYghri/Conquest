@@ -6,10 +6,12 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+/* lib */
 #include <stdint.h>
 #include <ncurses.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 
 enum {
         ColorBlack,

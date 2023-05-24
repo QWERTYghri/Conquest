@@ -29,6 +29,7 @@
 
 /* Global Vars */
 WINDOW* fWin, *bWin;
+GameStat* curGame;
 
 char* title[TITLE_ARR] =
 { 
@@ -150,14 +151,19 @@ levelSetUp ( int32_t lvl )
 static void
 playGame ( void )
 {
-	WINDOW* optPlay = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, 0, 0 );
-
+	WINDOW* optPlay = newwin ( GAME_WINDOW_Y, OPTION_X , POS_PLAY, POS_PLAY );
+	WINDOW* gameWin	= newwin ( GAME_WINDOW_Y, GAME_WINDOW_X - OPTION_X, POS_PLAY, OPTION_X + 5 );
 	werase ( fWin );
 	
 	box ( optPlay, 0, 0 );
+	box ( gameWin, 0, 0 );
+	
+	wbkgd ( gameWin, COLOR_PAIR ( ColorGrey ) );
 	wbkgd ( optPlay, COLOR_PAIR ( ColorGrey ) );
+	
 	wrefresh ( fWin );
 	wrefresh ( optPlay );
+	wrefresh ( gameWin );
 	
 	delwin ( optPlay );
 	getch ();

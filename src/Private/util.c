@@ -3,12 +3,14 @@
  *
  */
 
+/* lib */
 #include <stdint.h>
 #include <ncurses.h>
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
 
+/* local */
 #include "../Public/util.h"
 #include "../Public/decal.h"
 
@@ -16,6 +18,7 @@
 int32_t
 xCenterStr ( WINDOW* win, char* str )
 {
+	#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
         int32_t yLen, xLen;
         getmaxyx ( win, yLen, xLen );
 

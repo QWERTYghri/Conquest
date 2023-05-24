@@ -6,6 +6,7 @@
 #ifndef DECAL_H
 #define DECAL_H
 
+typedef int _;
 /* Macros */
 
 
@@ -22,7 +23,8 @@
 #define DIFF_WINDOW_Y	( GAME_WINDOW_Y - 15 )
 #define DIFF_WINDOW_X	( GAME_WINDOW_X - 120 )
 
-#define PLAY_WINDOW_X	( 10 )
+#define OPTION_X	( 30 )
+#define POS_PLAY	( 5 )
 
 /**********************************************************************/
 
@@ -48,7 +50,7 @@
 #define MIN_COLS	( 190 )
 
 #define MAX_COUNTRY	( 5 )
-
+#define NAME_MAX	( 50 )
 /**********************************************************************/
 
 /* Text Info and Sets */
@@ -58,7 +60,7 @@
 #define UKN_ARG		( "Error: Unknown argument\n\nArgs:\n\t--help\n\t--version\n" )
 #define NO_ARG		( "Error: No argument or unformatted argument\n" )
 #define ERR_COLOR	( "Error: Colors are not supported by terminal\nExitting...\n" )
-#define WIN_SIZE	( "Error: LINES and COLS are less than the requirement ( 62, 239 ). Can't use other screens because of the ASCII art\n" )
+#define WIN_SIZE	( "Error: LINES and COLS are less than the requirement ( 62, 239 ). Can't use other screens because of the ASCII art. Try to lower terminal font\n" )
 #define THANK_YOU	( "Thanks for playing, I need to stop doing projects like these and start doing like ones that I can actually get something in return.\n\n * Visit my Roblox, \"mrgameybean17\"\n" )
 #define MENU_FAIL	( "Possible failure in menuHandler function\n" )
 

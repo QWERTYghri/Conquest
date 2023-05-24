@@ -1,7 +1,8 @@
 /*
  * Country.h
  *
- * File describing the countries in the game.
+ * File describing the countries in the game and initializing
+ * different objects.
  */
 
 #ifndef GAME_H
@@ -26,7 +27,8 @@ typedef struct
 
         struct Trade
         {
-                char*           tradeCountries;
+                char*           tradeCountries[MAX_COUNTRY];
+        	
         } Trade;
 
         struct War
@@ -43,7 +45,14 @@ typedef struct
 
 typedef struct
 {
+	char playerName[NAME_MAX];
 	Country* countries[MAX_COUNTRY];
+	
+	int32_t difficulty,
+		score;
 } GameStat;
+
+Country*	initCountry ();
+GameStat*	initGame ();
 
 #endif /* END */
