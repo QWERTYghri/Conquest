@@ -7,7 +7,7 @@
 CC	 := gcc
 CFLAGS	 := -std=c99 -pedantic -Wall -Wextra -pipe
 CPPFLAGS := -D_POSIX_C_SOURCE=200809L
-LIB	 := -lncurses
+LIB	 := -lncurses -lpthread
 
 #Optimization flag
 OFLAG	 := -g -O0

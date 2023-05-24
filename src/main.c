@@ -15,6 +15,7 @@
 /* Posix */
 #include <unistd.h>
 #include <getopt.h>
+#include <pthread.h>
 
 /* Curses */
 #include <ncurses.h>
@@ -30,6 +31,8 @@
 /* Global Vars */
 WINDOW* fWin, *bWin;
 GameStat* curGame;
+
+WINDOW* optPlay, *gameWin;
 
 char* title[TITLE_ARR] =
 { 
@@ -148,11 +151,28 @@ levelSetUp ( int32_t lvl )
 
 }
 
+static void*
+thInput ( void* arg )
+{
+	char* optList[2] =
+	{
+		"test",
+		"military"
+	}
+	
+	int32_t input;
+	
+	return NULL;
+}
+
 static void
 playGame ( void )
 {
-	WINDOW* optPlay = newwin ( GAME_WINDOW_Y, OPTION_X , POS_PLAY, POS_PLAY );
-	WINDOW* gameWin	= newwin ( GAME_WINDOW_Y, GAME_WINDOW_X - OPTION_X, POS_PLAY, OPTION_X + 5 );
+	optPlay = newwin ( GAME_WINDOW_Y, OPTION_X , POS_PLAY, POS_PLAY );
+	gameWin	= newwin ( GAME_WINDOW_Y, GAME_WINDOW_X - OPTION_X, POS_PLAY, OPTION_X + 5 );
+	
+	pthread_t inputObj;
+	
 	werase ( fWin );
 	
 	box ( optPlay, 0, 0 );
@@ -165,8 +185,11 @@ playGame ( void )
 	wrefresh ( optPlay );
 	wrefresh ( gameWin );
 	
+	pthread_create ( &inputObj, NULL, thInput, NULL );
+	
+	pthread_exit ( NULL );
 	delwin ( optPlay );
-	getch ();
+	delwin ( gameWin );
 }
 
 /* Sets up windows and levels to play game */
