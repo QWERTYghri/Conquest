@@ -33,7 +33,9 @@ typedef int _;
 #define MENU_Y_OFFSET   ( TITLE_Y_OFFSET + 10 )
 #define NUKE_Y_OFFSET   ( 25 )
 #define TANK_Y_OFFSET	( 2 )
+#define STAR_Y_OFFSET	( 2 )
 
+#define GAME_Y_OFFSET	( 15 )
 
 /**********************************************************************/
 
@@ -42,6 +44,7 @@ typedef int _;
 #define TITLE_ARR       ( 9 )
 #define NUKE_ARR        ( 11 )
 #define TANK_ARR	( 7 )
+#define STAR_ARR	( 9 )
 
 #define LVL_MAX		( 4 )
 #define OPT_ARR         ( 3 )
@@ -51,6 +54,8 @@ typedef int _;
 
 #define MAX_COUNTRY	( 5 )
 #define NAME_MAX	( 50 )
+
+#define GAME_OPT	( 8 )
 /**********************************************************************/
 
 /* Text Info and Sets */

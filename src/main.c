@@ -73,6 +73,19 @@ char* tank[TANK_ARR] =
 	"Choose a level difficulty"
 };
 
+char* star[STAR_ARR] =
+{
+".",
+",O,",
+",OOO,",
+"\'oooooOOOOOooooo\'",
+"`OOOOOOOOOOO`",
+"`OOOOOOO`",
+"OOOO\'OOOO",
+"OOO\'   \'OOO",
+"O\'         \'O"
+};
+
 /* Functions */
 
 /* Handles argument inputs */
@@ -154,10 +167,22 @@ levelSetUp ( int32_t lvl )
 static void*
 thInput ( void* arg )
 {
-	char* optList[2] =
+	char* optList[GAME_OPT] =
 	{
-		"test",
-		"military"
+		"Country",
+		"Diplomacy",
+		"Economy",
+		"Technology",
+		"Military",
+		"View Other Countries",
+		"Status",
+		"Exit Game"
+	};
+	
+	int32_t retVal = 0;
+	while ( 1 )
+	{
+		menuOption ( optPlay, GAME_Y_OFFSET, optList, GAME_OPT );
 	}
 	
 	int32_t input;
@@ -178,6 +203,8 @@ playGame ( void )
 	box ( optPlay, 0, 0 );
 	box ( gameWin, 0, 0 );
 	
+	printArt ( optPlay, STAR_Y_OFFSET, star, STAR_ARR );
+	
 	wbkgd ( gameWin, COLOR_PAIR ( ColorGrey ) );
 	wbkgd ( optPlay, COLOR_PAIR ( ColorGrey ) );
 	
@@ -185,9 +212,9 @@ playGame ( void )
 	wrefresh ( optPlay );
 	wrefresh ( gameWin );
 	
-	pthread_create ( &inputObj, NULL, thInput, NULL );
+	pthread_create ( &inputObj, NULL, thInput, &optPlay );
+	pthread_join ( inputObj, NULL );
 	
-	pthread_exit ( NULL );
 	delwin ( optPlay );
 	delwin ( gameWin );
 }
