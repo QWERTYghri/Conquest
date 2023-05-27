@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <locale.h>
-#include <string.h>
 #include <signal.h>
 
 /* Posix */
@@ -134,7 +133,7 @@ menuHandler ()
                 "About",
                 "End Game"
         };
-                        
+        
 	return menuOption ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR );
 }
 
@@ -142,6 +141,8 @@ menuHandler ()
 static void
 baseSetUp ( void )
 {
+	char name[NAME_MAX];
+
         fWin = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, centerPos ( LINES, GAME_WINDOW_Y ), centerPos ( COLS, GAME_WINDOW_X ) );
         bWin = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, centerPos ( LINES, GAME_WINDOW_Y ) + 1, centerPos ( COLS, GAME_WINDOW_X ) + 1 );
 
@@ -152,16 +153,20 @@ baseSetUp ( void )
         box ( fWin, 0, 0 );
 	printArt ( fWin, TITLE_Y_OFFSET, title, TITLE_ARR );
 	printArt ( fWin, NUKE_Y_OFFSET, nuke, NUKE_ARR );
+	
+	getlogin_r ( name, NAME_MAX );
+	curGame = initGame ( name, 0 );
 
         refresh ();
         wrefresh ( bWin );
         wrefresh ( fWin );
 }
 
-static void
-levelSetUp ( int32_t lvl )
+static void*
+valueUpdate ( void* arg )
 {
-
+	
+	return NULL;
 }
 
 static void*
@@ -178,14 +183,12 @@ thInput ( void* arg )
 		"Status",
 		"Exit Game"
 	};
-	
 	int32_t retVal = 0;
+	
 	while ( 1 )
 	{
-		menuOption ( optPlay, GAME_Y_OFFSET, optList, GAME_OPT );
+		retVal = menuOption ( optPlay, GAME_Y_OFFSET, optList, GAME_OPT );
 	}
-	
-	int32_t input;
 	
 	return NULL;
 }
@@ -196,10 +199,10 @@ playGame ( void )
 	optPlay = newwin ( GAME_WINDOW_Y, OPTION_X , POS_PLAY, POS_PLAY );
 	gameWin	= newwin ( GAME_WINDOW_Y, GAME_WINDOW_X - OPTION_X, POS_PLAY, OPTION_X + 5 );
 	
-	pthread_t inputObj;
+	pthread_t	inputObj,
+			valUpdate;
 	
 	werase ( fWin );
-	
 	box ( optPlay, 0, 0 );
 	box ( gameWin, 0, 0 );
 	
@@ -212,7 +215,9 @@ playGame ( void )
 	wrefresh ( optPlay );
 	wrefresh ( gameWin );
 	
-	pthread_create ( &inputObj, NULL, thInput, &optPlay );
+	pthread_create ( &inputObj, NULL, thInput, NULL );
+	pthread_create ( &valUpdate, NULL, valueUpdate, NULL );
+	pthread_join ( inputObj, NULL );
 	pthread_join ( inputObj, NULL );
 	
 	delwin ( optPlay );
@@ -221,7 +226,7 @@ playGame ( void )
 
 /* Sets up windows and levels to play game */
 static int32_t
-playLvl ()
+levelSet ( void )
 {
 	char* optName[LVL_MAX] =
 	{
@@ -232,32 +237,32 @@ playLvl ()
 	};
 	
 	int32_t retVal = 0;
-	WINDOW* playWin	= newwin ( DIFF_WINDOW_Y, DIFF_WINDOW_X, centerPos ( LINES, DIFF_WINDOW_Y ), centerPos ( COLS, DIFF_WINDOW_X ) );
+	WINDOW* levelWin = newwin ( DIFF_WINDOW_Y, DIFF_WINDOW_X, centerPos ( LINES, DIFF_WINDOW_Y ), centerPos ( COLS, DIFF_WINDOW_X ) );
 	
 	werase ( fWin );
- 	wbkgd ( playWin, COLOR_PAIR ( ColorGrey ) );
-	box ( playWin, 0, 0 );
+ 	wbkgd ( levelWin, COLOR_PAIR ( ColorGrey ) );
+	box ( levelWin, 0, 0 );
 	box ( fWin, 0, 0 );
 	
-	printArt ( playWin, 2, tank, TANK_ARR );
+	printArt ( levelWin, 2, tank, TANK_ARR );
 	
 	wrefresh ( fWin );
-	wrefresh ( playWin );	
+	wrefresh ( levelWin );	
 	
-	retVal = menuOption ( playWin, ( DIFF_WINDOW_Y / 2 ) - ( LVL_MAX - 1 ), optName, LVL_MAX );
+	retVal = menuOption ( levelWin, ( DIFF_WINDOW_Y / 2 ) - ( LVL_MAX - 1 ), optName, LVL_MAX );
 	if ( retVal == 3 )
-		return 1;
+		return EXIT_RET; /* exit to return back to the menu */
 		
-	levelSetUp ( retVal );
+	curGame -> difficulty = retVal;
 	playGame ();
-	delwin ( playWin );
+	delwin ( levelWin );
 	
         return 0;
 }
 
 /* Display an about msg */
 static int32_t
-aboutMsg ()
+aboutMsg ( void )
 {
 	WINDOW* aboutWin = newwin ( ABOUT_WINDOW_Y, ABOUT_WINDOW_X, centerPos ( LINES, ABOUT_WINDOW_Y ), centerPos ( COLS, ABOUT_WINDOW_X ) );
 	int32_t ret;
@@ -273,14 +278,15 @@ aboutMsg ()
         wrefresh ( aboutWin );
         delwin ( aboutWin );
         
-        while ( ( ret = getch () ) != 'e' && ret != EOF );
+        /* ew */
+        while ( ( ret = getch () ) != 13 && ret != EOF && ret != KEY_ENTER && ret != 'e' );
         
-        return 1;
+        return EXIT_RET;
 }
 
 /* Exit the game */
 static int32_t
-endGame ()
+endGame ( void )
 {
 	delwin ( fWin );
         delwin ( bWin );
@@ -294,13 +300,11 @@ endGame ()
 static void
 game ( void )
 {
-	int32_t ( *optList[OPT_ARR] ) ( void ) = { playLvl, aboutMsg, endGame };
+	int32_t ( *optList[OPT_ARR] ) ( void ) = { levelSet, aboutMsg, endGame };
 _reset:
         baseSetUp ();
-        if ( optList[menuHandler ()] () == 1 )
+        if ( optList[menuHandler ()] () == EXIT_RET )
         	goto _reset;
-        
-        getch ();
 
         delwin ( fWin );
         delwin ( bWin );

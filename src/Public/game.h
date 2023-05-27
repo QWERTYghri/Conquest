@@ -53,6 +53,6 @@ typedef struct
 } GameStat;
 
 Country*	initCountry ();
-GameStat*	initGame ();
+GameStat*	initGame ( char* playerName, int32_t difficulty );
 
 #endif /* END */

@@ -78,6 +78,8 @@ menuOption ( WINDOW* obj,
 				
 				optInc--;
 				break;
+			case KEY_ENTER:
+			case 13:
 			case 'e':
 				return optInc;
 		}
