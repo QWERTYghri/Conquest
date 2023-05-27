@@ -85,6 +85,22 @@ char* star[STAR_ARR] =
 "O\'         \'O"
 };
 
+char* floppy[FLOPPY_ARR] =
+{
+	"==================================",
+	" _________________",
+	"|# :           : #|",
+	"|  : Conquest  :  |",
+	"|  :           :  |",
+	"|  : 1981: 45  :  |",
+	"|  :___________:  |",
+	"|     _________   |",
+	"|    | __      |  |",
+	"|    ||  |     |  |",
+	"\\____||__|_____|__|",
+	"=================================="
+};
+
 /* Functions */
 
 /* Handles argument inputs */
@@ -130,6 +146,7 @@ menuHandler ()
         char* optNames[OPT_ARR] =
         {
                 "Play Game",
+                "Load Game",
                 "About",
                 "End Game"
         };
@@ -166,6 +183,7 @@ static void*
 valueUpdate ( void* arg )
 {
 	
+	
 	return NULL;
 }
 
@@ -187,6 +205,7 @@ thInput ( void* arg )
 	
 	while ( 1 )
 	{
+		printf ( "%d\n", curGame -> countries[1] -> General.money );
 		retVal = menuOption ( optPlay, GAME_Y_OFFSET, optList, GAME_OPT );
 	}
 	
@@ -260,6 +279,36 @@ levelSet ( void )
         return 0;
 }
 
+static int32_t
+loadGame ( void )
+{
+	WINDOW* loadGame = newwin ( DIFF_WINDOW_Y, DIFF_WINDOW_X, centerPos ( LINES, DIFF_WINDOW_Y ), centerPos ( COLS, DIFF_WINDOW_X ) );
+	char	buf[10];
+	
+	werase ( fWin );
+	wbkgd ( loadGame, COLOR_PAIR ( ColorGrey ) );
+	printArt ( loadGame, 2, floppy, FLOPPY_ARR );
+	
+	box ( loadGame, 0, 0 );
+	box ( fWin, 0, 0 );
+	
+	wrefresh ( fWin );
+	wrefresh ( loadGame );
+
+	/* Input string for save file */
+	echo ();
+	nl ();
+	
+	mvwgetnstr ( loadGame, 15, 15, buf, 10  ); // temp
+	
+	nonl ();
+	noecho ();
+
+	getch ();
+	
+	return 1;
+}
+
 /* Display an about msg */
 static int32_t
 aboutMsg ( void )
@@ -294,13 +343,13 @@ endGame ( void )
         exitNc ();
         errMsg ( EXIT_SUCCESS, THANK_YOU );
         
-        return 2;
+        return 3;
 }
 
 static void
 game ( void )
 {
-	int32_t ( *optList[OPT_ARR] ) ( void ) = { levelSet, aboutMsg, endGame };
+	int32_t ( *optList[OPT_ARR] ) ( void ) = { levelSet, loadGame, aboutMsg, endGame };
 _reset:
         baseSetUp ();
         if ( optList[menuHandler ()] () == EXIT_RET )

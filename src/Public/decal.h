@@ -48,9 +48,10 @@ typedef int _;
 #define NUKE_ARR        ( 11 )
 #define TANK_ARR	( 7 )
 #define STAR_ARR	( 9 )
+#define FLOPPY_ARR	( 12 )
 
 #define LVL_MAX		( 4 )
-#define OPT_ARR         ( 3 )
+#define OPT_ARR         ( 4 )
 
 #define MIN_LINES	( 50 )
 #define MIN_COLS	( 190 )
@@ -76,9 +77,11 @@ typedef int _;
 			  "You can control where to place troops in the area and also work on trade between other countries. Use the cursor\n\tto click on troops to move them to a point in the map " \
 			  "Use the arrow keys and the enter key to navigate the screen." )
 			  
-#define THANK_YOU	( "Thanks for playing, I need to stop doing projects like these and start doing like ones that I can actually get something in return.\n\n * Visit my Roblox, \"mrgameybean17\"\n" )
+#define THANK_YOU	( "Thanks for playing, I need to stop doing projects like these and start doing like ones that I can actually get something in return.\n\n * Visit my Roblox, "\
+			  "\"mrgameybean17\"\n\n\nAlso I'm just realizing I forgot to credit the art in here, but eh it doesn't matter, I think...\n" )
+
 /**********************************************************************/
 
 /* Other */
-#define EXIT_RET	( 1 )
+#define EXIT_RET	( 2 )
 #endif /* End file */
