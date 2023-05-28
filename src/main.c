@@ -376,10 +376,10 @@ static void
 game ( void )
 {
 	int32_t ( *optList[OPT_ARR] ) ( void ) = { levelMenu, loadMenu, aboutMenu, endGame };
-_reset:
-        baseSetUp ();
-        if ( optList[menuHandler ()] () == EXIT_RET )
-        	goto _reset;
+ 	
+        do {
+                baseSetUp ();
+        } while ( optList[menuHandler ()] () == EXIT_RET );
 
         delwin ( fWin );
         delwin ( bWin );
