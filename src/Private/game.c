@@ -77,7 +77,11 @@ initGame ( char* playerName, int32_t difficulty )
 
 GameState* loadGame ( char* fileName )
 {
-	return NULL;
+	GameState* curGame = calloc ( 1, sizeof ( GameState ) );
+	
+	
+	
+	return curGame;
 }
 void saveGame ( GameState* obj )
 {

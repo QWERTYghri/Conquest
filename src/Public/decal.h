@@ -39,7 +39,7 @@ typedef int _;
 #define STAR_Y_OFFSET	( 2 )
 
 #define GAME_Y_OFFSET	( 15 )
-#define GETSTR_Y_OFFSET	( 15 )
+#define GETSTR_Y_OFFSET	( 17 )
 /**********************************************************************/
 
 
@@ -48,7 +48,7 @@ typedef int _;
 #define NUKE_ARR        ( 11 )
 #define TANK_ARR	( 7 )
 #define STAR_ARR	( 9 )
-#define FLOPPY_ARR	( 12 )
+#define FLOPPY_ARR	( 13 )
 
 #define LVL_MAX		( 4 )
 #define OPT_ARR         ( 4 )
@@ -59,7 +59,7 @@ typedef int _;
 #define MAX_COUNTRY	( 5 )
 #define NAME_MAX	( 50 )
 
-#define GAME_OPT	( 8 )
+#define GAME_OPT	( 9 )
 #define MAX_STRING	( 40 )
 /**********************************************************************/
 

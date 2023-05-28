@@ -1,6 +1,7 @@
 /*
  * Main Program File
  *
+ * btw if your kinda pedantic, don't mind the goto statements, and possible memory leaks...
  * @QWERTYghri
 */
 
@@ -98,7 +99,8 @@ char* floppy[FLOPPY_ARR] =
 	"|    | __      |  |",
 	"|    ||  |     |  |",
 	"\\____||__|_____|__|",
-	"=================================="
+	"==================================",
+	"Enter the path of a .scon file"
 };
 
 /* Functions */
@@ -202,6 +204,7 @@ thInput ( void* arg )
 		"Military",
 		"View Other Countries",
 		"Status",
+		"Save Game",
 		"Exit Game"
 	};
 	int32_t retVal = 0;
@@ -288,38 +291,50 @@ levelMenu ( void )
 static int32_t
 loadMenu ( void )
 {
-	WINDOW* loadGame = newwin ( DIFF_WINDOW_Y, DIFF_WINDOW_X, centerPos ( LINES, DIFF_WINDOW_Y ), centerPos ( COLS, DIFF_WINDOW_X ) );
+	WINDOW* loadWin = newwin ( DIFF_WINDOW_Y, DIFF_WINDOW_X, centerPos ( LINES, DIFF_WINDOW_Y ), centerPos ( COLS, DIFF_WINDOW_X ) );
 	char	buf[MAX_STRING];
-	
+
+/* I don't like this but I just want it to be easy */
+_error:
 	werase ( fWin );
-	wbkgd ( loadGame, COLOR_PAIR ( ColorGrey ) );
-	printArt ( loadGame, 2, floppy, FLOPPY_ARR );
+	werase ( loadWin );
+	wbkgd ( loadWin, COLOR_PAIR ( ColorGrey ) );
+	printArt ( loadWin, 2, floppy, FLOPPY_ARR );
 	
-	box ( loadGame, 0, 0 );
+	box ( loadWin, 0, 0 );
 	box ( fWin, 0, 0 );
 	
 	wrefresh ( fWin );
-	wrefresh ( loadGame );
+	wrefresh ( loadWin );
 
 	/* Input string for save file */
 	echo ();
 	nl ();
-_error:	
-	mvwgetnstr ( loadGame, GETSTR_Y_OFFSET, xCenterStrBuf ( loadGame, MAX_STRING ), buf, MAX_STRING  ); // temp
+	keypad ( stdscr, false );
+
+	for ( int64_t i = 0; i < MAX_STRING; i++ )
+		buf[i] = 0;
+
+	mvwgetnstr ( loadWin, GETSTR_Y_OFFSET, xCenterStrBuf ( loadWin, MAX_STRING ), buf, MAX_STRING  ); // temp
 	buf[strcspn ( buf, "\r\n" )] = 0; /* Just being paranoid */
 	
-	if ( access ( buf, F_OK ) != 0 ) {
+	if ( access ( buf, F_OK ) == 0 ) {
+		if ( ( curGame = loadGame ( buf ) ) == NULL )
+			goto _error;
+		playGame ();
 		
-	} else {
-	
+		return 0;
 	}
+	else
+		goto _error;
 	
+	keypad ( stdscr, true );
 	nonl ();
 	noecho ();
-
-	getch ();
 	
-	return 1;
+	delwin ( loadWin );
+	
+	return 0;
 }
 
 /* Display an about msg */
