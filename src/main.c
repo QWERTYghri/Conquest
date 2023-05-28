@@ -100,7 +100,7 @@ char* floppy[FLOPPY_ARR] =
 	"|    ||  |     |  |",
 	"\\____||__|_____|__|",
 	"==================================",
-	"Enter the path of a .scon file"
+	"Enter the path of a .scon file",
 };
 
 /* Functions */
@@ -310,7 +310,6 @@ _error:
 	/* Input string for save file */
 	echo ();
 	nl ();
-	keypad ( stdscr, false );
 
 	for ( int64_t i = 0; i < MAX_STRING; i++ )
 		buf[i] = 0;
@@ -328,7 +327,6 @@ _error:
 	else
 		goto _error;
 	
-	keypad ( stdscr, true );
 	nonl ();
 	noecho ();
 	
@@ -390,9 +388,8 @@ _reset:
 int
 main ( int argc, char** argv )
 {
-        initNc ();
-        
         readInput ( argc, argv );
+        initNc ();
         game ();
         
         exitNc ();
