@@ -51,18 +51,18 @@ typedef struct
 Country*
 initCountry ()
 {
-	Country* cntObj = calloc ( 1, sizeof ( GameStat ) );
+	Country* cntObj = calloc ( 1, sizeof ( Country ) );
 
 	return cntObj;
 }
 
-GameStat*
+GameState*
 initGame ( char* playerName, int32_t difficulty )
 {
-	GameStat* curGame = calloc ( 1, sizeof ( GameStat ) );
+	GameState* curGame = calloc ( 1, sizeof ( GameState ) );
 	
 	if ( playerName == NULL )
-		errMsg ( EXIT_FAILURE, "Username could not be found" );
+		errMsg ( EXIT_FAILURE, USERN_FAIL );
 	
 	snprintf ( curGame -> playerName, NAME_MAX, "%s", playerName );
 	curGame -> difficulty = difficulty;
@@ -72,4 +72,14 @@ initGame ( char* playerName, int32_t difficulty )
 		curGame -> countries[i] = initCountry ();
 	
 	return curGame;
+}
+
+
+GameState* loadGame ( char* fileName )
+{
+	return NULL;
+}
+void saveGame ( GameState* obj )
+{
+	
 }

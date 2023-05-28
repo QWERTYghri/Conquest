@@ -25,9 +25,19 @@ xCenterStr ( WINDOW* win, char* str )
         return ( xLen / 2 ) - ( strlen ( str ) / 2 );
 }
 
+int32_t
+xCenterStrBuf ( WINDOW* win, int64_t buffer )
+{
+	#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+        int32_t yLen, xLen;
+        getmaxyx ( win, yLen, xLen );	
+        
+        return ( xLen / 2 ) - ( buffer / 2  );
+}
+
 /* wtf inline not inline?*/
 int32_t
-centerPos ( int32_t baseVal, int32_t size )
+centerPos ( int64_t baseVal, int64_t size )
 {
 	return ( baseVal - size ) / 2;
 }
@@ -55,7 +65,7 @@ int32_t
 menuOption ( WINDOW* obj,
 	     int32_t yPos,
 	     char* optName[],
-	     int32_t maxName )
+	     int64_t maxName )
 {
 	int32_t		optInc = 0,
 			input = 0;
@@ -90,7 +100,7 @@ menuOption ( WINDOW* obj,
 }
 
 void
-printArt ( WINDOW* obj, int32_t yPos, char* str[], int32_t strMax )
+printArt ( WINDOW* obj, int32_t yPos, char* str[], int64_t strMax )
 {
 	int32_t yInc = 0;
 	
@@ -142,7 +152,6 @@ void
 initNc ( void )
 {		
         setlocale ( LC_ALL, "" );
-
         initscr ();
         
         if ( LINES < MIN_LINES && COLS < MIN_COLS )

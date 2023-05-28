@@ -29,7 +29,7 @@
 
 /* Global Vars */
 WINDOW* fWin, *bWin;
-GameStat* curGame;
+GameState* curGame;
 
 WINDOW* optPlay, *gameWin;
 
@@ -179,6 +179,9 @@ baseSetUp ( void )
         wrefresh ( fWin );
 }
 
+/* Actual game part */
+/*************************************************************************/
+
 static void*
 valueUpdate ( void* arg )
 {
@@ -243,9 +246,12 @@ playGame ( void )
 	delwin ( gameWin );
 }
 
+/* Menu Handler functions */
+/*************************************************************************/
+
 /* Sets up windows and levels to play game */
 static int32_t
-levelSet ( void )
+levelMenu ( void )
 {
 	char* optName[LVL_MAX] =
 	{
@@ -280,10 +286,10 @@ levelSet ( void )
 }
 
 static int32_t
-loadGame ( void )
+loadMenu ( void )
 {
 	WINDOW* loadGame = newwin ( DIFF_WINDOW_Y, DIFF_WINDOW_X, centerPos ( LINES, DIFF_WINDOW_Y ), centerPos ( COLS, DIFF_WINDOW_X ) );
-	char	buf[10];
+	char	buf[MAX_STRING];
 	
 	werase ( fWin );
 	wbkgd ( loadGame, COLOR_PAIR ( ColorGrey ) );
@@ -298,8 +304,15 @@ loadGame ( void )
 	/* Input string for save file */
 	echo ();
 	nl ();
+_error:	
+	mvwgetnstr ( loadGame, GETSTR_Y_OFFSET, xCenterStrBuf ( loadGame, MAX_STRING ), buf, MAX_STRING  ); // temp
+	buf[strcspn ( buf, "\r\n" )] = 0; /* Just being paranoid */
 	
-	mvwgetnstr ( loadGame, 15, 15, buf, 10  ); // temp
+	if ( access ( buf, F_OK ) != 0 ) {
+		
+	} else {
+	
+	}
 	
 	nonl ();
 	noecho ();
@@ -311,7 +324,7 @@ loadGame ( void )
 
 /* Display an about msg */
 static int32_t
-aboutMsg ( void )
+aboutMenu ( void )
 {
 	WINDOW* aboutWin = newwin ( ABOUT_WINDOW_Y, ABOUT_WINDOW_X, centerPos ( LINES, ABOUT_WINDOW_Y ), centerPos ( COLS, ABOUT_WINDOW_X ) );
 	int32_t ret;
@@ -349,7 +362,7 @@ endGame ( void )
 static void
 game ( void )
 {
-	int32_t ( *optList[OPT_ARR] ) ( void ) = { levelSet, loadGame, aboutMsg, endGame };
+	int32_t ( *optList[OPT_ARR] ) ( void ) = { levelMenu, loadMenu, aboutMenu, endGame };
 _reset:
         baseSetUp ();
         if ( optList[menuHandler ()] () == EXIT_RET )

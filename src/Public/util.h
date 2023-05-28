@@ -29,7 +29,8 @@ enum {
 
 /* Used to calculate positions to center out a strings or windows*/
 int32_t xCenterStr ( WINDOW* win, char* str );
-int32_t centerPos ( int32_t baseVal, int32_t size );
+int32_t xCenterStrBuf ( WINDOW* win, int64_t buffer );
+int32_t centerPos ( int64_t baseVal, int64_t size );
 
 /* Used in menuhandler to switch between highlighting different choices */
 void printMenu ( WINDOW* win,
@@ -41,10 +42,10 @@ void printMenu ( WINDOW* win,
 int32_t menuOption ( WINDOW* obj,
 		     int32_t yPos,
 		     char* optName[],
-		     int32_t maxName );
+		     int64_t maxName );
 
 /* Misc for drawing ascii art */
-void printArt ( WINDOW* obj, int32_t yPos, char* str[], int32_t strMax );
+void printArt ( WINDOW* obj, int32_t yPos, char* str[], int64_t strMax );
 
 /* Functions used in setting up ncurses and errors */
 int32_t initColor ( void );

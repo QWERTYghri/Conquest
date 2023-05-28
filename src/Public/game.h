@@ -50,9 +50,12 @@ typedef struct
 	
 	int32_t difficulty,
 		score;
-} GameStat;
+} GameState;
 
 Country*	initCountry ();
-GameStat*	initGame ( char* playerName, int32_t difficulty );
+GameState*	initGame ( char* playerName, int32_t difficulty );
+
+GameState*	loadGame ( char* fileName );
+void		saveGame ( GameState* obj );
 
 #endif /* END */

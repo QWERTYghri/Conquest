@@ -39,7 +39,7 @@ typedef int _;
 #define STAR_Y_OFFSET	( 2 )
 
 #define GAME_Y_OFFSET	( 15 )
-
+#define GETSTR_Y_OFFSET	( 15 )
 /**********************************************************************/
 
 
@@ -60,6 +60,7 @@ typedef int _;
 #define NAME_MAX	( 50 )
 
 #define GAME_OPT	( 8 )
+#define MAX_STRING	( 40 )
 /**********************************************************************/
 
 /* Text Info and Sets */
