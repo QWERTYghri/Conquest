@@ -1,7 +1,7 @@
 /*
  * Main Program File
  *
- * btw if your kinda pedantic, don't mind the goto statements, and possible memory leaks...
+ * btw if your kinda pedantic, don't mind possible memory leaks and weird includes...
  * @QWERTYghri
 */
 
@@ -9,8 +9,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <locale.h>
-#include <signal.h>
 
 /* Posix */
 #include <unistd.h>

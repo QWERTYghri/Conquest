@@ -28,7 +28,6 @@ typedef struct
         struct Trade
         {
                 char*           tradeCountries[MAX_COUNTRY];
-        	
         } Trade;
 
         struct War
