@@ -48,7 +48,7 @@ typedef int _;
 #define NUKE_ARR        ( 11 )
 #define TANK_ARR	( 7 )
 #define STAR_ARR	( 9 )
-#define FLOPPY_ARR	( 13 )
+#define FLOPPY_ARR	( 14 )
 
 #define LVL_MAX		( 4 )
 #define OPT_ARR         ( 4 )
@@ -61,6 +61,8 @@ typedef int _;
 
 #define GAME_OPT	( 9 )
 #define MAX_STRING	( 40 )
+#define FNAME_BUF	( 100 )
+#define CMP_BUF		( 25 )
 /**********************************************************************/
 
 /* Text Info and Sets */
@@ -73,6 +75,8 @@ typedef int _;
 #define WIN_SIZE	( "Error: LINES and COLS are less than the requirement ( 62, 239 ). Can't use other screens because of the ASCII art. Try to lower terminal font\n" )
 #define USERN_FAIL	( "Error: Username could not be found\n" )
 #define MENU_FAIL	( "Error: Possible failure in menuHandler function\n" )
+#define INVALID_FILE	( "Error: Invalid file or file doesn't exist" )
+#define SAVE_FAIL	( "Error: Failed to save file\n" )
 
 #define ABOUTSTR	( "Conquest:\n\tThis is a grand strategy type of game based on the game Hearts of Iron. It's focused on making it towards world domination by invading\n\tother countries. " \
 			  "You can control where to place troops in the area and also work on trade between other countries. Use the cursor\n\tto click on troops to move them to a point in the map " \
@@ -80,6 +84,8 @@ typedef int _;
 			  
 #define THANK_YOU	( "Thanks for playing, I need to stop doing projects like these and start doing like ones that I can actually get something in return.\n\n * Visit my Roblox, "\
 			  "\"mrgameybean17\"\n\n\nAlso I'm just realizing I forgot to credit the art in here, but eh it doesn't matter, I think...\n" )
+
+#define SAVE_EXT	( ".scon" )
 
 /**********************************************************************/
 

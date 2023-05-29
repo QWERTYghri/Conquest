@@ -101,6 +101,7 @@ char* floppy[FLOPPY_ARR] =
 	"\\____||__|_____|__|",
 	"==================================",
 	"Enter the path of a .scon file",
+	"Search the .conquest folder in your home directory"
 };
 
 /* Functions */
@@ -211,7 +212,9 @@ thInput ( void* arg )
 	
 	while ( 1 )
 	{
-		printf ( "%d\n", curGame -> countries[1] -> General.money );
+		if ( curGame -> countries[1] -> General.money  ) {
+			printf ("TEST" );
+		}
 		retVal = menuOption ( optPlay, GAME_Y_OFFSET, optList, GAME_OPT );
 	}
 	
@@ -279,7 +282,7 @@ levelMenu ( void )
 	
 	retVal = menuOption ( levelWin, ( DIFF_WINDOW_Y / 2 ) - ( LVL_MAX - 1 ), optName, LVL_MAX );
 	if ( retVal == 3 )
-		return EXIT_RET; /* exit to return back to the menu */
+		return EXIT_RET; // exit to return back to the menu
 		
 	curGame -> difficulty = retVal;
 	playGame ();
@@ -293,9 +296,9 @@ loadMenu ( void )
 {
 	WINDOW* loadWin = newwin ( DIFF_WINDOW_Y, DIFF_WINDOW_X, centerPos ( LINES, DIFF_WINDOW_Y ), centerPos ( COLS, DIFF_WINDOW_X ) );
 	char	buf[MAX_STRING];
-
-/* I don't like this but I just want it to be easy */
-_error:
+	int32_t retAcc = -2; // Set to not anger the error code
+	
+	do {
 	werase ( fWin );
 	werase ( loadWin );
 	wbkgd ( loadWin, COLOR_PAIR ( ColorGrey ) );
@@ -303,6 +306,10 @@ _error:
 	
 	box ( loadWin, 0, 0 );
 	box ( fWin, 0, 0 );
+
+	if ( retAcc == -1 ) {
+		mvwaddstr ( loadWin, GETSTR_Y_OFFSET + 2, xCenterStr ( loadWin, INVALID_FILE ), INVALID_FILE );
+	}
 	
 	wrefresh ( fWin );
 	wrefresh ( loadWin );
@@ -311,21 +318,19 @@ _error:
 	echo ();
 	nl ();
 
+	/* Zero out buffer */
 	for ( int64_t i = 0; i < MAX_STRING; i++ )
 		buf[i] = 0;
-
-	mvwgetnstr ( loadWin, GETSTR_Y_OFFSET, xCenterStrBuf ( loadWin, MAX_STRING ), buf, MAX_STRING  ); // temp
-	buf[strcspn ( buf, "\r\n" )] = 0; /* Just being paranoid */
-	
-	if ( access ( buf, F_OK ) == 0 ) {
-		if ( ( curGame = loadGame ( buf ) ) == NULL )
-			goto _error;
-		playGame ();
 		
-		return 0;
-	}
-	else
-		goto _error;
+	/* Input to buffer */
+	mvwgetnstr ( loadWin, GETSTR_Y_OFFSET, xCenterStrBuf ( loadWin, MAX_STRING ), buf, MAX_STRING  ); // temp
+	buf[strcspn ( buf, "\r\n" )] = 0; // being paranoid
+	
+	retAcc = fileCheck ( buf );
+	
+	} while ( retAcc != 0 );
+	
+	curGame = loadGame ( buf );
 	
 	nonl ();
 	noecho ();
@@ -353,7 +358,7 @@ aboutMenu ( void )
         wrefresh ( aboutWin );
         delwin ( aboutWin );
         
-        /* ew */
+        // Ew
         while ( ( ret = getch () ) != 13 && ret != EOF && ret != KEY_ENTER && ret != 'e' );
         
         return EXIT_RET;

@@ -10,6 +10,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 /* Local */
 #include "../Public/decal.h"
 #include "../Public/game.h"
@@ -74,16 +78,43 @@ initGame ( char* playerName, int32_t difficulty )
 	return curGame;
 }
 
+int32_t
+fileCheck ( char* fileName )
+{
+	int32_t retAcc = access ( fileName, F_OK );
+	char* ext;
+	
+	if ( retAcc == -1 )
+		return retAcc;
+		
+	/* Pain, using file extension */
+	if ( !( ext = strrchr ( fileName, '.' ) ) )
+		return -1;
+	else
+	{
+		if ( strncmp ( ext, SAVE_EXT, CMP_BUF ) != 0 )
+			return -1;
+	}
+	return 0;
+}
 
 GameState* loadGame ( char* fileName )
 {
 	GameState* curGame = calloc ( 1, sizeof ( GameState ) );
 	
-	
-	
 	return curGame;
 }
 void saveGame ( GameState* obj )
 {
+	FILE *fObj;
+	char fName[FNAME_BUF];
+	
+	
+	snprintf ( fName, FNAME_BUF, "%s.scon", obj -> playerName );
+	
+	if ( ( fObj = fopen ( fName, "w+" ) ) == NULL )
+		errMsg ( EXIT_FAILURE, SAVE_FAIL );
+	
+	fclose ( fObj );
 	
 }
