@@ -86,9 +86,14 @@ typedef int _;
 			  "\"mrgameybean17\"\n\n\nAlso I'm just realizing I forgot to credit the art in here, but eh it doesn't matter, I think...\n" )
 
 #define SAVE_EXT	( ".scon" )
+#define EXIT_MENU	( "EXIT" )
 
 /**********************************************************************/
 
 /* Other */
 #define EXIT_RET	( 2 )
+
+/* Some characters */
+#define ESC		( 27 )
+#define ENTER	( 13 )
 #endif /* End file */

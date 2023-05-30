@@ -98,7 +98,7 @@ char* floppy[FLOPPY_ARR] =
 	"|    ||  |     |  |",
 	"\\____||__|_____|__|",
 	"==================================",
-	"Enter the path of a .scon file",
+	"Enter the path of a .scon file or press esc to return",
 	"Search the .conquest folder in your home directory"
 };
 
@@ -294,7 +294,8 @@ loadMenu ( void )
 {
 	WINDOW* loadWin = newwin ( DIFF_WINDOW_Y, DIFF_WINDOW_X, centerPos ( LINES, DIFF_WINDOW_Y ), centerPos ( COLS, DIFF_WINDOW_X ) );
 	char	buf[MAX_STRING];
-	int32_t retAcc = -2; // Set to not anger the error code
+	int32_t retGetch;
+	int32_t retAcc = -3; // Set to not anger the error code
 	
 	do {
 	werase ( fWin );
@@ -305,9 +306,8 @@ loadMenu ( void )
 	box ( loadWin, 0, 0 );
 	box ( fWin, 0, 0 );
 
-	if ( retAcc == -1 ) {
+	if ( retAcc == -1 )
 		mvwaddstr ( loadWin, GETSTR_Y_OFFSET + 2, xCenterStr ( loadWin, INVALID_FILE ), INVALID_FILE );
-	}
 	
 	wrefresh ( fWin );
 	wrefresh ( loadWin );
@@ -321,13 +321,15 @@ loadMenu ( void )
 		buf[i] = 0;
 		
 	/* Input to buffer */
+	if ( ( retGetch = getch () ) == ESC )
+		return EXIT_RET;
+	
 	mvwgetnstr ( loadWin, GETSTR_Y_OFFSET, xCenterStrBuf ( loadWin, MAX_STRING ), buf, MAX_STRING  ); // temp
 	buf[strcspn ( buf, "\r\n" )] = 0; // being paranoid
 	
 	retAcc = fileCheck ( buf );
 	
 	} while ( retAcc != 0 );
-	
 	curGame = loadGame ( buf );
 	
 	nonl ();
@@ -357,7 +359,7 @@ aboutMenu ( void )
         delwin ( aboutWin );
         
         // Ew
-        while ( ( ret = getch () ) != 13 && ret != EOF && ret != KEY_ENTER && ret != 'e' );
+        while ( ( ret = getch () ) != ENTER && ret != EOF && ret != KEY_ENTER && ret != 'e' );
         
         return EXIT_RET;
 }

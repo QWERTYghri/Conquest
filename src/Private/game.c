@@ -86,7 +86,7 @@ fileCheck ( char* fileName )
 	
 	if ( retAcc == -1 )
 		return retAcc;
-		
+	
 	/* Pain, using file extension */
 	if ( !( ext = strrchr ( fileName, '.' ) ) )
 		return -1;
