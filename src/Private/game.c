@@ -112,6 +112,12 @@ GameState* loadGame ( char* fileName )
 	fclose ( fObj );
 	return curGame;
 }
+
+void saveCountry ( FILE* obj, Country* obj )
+{
+
+}
+
 void saveGame ( GameState* obj, char* saveName )
 {
 	FILE *fObj;
@@ -140,6 +146,7 @@ void saveGame ( GameState* obj, char* saveName )
 	// Serialization
 	
 	
+	fseek ( fObj, 0, SEEK_SET );
 	fclose ( fObj );
 	
 }

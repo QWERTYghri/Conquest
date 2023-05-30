@@ -54,9 +54,12 @@ typedef struct
 Country*	initCountry ();
 GameState*	initGame ( char* playerName, int32_t difficulty );
 
+/* Save/load functions */
 int32_t		fileCheck ( char* fileName );
 
+Country*	loadCountry ( FILE* obj, Country* obj );
 GameState*	loadGame ( char* fileName );
-void		saveGame ( GameState* obj, char* saveName );
 
+void		saveCountry ( FILE* obj, Country* obj );
+void		saveGame ( GameState* obj, char* saveName );
 #endif /* END */
