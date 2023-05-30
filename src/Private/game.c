@@ -100,8 +100,16 @@ fileCheck ( char* fileName )
 
 GameState* loadGame ( char* fileName )
 {
+	FILE* fObj;
 	GameState* curGame = calloc ( 1, sizeof ( GameState ) );
 	
+	if ( ( fObj = fopen ( fileName, "r+" ) ) == NULL )
+		errMsg ( EXIT_FAILURE, SAVE_FAIL );
+	
+	// Deserialization
+	
+	
+	fclose ( fObj );
 	return curGame;
 }
 void saveGame ( GameState* obj, char* saveName )
@@ -129,7 +137,7 @@ void saveGame ( GameState* obj, char* saveName )
 	if ( ( fObj = fopen ( fName, "w+" ) ) == NULL )
 		errMsg ( EXIT_FAILURE, SAVE_FAIL );
 	
-	//Move file to save directory
+	// Serialization
 	
 	
 	fclose ( fObj );
