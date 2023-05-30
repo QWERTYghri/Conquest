@@ -58,6 +58,7 @@ typedef int _;
 
 #define MAX_COUNTRY	( 5 )
 #define NAME_MAX	( 50 )
+#define DIR_MAX		( 100 )
 
 #define GAME_OPT	( 9 )
 #define MAX_STRING	( 40 )
@@ -84,6 +85,8 @@ typedef int _;
 			  
 #define THANK_YOU	( "Thanks for playing, I need to stop doing projects like these and start doing like ones that I can actually get something in return.\n\n * Visit my Roblox, "\
 			  "\"mrgameybean17\"\n\n\nAlso I'm just realizing I forgot to credit the art in here, but eh it doesn't matter, I think...\n" )
+
+#define SAVE_DIR	( "/home/%s/.conquest" )
 
 #define SAVE_EXT	( ".scon" )
 #define EXIT_MENU	( "EXIT" )
