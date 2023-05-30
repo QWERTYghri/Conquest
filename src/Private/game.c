@@ -113,19 +113,24 @@ void saveGame ( GameState* obj, char* saveName )
 	
 	// makes path /home/[USER]/.conquest
 	snprintf ( saveDir, DIR_MAX, SAVE_DIR, obj -> playerName );
+	printf ( "%s", saveDir );
 	
 	// Make directory if not already existing
 	if ( stat ( saveDir, &stObj ) == -1 )
-		mkdir ( saveDir, 0700 );
-	
-	// Make a file name and extension
-	snprintf ( fName, FNAME_BUF, "%s.scon", saveName );
+	{
+		if ( mkdir ( saveDir, 0700 ) != 0 ) {
+			errMsg ( EXIT_FAILURE, SAVE_FAIL );
+		}
+		// Make a file name and extension
+		snprintf ( fName, FNAME_BUF, "%s/%s.scon", saveDir, saveName );
+	}
 	
 	// Make that save file
 	if ( ( fObj = fopen ( fName, "w+" ) ) == NULL )
 		errMsg ( EXIT_FAILURE, SAVE_FAIL );
 	
 	//Move file to save directory
+	
 	
 	fclose ( fObj );
 	

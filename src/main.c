@@ -396,7 +396,7 @@ main ( int argc, char** argv )
         readInput ( argc, argv );
         initNc ();
         game ();
-        
+             
         exitNc ();
 
         return 0;

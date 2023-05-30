@@ -57,6 +57,6 @@ GameState*	initGame ( char* playerName, int32_t difficulty );
 int32_t		fileCheck ( char* fileName );
 
 GameState*	loadGame ( char* fileName );
-void		saveGame ( GameState* obj );
+void		saveGame ( GameState* obj, char* saveName );
 
 #endif /* END */
