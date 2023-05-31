@@ -1,8 +1,6 @@
 #Shit git ignore
 
-./bin/
-
-
+./todo
 
 # ***********
 # C GITIGNORE TEMPLATE
