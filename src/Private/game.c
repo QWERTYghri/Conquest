@@ -50,6 +50,16 @@ typedef struct
                                 manPower;
         } War;
 } Country;
+
+
+typedef struct
+{
+	char playerName[NAME_MAX];
+	Country countries[MAX_COUNTRY];
+	
+	int32_t difficulty,
+		score;
+} GameState;
 */
 
 Country*
@@ -73,7 +83,9 @@ initGame ( char* playerName, int32_t difficulty )
 	
 	/* zero out the countries flag */
 	for ( int32_t i = 0; i < MAX_COUNTRY; i++ )
-		curGame -> countries[i] = initCountry ();
+		curGame -> countries[i] = *initCountry ();
+	
+	curGame -> countries[1].General.money = 54;
 	
 	return curGame;
 }
@@ -113,7 +125,7 @@ GameState* loadGame ( char* fileName )
 	return curGame;
 }
 
-void saveCountry ( FILE* obj, Country* obj )
+void saveCountry ( FILE* fObj, Country* cntObj  )
 {
 
 }
@@ -127,7 +139,6 @@ void saveGame ( GameState* obj, char* saveName )
 	
 	// makes path /home/[USER]/.conquest
 	snprintf ( saveDir, DIR_MAX, SAVE_DIR, obj -> playerName );
-	printf ( "%s", saveDir );
 	
 	// Make directory if not already existing
 	if ( stat ( saveDir, &stObj ) == -1 )
@@ -135,18 +146,18 @@ void saveGame ( GameState* obj, char* saveName )
 		if ( mkdir ( saveDir, 0700 ) != 0 ) {
 			errMsg ( EXIT_FAILURE, SAVE_FAIL );
 		}
-		// Make a file name and extension
-		snprintf ( fName, FNAME_BUF, "%s/%s.scon", saveDir, saveName );
 	}
+	
+	// Make a file name and extension
+	snprintf ( fName, FNAME_BUF, "%s/%s.scon", saveDir, saveName );
 	
 	// Make that save file
 	if ( ( fObj = fopen ( fName, "w+" ) ) == NULL )
 		errMsg ( EXIT_FAILURE, SAVE_FAIL );
 	
 	// Serialization
+	fwrite ( &(*obj), sizeof ( *obj ), 1, fObj );
 	
-	
-	fseek ( fObj, 0, SEEK_SET );
 	fclose ( fObj );
 	
 }

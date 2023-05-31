@@ -141,9 +141,10 @@ errMsg ( int32_t code, const char* format, ... )
 {
 	va_list set;
 	va_start ( set, format );
-	vfprintf ( stderr, format, set );
 
 	exitNc ();
+	vfprintf ( stderr, format, set );
+	
 	va_end ( set );
 	exit ( code );
 }

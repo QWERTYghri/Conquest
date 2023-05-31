@@ -12,6 +12,12 @@
 
 #include "./decal.h"
 
+/*
+typedef struct
+{
+
+} factory;
+*/
 typedef struct
 {
         struct General
@@ -27,7 +33,7 @@ typedef struct
 
         struct Trade
         {
-                char*           tradeCountries[MAX_COUNTRY];
+                char* test;
         } Trade;
 
         struct War
@@ -45,7 +51,7 @@ typedef struct
 typedef struct
 {
 	char playerName[NAME_MAX];
-	Country* countries[MAX_COUNTRY];
+	Country countries[MAX_COUNTRY];
 	
 	int32_t difficulty,
 		score;
@@ -57,9 +63,9 @@ GameState*	initGame ( char* playerName, int32_t difficulty );
 /* Save/load functions */
 int32_t		fileCheck ( char* fileName );
 
-Country*	loadCountry ( FILE* obj, Country* obj );
+Country*	loadCountry ( FILE* fObj, Country* cntObj );
 GameState*	loadGame ( char* fileName );
 
-void		saveCountry ( FILE* obj, Country* obj );
+void		saveCountry ( FILE* fObj, Country* cntObj  );
 void		saveGame ( GameState* obj, char* saveName );
 #endif /* END */

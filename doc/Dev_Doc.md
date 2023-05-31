@@ -35,6 +35,15 @@ such as money, debt, income, trade, war, and more.
     * Resources: Depends on country
     * Factory output: Output of resources.
 
+### Difficulty Settings
+There are three difficulties that act as a modifier to the incremented values in the system.
+These modifiers affect the following
+
+
+1. Easy: Doesn't change anything and your income stays the same
+2. Medium: 25% of your income is subtracted
+3. Hard: 50% of your income is subtracted
+
 ### Political Ideologies
 The game features 7 different political ideologies with their own benefits and negatives
 
@@ -143,7 +152,6 @@ It has a high amount of resources:
 Notes
 ------
 **1/24/23**
-
 Currently there is plans for only one playing mode which is single player. However I am planning for some sort of way
 for multiplayer. Perhaps the ability to set up a server and have people join it. But I'd have to plan the single player
 build to accomodate that plan which really isn't thought out much.

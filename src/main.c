@@ -155,12 +155,19 @@ menuHandler ()
 	return menuOption ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR );
 }
 
-/*Set up back windows */
 static void
-baseSetUp ( void )
+gameInit ( void )
 {
 	char name[NAME_MAX];
 
+	getlogin_r ( name, NAME_MAX );
+	curGame = initGame ( name, 0 );
+}
+
+/*Set up back windows */
+static void
+windowInit ( void )
+{
         fWin = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, centerPos ( LINES, GAME_WINDOW_Y ), centerPos ( COLS, GAME_WINDOW_X ) );
         bWin = newwin ( GAME_WINDOW_Y, GAME_WINDOW_X, centerPos ( LINES, GAME_WINDOW_Y ) + 1, centerPos ( COLS, GAME_WINDOW_X ) + 1 );
 
@@ -171,9 +178,6 @@ baseSetUp ( void )
         box ( fWin, 0, 0 );
 	printArt ( fWin, TITLE_Y_OFFSET, title, TITLE_ARR );
 	printArt ( fWin, NUKE_Y_OFFSET, nuke, NUKE_ARR );
-	
-	getlogin_r ( name, NAME_MAX );
-	curGame = initGame ( name, 0 );
 
         refresh ();
         wrefresh ( bWin );
@@ -183,10 +187,35 @@ baseSetUp ( void )
 /* Actual game part */
 /*************************************************************************/
 
-static void*
-valueUpdate ( void* arg )
+static void
+editVal ( float modifier )
 {
 	
+}
+
+static void*
+valueUpdate ( void* arg )
+{	
+	float modifier;
+
+	switch ( curGame -> difficulty )
+	{
+		case 0:
+			modifier = 0.00f;
+			break;
+		case 1:
+			modifier = 0.25f;
+			break;
+		case 2:
+			modifier = 0.50f;
+			break;
+	}
+	
+	while ( 1 )
+	{
+		editVal ( modifier );
+		napms ( VAL_DELAY );
+	}
 	
 	return NULL;
 }
@@ -210,9 +239,6 @@ thInput ( void* arg )
 	
 	while ( 1 )
 	{
-		if ( curGame -> countries[1] -> General.money  ) {
-			printf ("TEST" );
-		}
 		retVal = menuOption ( optPlay, GAME_Y_OFFSET, optList, GAME_OPT );
 	}
 	
@@ -232,7 +258,7 @@ playGame ( void )
 	box ( optPlay, 0, 0 );
 	box ( gameWin, 0, 0 );
 	
-	printArt ( optPlay, STAR_Y_OFFSET, star, STAR_ARR );
+	printArt ( optPlay, ICON_Y_OFFSET, star, STAR_ARR );
 	
 	wbkgd ( gameWin, COLOR_PAIR ( ColorGrey ) );
 	wbkgd ( optPlay, COLOR_PAIR ( ColorGrey ) );
@@ -240,7 +266,7 @@ playGame ( void )
 	wrefresh ( fWin );
 	wrefresh ( optPlay );
 	wrefresh ( gameWin );
-	
+
 	pthread_create ( &inputObj, NULL, thInput, NULL );
 	pthread_create ( &valUpdate, NULL, valueUpdate, NULL );
 	pthread_join ( inputObj, NULL );
@@ -257,7 +283,7 @@ playGame ( void )
 static int32_t
 levelMenu ( void )
 {
-	char* optName[LVL_MAX] =
+	char* optName[LVL_MENU_MAX] =
 	{
 		"Easy",
 		"Medium",
@@ -272,13 +298,12 @@ levelMenu ( void )
  	wbkgd ( levelWin, COLOR_PAIR ( ColorGrey ) );
 	box ( levelWin, 0, 0 );
 	box ( fWin, 0, 0 );
-	
 	printArt ( levelWin, 2, tank, TANK_ARR );
 	
 	wrefresh ( fWin );
 	wrefresh ( levelWin );	
 	
-	retVal = menuOption ( levelWin, ( DIFF_WINDOW_Y / 2 ) - ( LVL_MAX - 1 ), optName, LVL_MAX );
+	retVal = menuOption ( levelWin, ( DIFF_WINDOW_Y / 2 ) - ( LVL_MENU_MAX - 1 ), optName, LVL_MENU_MAX );
 	if ( retVal == 3 )
 		return EXIT_RET; // exit to return back to the menu
 		
@@ -336,8 +361,9 @@ loadMenu ( void )
 	noecho ();
 	
 	delwin ( loadWin );
+	levelMenu ();		// Exit load and enter levelMenu after loading game
 	
-	return 0;
+	return 1;
 }
 
 /* Display an about msg */
@@ -383,7 +409,7 @@ game ( void )
 	int32_t ( *optList[OPT_ARR] ) ( void ) = { levelMenu, loadMenu, aboutMenu, endGame };
  	
         do {
-                baseSetUp ();
+                windowInit ();
         } while ( optList[menuHandler ()] () == EXIT_RET );
 
         delwin ( fWin );
@@ -393,11 +419,17 @@ game ( void )
 int
 main ( int argc, char** argv )
 {
+	curGame = initGame ( "inanis", 0 );
+	saveGame ( curGame, "test" );
+
+/*
         readInput ( argc, argv );
+        
         initNc ();
+        gameInit ();
         game ();
              
         exitNc ();
-
+*/
         return 0;
 }

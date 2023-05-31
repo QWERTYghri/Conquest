@@ -35,8 +35,7 @@ typedef int _;
 #define TITLE_Y_OFFSET  ( 6 )
 #define MENU_Y_OFFSET   ( TITLE_Y_OFFSET + 10 )
 #define NUKE_Y_OFFSET   ( 25 )
-#define TANK_Y_OFFSET	( 2 )
-#define STAR_Y_OFFSET	( 2 )
+#define ICON_Y_OFFSET	( 2 )
 
 #define GAME_Y_OFFSET	( 15 )
 #define GETSTR_Y_OFFSET	( 17 )
@@ -50,7 +49,7 @@ typedef int _;
 #define STAR_ARR	( 9 )
 #define FLOPPY_ARR	( 14 )
 
-#define LVL_MAX		( 4 )
+#define LVL_MENU_MAX	( 4 )
 #define OPT_ARR         ( 4 )
 
 #define MIN_LINES	( 50 )
@@ -95,6 +94,7 @@ typedef int _;
 
 /* Other */
 #define EXIT_RET	( 2 )
+#define VAL_DELAY	( 1000 )
 
 /* Some characters */
 #define ESC		( 27 )
