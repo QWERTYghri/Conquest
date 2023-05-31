@@ -119,15 +119,10 @@ GameState* loadGame ( char* fileName )
 		errMsg ( EXIT_FAILURE, SAVE_FAIL );
 	
 	// Deserialization
-	
+	fread ( &(*curGame), sizeof ( *curGame ), 1, fObj );
 	
 	fclose ( fObj );
 	return curGame;
-}
-
-void saveCountry ( FILE* fObj, Country* cntObj  )
-{
-
 }
 
 void saveGame ( GameState* obj, char* saveName )

@@ -99,7 +99,7 @@ char* floppy[FLOPPY_ARR] =
 	"\\____||__|_____|__|",
 	"==================================",
 	"Enter the path of a .scon file or press esc to return",
-	"Search the .conquest folder in your home directory"
+	"Search the ~/.conquest folder in your home directory"
 };
 
 /* Functions */
@@ -239,6 +239,9 @@ thInput ( void* arg )
 	
 	while ( 1 )
 	{
+		wprintw ( gameWin, "%d", curGame -> countries[1].General.money );
+		wrefresh ( gameWin );
+		
 		retVal = menuOption ( optPlay, GAME_Y_OFFSET, optList, GAME_OPT );
 	}
 	
@@ -322,6 +325,7 @@ loadMenu ( void )
 	int32_t retGetch;
 	int32_t retAcc = -3; // Set to not anger the error code
 	
+	/* While the file name isn't correct */
 	do {
 	werase ( fWin );
 	werase ( loadWin );
@@ -331,6 +335,7 @@ loadMenu ( void )
 	box ( loadWin, 0, 0 );
 	box ( fWin, 0, 0 );
 
+	/* Invalid file */
 	if ( retAcc == -1 )
 		mvwaddstr ( loadWin, GETSTR_Y_OFFSET + 2, xCenterStr ( loadWin, INVALID_FILE ), INVALID_FILE );
 	
@@ -347,11 +352,14 @@ loadMenu ( void )
 		
 	/* Input to buffer */
 	if ( ( retGetch = getch () ) == ESC )
+	{
+		nonl ();
+		noecho ();
 		return EXIT_RET;
+	}
 	
 	mvwgetnstr ( loadWin, GETSTR_Y_OFFSET, xCenterStrBuf ( loadWin, MAX_STRING ), buf, MAX_STRING  ); // temp
 	buf[strcspn ( buf, "\r\n" )] = 0; // being paranoid
-	
 	retAcc = fileCheck ( buf );
 	
 	} while ( retAcc != 0 );
@@ -361,7 +369,7 @@ loadMenu ( void )
 	noecho ();
 	
 	delwin ( loadWin );
-	levelMenu ();		// Exit load and enter levelMenu after loading game
+	playGame ();		// Exit load and enter levelMenu after loading game
 	
 	return 1;
 }
@@ -419,10 +427,6 @@ game ( void )
 int
 main ( int argc, char** argv )
 {
-	curGame = initGame ( "inanis", 0 );
-	saveGame ( curGame, "test" );
-
-/*
         readInput ( argc, argv );
         
         initNc ();
@@ -430,6 +434,5 @@ main ( int argc, char** argv )
         game ();
              
         exitNc ();
-*/
         return 0;
 }

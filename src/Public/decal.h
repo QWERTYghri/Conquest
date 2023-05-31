@@ -76,7 +76,7 @@ typedef int _;
 #define USERN_FAIL	( "Error: Username could not be found\n" )
 #define MENU_FAIL	( "Error: Possible failure in menuHandler function\n" )
 #define INVALID_FILE	( "Error: Invalid file or file doesn't exist" )
-#define SAVE_FAIL	( "Error: Failed to save or load file\n" )
+#define SAVE_FAIL	( "Error: Failed to save/load or access file\n" )
 
 #define ABOUTSTR	( "Conquest:\n\tThis is a grand strategy type of game based on the game Hearts of Iron. It's focused on making it towards world domination by invading\n\tother countries. " \
 			  "You can control where to place troops in the area and also work on trade between other countries. Use the cursor\n\tto click on troops to move them to a point in the map " \
