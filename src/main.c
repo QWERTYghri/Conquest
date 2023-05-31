@@ -140,21 +140,6 @@ readInput ( int argc, char** argv )
                 errMsg ( EXIT_FAILURE, NO_ARG );
 }
 
-/* Handles the initial menu option choices  * Perhaps we can change this to something more portable instead * */
-static int32_t
-menuHandler ()
-{
-        char* optNames[OPT_ARR] =
-        {
-                "Play Game",
-                "Load Game",
-                "About",
-                "End Game"
-        };
-        
-	return menuOption ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR );
-}
-
 static void
 gameInit ( void )
 {
@@ -415,10 +400,17 @@ static void
 game ( void )
 {
 	int32_t ( *optList[OPT_ARR] ) ( void ) = { levelMenu, loadMenu, aboutMenu, endGame };
+ 	char* optNames[OPT_ARR] =
+        {
+                "Play Game",
+                "Load Game",
+                "About",
+                "End Game"
+        };
  	
         do {
                 windowInit ();
-        } while ( optList[menuHandler ()] () == EXIT_RET );
+        } while ( optList[ menuOption ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR ) ] () == EXIT_RET );
 
         delwin ( fWin );
         delwin ( bWin );
