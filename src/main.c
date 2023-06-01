@@ -22,15 +22,10 @@
 #include "./Public/game.h"
 #include "./Public/util.h"
 #include "./Public/decal.h"
-
-/* Types */
-
+#include "./Public/handler.h"
 
 /* Global Vars */
 WINDOW* fWin, *bWin;
-GameState* curGame;
-
-WINDOW* optPlay, *gameWin;
 
 char* title[TITLE_ARR] =
 { 
@@ -220,13 +215,24 @@ thInput ( void* arg )
 		"Save Game",
 		"Exit Game"
 	};
+	
+	void ( *jumpTab[GAME_OPT] ) ( void ) =
+	{
+		country,
+		diplomacy,
+		economy,
+		technology,
+		military,
+		viewCountries,
+		status,
+		save,
+		exit
+	};
+	
 	int32_t retVal = 0;
 	
 	while ( 1 )
-	{
-		wprintw ( gameWin, "%d", curGame -> countries[1].General.money );
-		wrefresh ( gameWin );
-		
+	{		
 		retVal = menuOption ( optPlay, GAME_Y_OFFSET, optList, GAME_OPT );
 	}
 	
