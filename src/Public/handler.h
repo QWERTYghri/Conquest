@@ -11,6 +11,9 @@
 
 extern GameState* curGame;
 extern WINDOW* optPlay, *gameWin;
+extern WINDOW* fWin, *bWin;
+
+void clearWins ( void );
 
 void country ( void );
 void diplomacy ( void );

@@ -25,8 +25,6 @@
 #include "./Public/handler.h"
 
 /* Global Vars */
-WINDOW* fWin, *bWin;
-
 char* title[TITLE_ARR] =
 { 
 	"---------------------------------------------------------------",
@@ -226,7 +224,7 @@ thInput ( void* arg )
 		viewCountries,
 		status,
 		save,
-		exit
+		exitGame
 	};
 	
 	int32_t retVal = 0;
@@ -234,11 +232,16 @@ thInput ( void* arg )
 	while ( 1 )
 	{		
 		retVal = menuOption ( optPlay, GAME_Y_OFFSET, optList, GAME_OPT );
+		jumpTab[retVal] ();
+		
+		wprintw ( optPlay, "%d\n", retVal );
+		wrefresh ( optPlay );
 	}
 	
 	return NULL;
 }
 
+/* set up game window and init thread for input and value increaser */
 static void
 playGame ( void )
 {
@@ -302,6 +305,7 @@ levelMenu ( void )
 		return EXIT_RET; // exit to return back to the menu
 		
 	curGame -> difficulty = retVal;
+	
 	playGame ();
 	delwin ( levelWin );
 	
@@ -393,10 +397,6 @@ aboutMenu ( void )
 static int32_t
 endGame ( void )
 {
-	delwin ( fWin );
-        delwin ( bWin );
-
-        exitNc ();
         errMsg ( EXIT_SUCCESS, THANK_YOU );
         
         return 3;
@@ -430,7 +430,8 @@ main ( int argc, char** argv )
         initNc ();
         gameInit ();
         game ();
-             
+        
+        clearWins ();
         exitNc ();
         return 0;
 }

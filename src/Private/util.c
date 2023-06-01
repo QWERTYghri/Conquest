@@ -13,6 +13,7 @@
 /* local */
 #include "../Public/util.h"
 #include "../Public/decal.h"
+#include "../Public/handler.h"
 
 /* Calculates an appropriate offset for a string to be placed in the center */
 int32_t
@@ -142,6 +143,7 @@ errMsg ( int32_t code, const char* format, ... )
 	va_list set;
 	va_start ( set, format );
 
+	clearWins ();
 	exitNc ();
 	vfprintf ( stderr, format, set );
 	
