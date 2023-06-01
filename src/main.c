@@ -231,11 +231,9 @@ thInput ( void* arg )
 	
 	while ( 1 )
 	{		
+		wrefresh ( optPlay );
 		retVal = menuOption ( optPlay, GAME_Y_OFFSET, optList, GAME_OPT );
 		jumpTab[retVal] ();
-		
-		wprintw ( optPlay, "%d\n", retVal );
-		wrefresh ( optPlay );
 	}
 	
 	return NULL;
@@ -417,9 +415,6 @@ game ( void )
         do {
                 windowInit ();
         } while ( optList[ menuOption ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR ) ] () == EXIT_RET );
-
-        delwin ( fWin );
-        delwin ( bWin );
 }
 
 int

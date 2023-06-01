@@ -26,6 +26,9 @@ typedef int _;
 #define DIFF_WINDOW_Y	( GAME_WINDOW_Y - 15 )
 #define DIFF_WINDOW_X	( GAME_WINDOW_X - 120 )
 
+#define PROMPT_WINDOW_Y ( 15 )
+#define PROMPT_WINDOW_X ( 35 )
+
 #define OPTION_X	( 30 )
 #define POS_PLAY	( 5 )
 
