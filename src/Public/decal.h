@@ -89,8 +89,9 @@ typedef int _;
 #define THANK_YOU	( "Thanks for playing, I need to stop doing projects like these and start doing like ones that I can actually get something in return.\n\n * Visit my Roblox, "\
 			  "\"mrgameybean17\"\n\n\nAlso I'm just realizing I forgot to credit the art in here, but eh it doesn't matter, I think...\n" )
 
-#define SAVE_PROMPT	( "Do you want to save?" )
+#define SAVE_PROMPT	( "Save files are in ~/.conquest" )
 #define SAVE_DIR	( "/home/%s/.conquest" )
+#define DEFAULT_SAVE	( "CON_%d%02d" )
 
 #define SAVE_EXT	( ".scon" )
 #define EXIT_MENU	( "EXIT" )
@@ -100,6 +101,7 @@ typedef int _;
 /* Other */
 #define EXIT_RET	( 2 )
 #define VAL_DELAY	( 1000 )
+#define RAND_HIGH	( 10000 )
 
 /* Some characters */
 #define ESC		( 27 )

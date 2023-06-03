@@ -120,7 +120,6 @@ GameState* loadGame ( char* fileName )
 	
 	// Deserialization
 	fread ( &(*curGame), sizeof ( *curGame ), 1, fObj );
-	
 	fclose ( fObj );
 	return curGame;
 }
@@ -152,7 +151,6 @@ void saveGame ( GameState* obj, char* saveName )
 	
 	// Serialization
 	fwrite ( &(*obj), sizeof ( *obj ), 1, fObj );
-	
 	fclose ( fObj );
 	
 }
