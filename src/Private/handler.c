@@ -104,6 +104,8 @@ status ( void )
 {
 	promptMenu ( "Status" );
 	
+	
+	
 	werase ( prompt );
 	wrefresh ( prompt );
 }
