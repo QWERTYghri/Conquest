@@ -48,6 +48,15 @@ typedef struct
         } War;
 } Country;
 
+/*
+Order:
+	"Pasternak"
+	"Atifa"
+	"Oceania"
+	"Kubo"
+	"Zanton"
+*/
+
 typedef struct
 {
 	char playerName[NAME_MAX];
