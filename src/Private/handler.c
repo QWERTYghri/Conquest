@@ -51,40 +51,61 @@ promptMenu ( char* title )
 void
 country ( void )
 {
+	promptMenu ( "Country" );
 	
+	werase ( prompt );
+	wrefresh ( prompt );
 }
 
 void
 diplomacy ( void )
 {
-
+	promptMenu ( "Diplomacy" );
+	
+	werase ( prompt );
+	wrefresh ( prompt );
 }
 
 void
 economy ( void )
 {
-
+	promptMenu ( "Economy" );
+	
+	werase ( prompt );
+	wrefresh ( prompt );
 }
 void
 technology ( void )
 {
-
+	promptMenu ( "Technology" );
+	
+	werase ( prompt );
+	wrefresh ( prompt );
 }
 
 void
 military ( void )
 {
-
+	promptMenu ( "Military" );
+	
+	werase ( prompt );
+	wrefresh ( prompt );
 }
 void
 viewCountries ( void )
 {
-
+	promptMenu ( "View Countries" );
+	
+	werase ( prompt );
+	wrefresh ( prompt );
 }
 void
 status ( void )
 {
-
+	promptMenu ( "Status" );
+	
+	werase ( prompt );
+	wrefresh ( prompt );
 }
 
 void
@@ -100,7 +121,6 @@ save ( void )
 	
 	time_t timeUnix = time ( NULL );
 	struct tm timeSet = *localtime ( &timeUnix );
-	
 	
 	srand ( time ( NULL ) );
 	snprintf ( buf,
