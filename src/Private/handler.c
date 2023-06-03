@@ -8,8 +8,9 @@
 #include <ncurses.h>
 
 #include "../Public/decal.h"
-#include "../Public/util.h"
+#include "../Public/game.h"
 #include "../Public/handler.h"
+#include "../Public/util.h"
 
 GameState* curGame;
 WINDOW* optPlay, *gameWin;
@@ -24,6 +25,7 @@ clearWins ( void )
 	delwin ( gameWin );
 	delwin ( fWin );
 	delwin ( bWin );
+	delwin ( prompt );
 	
 	free ( curGame );
 }
@@ -40,7 +42,7 @@ promptMenu ( char* title )
 	
 	wbkgd ( prompt, COLOR_PAIR ( ColorGrey ) );
 	box ( prompt, 0, 0 );
-	mvwprintw ( prompt, 0, xCenterStr ( prompt, title ) - 1, "||%s||", title );
+	mvwprintw ( prompt, 0, xCenterStr ( prompt, title ) - 1, "┤%s├", title );
 	
 	wrefresh ( prompt );
 }
@@ -87,7 +89,22 @@ status ( void )
 void
 save ( void )
 {
+	char* optList[YES_OPT] =
+	{
+		"No",
+		"Yes"
+	};
+
 	promptMenu ( "save" );
+	
+	mvwaddstr ( prompt, ICON_Y_OFFSET, xCenterStr ( prompt, SAVE_PROMPT ), SAVE_PROMPT );
+	wrefresh ( prompt );
+	
+	menuOption ( prompt, ICON_Y_OFFSET + 4, optList, YES_OPT );
+	
+	napms ( 5000 );
+	werase ( prompt );
+	wrefresh ( prompt );
 }
 
 void

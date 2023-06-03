@@ -320,25 +320,11 @@ loadMenu ( void )
 		
 		wrefresh ( fWin );
 		wrefresh ( loadWin );
-
-		/* Input string for save file */
-		echo ();
-		nl ();
-
-		/* Zero out buffer */
-		for ( int64_t i = 0; i < MAX_STRING; i++ )
-			buf[i] = 0;
-			
-		/* Input to buffer */
-		if ( ( retGetch = getch () ) == ESC )
-		{
-			nonl ();
-			noecho ();
-			return EXIT_RET;
-		}
 		
-		mvwgetnstr ( loadWin, GETSTR_Y_OFFSET, xCenterStrBuf ( loadWin, MAX_STRING ), buf, MAX_STRING  ); // temp
-		buf[strcspn ( buf, "\r\n" )] = 0; // being paranoid
+		retGetch = getStr ( loadWin, GETSTR_Y_OFFSET, xCenterStrBuf ( loadWin, MAX_STRING ), buf, MAX_STRING );
+		
+		if ( retGetch == EXIT_RET )
+			return EXIT_RET;
 		
 		retAcc = fileCheck ( buf );
 	} while ( retAcc != 0 );

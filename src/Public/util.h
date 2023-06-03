@@ -44,6 +44,8 @@ int32_t menuOption ( WINDOW* obj,
 		     char* optName[],
 		     int64_t maxName );
 
+int32_t getStr ( WINDOW* obj, int32_t posY, int32_t posX, char buf[], int64_t len );
+
 /* Misc for drawing stuff art */
 void printArt ( WINDOW* obj, int32_t yPos, char* str[], int64_t strMax );
 void windowFmt ( WINDOW* obj );

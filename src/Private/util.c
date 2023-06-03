@@ -103,6 +103,32 @@ menuOption ( WINDOW* obj,
 	return 0;
 }
 
+int32_t
+getStr ( WINDOW* obj, int32_t posY, int32_t posX, char buf[], int64_t len )
+{
+	int32_t retVal;
+
+	for ( int64_t i = 0; i < len; i++ )
+		buf[i] = 0;
+
+	echo ();
+	nl ();
+	
+	if ( ( retVal = getch () ) == ESC )
+	{
+		noecho ();
+		nonl ();
+		return EXIT_RET;
+	}
+	mvwgetnstr ( obj, posY, posX, buf, len );
+	buf[strcspn ( buf, "\r\n" )] = 0;
+	
+	noecho ();
+	nonl ();
+	
+	return 0;
+}
+
 /***************************************************************************************/
 /* Drawing stuff */
 void
