@@ -44,8 +44,10 @@ int32_t menuOption ( WINDOW* obj,
 		     char* optName[],
 		     int64_t maxName );
 
-/* Misc for drawing ascii art */
+/* Misc for drawing stuff art */
 void printArt ( WINDOW* obj, int32_t yPos, char* str[], int64_t strMax );
+void windowFmt ( WINDOW* obj );
+void windowPrint ( WINDOW* obj, int32_t artOffset, char* art[], int64_t len );
 
 /* Functions used in setting up ncurses and errors */
 int32_t initColor ( void );

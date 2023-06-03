@@ -15,6 +15,7 @@
 #include "../Public/decal.h"
 #include "../Public/handler.h"
 
+/***************************************************************************************/
 /* Calculates an appropriate offset for a string to be placed in the center */
 int32_t
 xCenterStr ( WINDOW* win, char* str )
@@ -43,6 +44,8 @@ centerPos ( int64_t baseVal, int64_t size )
 	return ( baseVal - size ) / 2;
 }
 
+
+/***************************************************************************************/
 /* Used in menuhandler to switch between highlighting different choices */
 void
 printMenu (   WINDOW* win,
@@ -100,6 +103,8 @@ menuOption ( WINDOW* obj,
 	return 0;
 }
 
+/***************************************************************************************/
+/* Drawing stuff */
 void
 printArt ( WINDOW* obj, int32_t yPos, char* str[], int64_t strMax )
 {
@@ -111,6 +116,26 @@ printArt ( WINDOW* obj, int32_t yPos, char* str[], int64_t strMax )
 	}
 }
 
+void
+windowFmt ( WINDOW* obj )
+{
+	werase ( fWin );
+	werase ( obj );
+	
+	wbkgd ( obj, COLOR_PAIR ( ColorGrey ) );
+	box ( obj, 0, 0 );
+	box ( fWin, 0, 0 );
+}
+
+void
+windowPrint ( WINDOW* obj, int32_t artOffset, char* art[], int64_t len )
+{
+	windowFmt ( obj );
+	printArt ( obj, artOffset, art, len );
+}
+
+/***************************************************************************************/
+/* Functions used in setting up ncurses and errors */
 int32_t
 initColor ( void )
 {

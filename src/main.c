@@ -249,14 +249,11 @@ playGame ( void )
 	pthread_t	inputObj,
 			valUpdate;
 	
-	werase ( fWin );
-	box ( optPlay, 0, 0 );
-	box ( gameWin, 0, 0 );
+	//tf is efficiency?
+	windowFmt ( optPlay );
+	windowFmt ( gameWin );
 	
 	printArt ( optPlay, ICON_Y_OFFSET, star, STAR_ARR );
-	
-	wbkgd ( gameWin, COLOR_PAIR ( ColorGrey ) );
-	wbkgd ( optPlay, COLOR_PAIR ( ColorGrey ) );
 	
 	wrefresh ( fWin );
 	wrefresh ( optPlay );
@@ -289,14 +286,9 @@ levelMenu ( void )
 	int32_t retVal = 0;
 	WINDOW* levelWin = newwin ( DIFF_WINDOW_Y, DIFF_WINDOW_X, centerPos ( LINES, DIFF_WINDOW_Y ), centerPos ( COLS, DIFF_WINDOW_X ) );
 	
-	werase ( fWin );
- 	wbkgd ( levelWin, COLOR_PAIR ( ColorGrey ) );
-	box ( levelWin, 0, 0 );
-	box ( fWin, 0, 0 );
-	printArt ( levelWin, 2, tank, TANK_ARR );
-	
+	windowPrint ( levelWin, ICON_Y_OFFSET, tank, TANK_ARR );
 	wrefresh ( fWin );
-	wrefresh ( levelWin );	
+	wrefresh ( levelWin );
 	
 	retVal = menuOption ( levelWin, ( DIFF_WINDOW_Y / 2 ) - ( LVL_MENU_MAX - 1 ), optName, LVL_MENU_MAX );
 	if ( retVal == 3 )
@@ -320,41 +312,35 @@ loadMenu ( void )
 	
 	/* While the file name isn't correct */
 	do {
-	werase ( fWin );
-	werase ( loadWin );
-	wbkgd ( loadWin, COLOR_PAIR ( ColorGrey ) );
-	printArt ( loadWin, 2, floppy, FLOPPY_ARR );
-	
-	box ( loadWin, 0, 0 );
-	box ( fWin, 0, 0 );
+		windowPrint ( loadWin, ICON_Y_OFFSET, floppy, FLOPPY_ARR );
 
-	/* Invalid file */
-	if ( retAcc == -1 )
-		mvwaddstr ( loadWin, GETSTR_Y_OFFSET + 2, xCenterStr ( loadWin, INVALID_FILE ), INVALID_FILE );
-	
-	wrefresh ( fWin );
-	wrefresh ( loadWin );
-
-	/* Input string for save file */
-	echo ();
-	nl ();
-
-	/* Zero out buffer */
-	for ( int64_t i = 0; i < MAX_STRING; i++ )
-		buf[i] = 0;
+		/* Invalid file */
+		if ( retAcc == -1 )
+			mvwaddstr ( loadWin, GETSTR_Y_OFFSET + ICON_Y_OFFSET, xCenterStr ( loadWin, INVALID_FILE ), INVALID_FILE );
 		
-	/* Input to buffer */
-	if ( ( retGetch = getch () ) == ESC )
-	{
-		nonl ();
-		noecho ();
-		return EXIT_RET;
-	}
-	
-	mvwgetnstr ( loadWin, GETSTR_Y_OFFSET, xCenterStrBuf ( loadWin, MAX_STRING ), buf, MAX_STRING  ); // temp
-	buf[strcspn ( buf, "\r\n" )] = 0; // being paranoid
-	retAcc = fileCheck ( buf );
-	
+		wrefresh ( fWin );
+		wrefresh ( loadWin );
+
+		/* Input string for save file */
+		echo ();
+		nl ();
+
+		/* Zero out buffer */
+		for ( int64_t i = 0; i < MAX_STRING; i++ )
+			buf[i] = 0;
+			
+		/* Input to buffer */
+		if ( ( retGetch = getch () ) == ESC )
+		{
+			nonl ();
+			noecho ();
+			return EXIT_RET;
+		}
+		
+		mvwgetnstr ( loadWin, GETSTR_Y_OFFSET, xCenterStrBuf ( loadWin, MAX_STRING ), buf, MAX_STRING  ); // temp
+		buf[strcspn ( buf, "\r\n" )] = 0; // being paranoid
+		
+		retAcc = fileCheck ( buf );
 	} while ( retAcc != 0 );
 	curGame = loadGame ( buf );
 	
@@ -373,13 +359,10 @@ aboutMenu ( void )
 {
 	WINDOW* aboutWin = newwin ( ABOUT_WINDOW_Y, ABOUT_WINDOW_X, centerPos ( LINES, ABOUT_WINDOW_Y ), centerPos ( COLS, ABOUT_WINDOW_X ) );
 	int32_t ret;
-	
-        werase ( fWin );
-        wbkgd ( aboutWin, COLOR_PAIR ( ColorGrey ) );
+
+	windowFmt ( aboutWin );
         mvwprintw ( aboutWin, 1, 1, ABOUTSTR );
-        
-        box ( fWin, 0, 0 );
-        box ( aboutWin, 0, 0 );
+        box ( aboutWin, 0, 0 ); // huh, window fmt was kinda a bad idea if I have to do this
         
         wrefresh ( fWin );
         wrefresh ( aboutWin );
