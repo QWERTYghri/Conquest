@@ -51,6 +51,8 @@ typedef struct
 typedef struct
 {
 	char playerName[NAME_MAX];
+	int32_t playerCountry;
+	
 	Country countries[MAX_COUNTRY];
 	
 	int32_t difficulty,

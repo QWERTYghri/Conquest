@@ -275,6 +275,7 @@ playGame ( void )
 static int32_t
 levelMenu ( void )
 {
+	WINDOW* levelWin = newwin ( DIFF_WINDOW_Y, DIFF_WINDOW_X, centerPos ( LINES, DIFF_WINDOW_Y ), centerPos ( COLS, DIFF_WINDOW_X ) );
 	char* optName[LVL_MENU_MAX] =
 	{
 		"Easy",
@@ -283,18 +284,38 @@ levelMenu ( void )
 		"Return to Menu"
 	};
 	
-	int32_t retVal = 0;
-	WINDOW* levelWin = newwin ( DIFF_WINDOW_Y, DIFF_WINDOW_X, centerPos ( LINES, DIFF_WINDOW_Y ), centerPos ( COLS, DIFF_WINDOW_X ) );
+	char* countries[MAX_COUNTRY + 1] =
+	{
+		"Pasternak",
+		"Atifa",
+		"Oceania",
+		"Kubo",
+		"Zanton",
+		"Return to Menu"
+	};
+	
+	int32_t	retVal = 0;
 	
 	windowPrint ( levelWin, ICON_Y_OFFSET, tank, TANK_ARR );
 	wrefresh ( fWin );
 	wrefresh ( levelWin );
 	
+	// Get difficulty
 	retVal = menuOption ( levelWin, ( DIFF_WINDOW_Y / 2 ) - ( LVL_MENU_MAX - 1 ), optName, LVL_MENU_MAX );
-	if ( retVal == 3 )
+	if ( retVal == LVL_MENU_MAX - 1 )
 		return EXIT_RET; // exit to return back to the menu
-		
 	curGame -> difficulty = retVal;
+	
+	//eww but idc
+	windowPrint ( levelWin, ICON_Y_OFFSET, tank, TANK_ARR );
+	wrefresh ( fWin );
+	wrefresh ( levelWin );
+	
+	// Get country
+	retVal = menuOption ( levelWin, ( DIFF_WINDOW_Y / 2 ) - ( LVL_MENU_MAX - 1 ), countries, MAX_COUNTRY + 1 );
+	if ( retVal == MAX_COUNTRY )
+		return EXIT_RET;
+	curGame -> playerCountry = retVal;
 	
 	playGame ();
 	delwin ( levelWin );

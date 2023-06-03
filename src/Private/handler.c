@@ -89,18 +89,14 @@ status ( void )
 void
 save ( void )
 {
-	char* optList[YES_OPT] =
-	{
-		"No",
-		"Yes"
-	};
-
+	char buf[MAX_STRING];
 	promptMenu ( "save" );
 	
 	mvwaddstr ( prompt, ICON_Y_OFFSET, xCenterStr ( prompt, SAVE_PROMPT ), SAVE_PROMPT );
 	wrefresh ( prompt );
 	
-	menuOption ( prompt, ICON_Y_OFFSET + 4, optList, YES_OPT );
+	wprintw ( prompt, buf );
+	wrefresh ( prompt );
 	
 	napms ( 5000 );
 	werase ( prompt );
