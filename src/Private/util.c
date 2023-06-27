@@ -46,7 +46,8 @@ centerPos ( int64_t baseVal, int64_t size )
 
 
 /***************************************************************************************/
-/* Used in menuhandler to switch between highlighting different choices */
+
+/* Display string menu in window center */
 void
 printMenu (   WINDOW* win,
                 int32_t y,
@@ -65,6 +66,7 @@ printMenu (   WINDOW* win,
         wrefresh ( win );
 }
 
+/* Set up menu option function to return the option from string */
 int32_t 
 menuOption ( WINDOW* obj,
 	     int32_t yPos,
@@ -103,6 +105,7 @@ menuOption ( WINDOW* obj,
 	return 0;
 }
 
+/* Get a string from input in WINDOW obj */
 int32_t
 getStr ( WINDOW* obj, int32_t posY, int32_t posX, char buf[], int64_t len )
 {
@@ -131,6 +134,8 @@ getStr ( WINDOW* obj, int32_t posY, int32_t posX, char buf[], int64_t len )
 
 /***************************************************************************************/
 /* Drawing stuff */
+
+/* Use an array to print ascii art */
 void
 printArt ( WINDOW* obj, int32_t yPos, char* str[], int64_t strMax )
 {
@@ -142,6 +147,7 @@ printArt ( WINDOW* obj, int32_t yPos, char* str[], int64_t strMax )
 	}
 }
 
+/* Format and clear a window and then reset the fWin window */
 void
 windowFmt ( WINDOW* obj )
 {
@@ -153,6 +159,7 @@ windowFmt ( WINDOW* obj )
 	box ( fWin, 0, 0 );
 }
 
+/* huh? clear and erase a window and print out the ascii art to a window */
 void
 windowPrint ( WINDOW* obj, int32_t artOffset, char* art[], int64_t len )
 {
@@ -180,6 +187,7 @@ initColor ( void )
         return 0;
 }
 
+/* Exit ncurses */
 void
 exitNc ( void )
 {
@@ -188,6 +196,7 @@ exitNc ( void )
         endwin ();
 }
 
+/* Error out and output a formatted message to stderr */
 void
 errMsg ( int32_t code, const char* format, ... )
 {
@@ -202,12 +211,14 @@ errMsg ( int32_t code, const char* format, ... )
 	exit ( code );
 }
 
+/* Init Ncurses */
 void
 initNc ( void )
 {		
         setlocale ( LC_ALL, "" );
         initscr ();
         
+        // If terminal is too small
         if ( LINES < MIN_LINES && COLS < MIN_COLS )
 		errMsg ( EXIT_FAILURE, WIN_SIZE );
 	 

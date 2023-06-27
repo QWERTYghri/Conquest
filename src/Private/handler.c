@@ -19,6 +19,7 @@ WINDOW* fWin, *bWin;
 
 WINDOW* prompt;
 
+/* clear windows */
 void
 clearWins ( void )
 {
@@ -31,6 +32,7 @@ clearWins ( void )
 	free ( curGame );
 }
 
+/* text prompt handler */
 void
 promptMenu ( char* title )
 {
@@ -110,6 +112,7 @@ status ( void )
 	wrefresh ( prompt );
 }
 
+/* Save game, to a file */
 void
 save ( void )
 {

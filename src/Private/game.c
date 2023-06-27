@@ -62,6 +62,7 @@ typedef struct
 } GameState;
 */
 
+/* init a country */
 Country*
 initCountry ()
 {
@@ -70,6 +71,7 @@ initCountry ()
 	return cntObj;
 }
 
+/* init a gameState object */
 GameState*
 initGame ( char* playerName, int32_t difficulty )
 {
@@ -90,6 +92,7 @@ initGame ( char* playerName, int32_t difficulty )
 	return curGame;
 }
 
+/* check if a file does exist and if the filename matches */
 int32_t
 fileCheck ( char* fileName )
 {
@@ -99,7 +102,11 @@ fileCheck ( char* fileName )
 	if ( retAcc == -1 )
 		return retAcc;
 	
-	/* Pain, using file extension */
+	/*
+		Pain, using file extension
+		if no file extension then return -1
+		else then compare to the default file extension
+	*/
 	if ( !( ext = strrchr ( fileName, '.' ) ) )
 		return -1;
 	else
@@ -110,6 +117,7 @@ fileCheck ( char* fileName )
 	return 0;
 }
 
+/* load a file to the game as curGame */
 GameState* loadGame ( char* fileName )
 {
 	FILE* fObj;
@@ -124,6 +132,7 @@ GameState* loadGame ( char* fileName )
 	return curGame;
 }
 
+/* Save the current game state to a file in .conquest */
 void saveGame ( GameState* obj, char* saveName )
 {
 	FILE *fObj;

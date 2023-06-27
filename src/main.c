@@ -133,6 +133,7 @@ readInput ( int argc, char** argv )
                 errMsg ( EXIT_FAILURE, NO_ARG );
 }
 
+/* Set up current game stat */
 static void
 gameInit ( void )
 {
@@ -142,7 +143,7 @@ gameInit ( void )
 	curGame = initGame ( name, 0 );
 }
 
-/*Set up back windows */
+/* Set up back windows */
 static void
 windowInit ( void )
 {
@@ -165,12 +166,14 @@ windowInit ( void )
 /* Actual game part */
 /*************************************************************************/
 
+/* edit the game stats */
 static void
 editVal ( float modifier )
 {
 	
 }
 
+/* Value updater, checks difficulty and uses editVal function */
 static void*
 valueUpdate ( void* arg )
 {	
@@ -198,6 +201,7 @@ valueUpdate ( void* arg )
 	return NULL;
 }
 
+/* game input handler */
 static void*
 thInput ( void* arg )
 {
@@ -306,7 +310,7 @@ levelMenu ( void )
 		return EXIT_RET; // exit to return back to the menu
 	curGame -> difficulty = retVal;
 	
-	//eww but idc
+	// eww but idc
 	windowPrint ( levelWin, ICON_Y_OFFSET, tank, TANK_ARR );
 	wrefresh ( fWin );
 	wrefresh ( levelWin );
@@ -323,6 +327,7 @@ levelMenu ( void )
         return 0;
 }
 
+/* Set up loading screen menu to get file */
 static int32_t
 loadMenu ( void )
 {
@@ -355,7 +360,7 @@ loadMenu ( void )
 	noecho ();
 	
 	delwin ( loadWin );
-	playGame ();		// Exit load and enter levelMenu after loading game
+	playGame (); // Exit load and enter levelMenu after loading game
 	
 	return 1;
 }
@@ -375,7 +380,7 @@ aboutMenu ( void )
         wrefresh ( aboutWin );
         delwin ( aboutWin );
         
-        // Ew
+        // Wait until respective input
         while ( ( ret = getch () ) != ENTER && ret != EOF && ret != KEY_ENTER && ret != 'e' );
         
         return EXIT_RET;
@@ -386,10 +391,10 @@ static int32_t
 endGame ( void )
 {
         errMsg ( EXIT_SUCCESS, THANK_YOU );
-        
         return 3;
 }
 
+/* Set up game window and execute respective option function */
 static void
 game ( void )
 {
@@ -402,6 +407,7 @@ game ( void )
                 "End Game"
         };
  	
+ 	// Display window until the return value isn't given
         do {
                 windowInit ();
         } while ( optList[ menuOption ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR ) ] () == EXIT_RET );
@@ -412,6 +418,7 @@ main ( int argc, char** argv )
 {
         readInput ( argc, argv );
         
+        // Set up ncurses and windows then init curGame, then play game
         initNc ();
         gameInit ();
         game ();
