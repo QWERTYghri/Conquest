@@ -48,6 +48,29 @@ typedef struct
         } War;
 } Country;
 
+// Definitions for different  types.
+enum {
+	IDEO_NATIONALISM,
+	IDEO_FACISM,
+	
+	IDEO_LIBERALISM,
+	IDEO_DEMORACY,
+	
+	IDEO_SOCIALISM,
+	IDEO_COMMUNISM,
+	
+	IDEO_NEUTRAL
+};
+
+// Increases manpower amount / lowers skills
+enum {
+	CON_VOLUNTEER,
+	CON_DRAFT,
+	CON_REQUIRED
+};
+
+
+
 /*
 Order:
 	"Pasternak"

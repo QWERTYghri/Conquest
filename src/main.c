@@ -166,11 +166,20 @@ windowInit ( void )
 /* Actual game part */
 /*************************************************************************/
 
+static void
+editVal ( Country* obj, float modifier )
+{
+
+}
+
 /* edit the game stats */
 static void
-editVal ( float modifier )
+editCountries ( float modifier )
 {
-	
+	for ( int32_t i = 0; i < MAX_COUNTRY; i++ )
+	{
+		editVal ( &curGame -> countries[i], modifier );
+	}
 }
 
 /* Value updater, checks difficulty and uses editVal function */
@@ -194,7 +203,7 @@ valueUpdate ( void* arg )
 	
 	while ( 1 )
 	{
-		editVal ( modifier );
+		editCountries ( modifier );
 		napms ( VAL_DELAY );
 	}
 	
@@ -266,7 +275,7 @@ playGame ( void )
 	pthread_create ( &inputObj, NULL, thInput, NULL );
 	pthread_create ( &valUpdate, NULL, valueUpdate, NULL );
 	pthread_join ( inputObj, NULL );
-	pthread_join ( inputObj, NULL );
+	pthread_join ( valUpdate, NULL );
 	
 	delwin ( optPlay );
 	delwin ( gameWin );
@@ -275,7 +284,7 @@ playGame ( void )
 /* Menu Handler functions */
 /*************************************************************************/
 
-/* Sets up windows and levels to play game */
+/* Sets up windows, levels, and countries to play game */
 static int32_t
 levelMenu ( void )
 {
@@ -407,7 +416,7 @@ game ( void )
                 "End Game"
         };
  	
- 	// Display window until the return value isn't given
+ 	// Display title until the return EXIT_RET isn't given
         do {
                 windowInit ();
         } while ( optList[ menuOption ( fWin, MENU_Y_OFFSET, optNames, OPT_ARR ) ] () == EXIT_RET );
