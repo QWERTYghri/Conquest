@@ -118,7 +118,8 @@ fileCheck ( char* fileName )
 }
 
 /* load a file to the game as curGame */
-GameState* loadGame ( char* fileName )
+GameState*
+loadGame ( char* fileName )
 {
 	FILE* fObj;
 	GameState* curGame = calloc ( 1, sizeof ( GameState ) );
@@ -133,7 +134,8 @@ GameState* loadGame ( char* fileName )
 }
 
 /* Save the current game state to a file in .conquest */
-void saveGame ( GameState* obj, char* saveName )
+void
+saveGame ( GameState* obj, char* saveName )
 {
 	FILE *fObj;
 	char fName[FNAME_BUF];
@@ -163,3 +165,11 @@ void saveGame ( GameState* obj, char* saveName )
 	fclose ( fObj );
 	
 }
+
+
+void
+editVal ( Country* obj, float modifier )
+{
+	
+}
+

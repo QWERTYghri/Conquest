@@ -67,6 +67,7 @@ typedef int _;
 #define MAX_STRING	( 40 )
 #define FNAME_BUF	( 100 )
 #define CMP_BUF		( 25 )
+#define MAX_TRADES	( 50 )
 /**********************************************************************/
 
 /* Text Info and Sets */

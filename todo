@@ -1,2 +1,11 @@
+* Value Updater:
+	More important, I need to find a way that to make an algorithm
+	that counts the difficulty, ideologies, and a general rate
+	for all the countries and then combine it so it's small.
+
 * Set menu system for game function and handlers
-* Difficulty incrementer system
+
+* Fix pointers:
+	I just remembered looking back that, I can't serialize a pointers
+	So I'm planning to try and change all the pointers out in the 
+	country file to regular buffers or just something

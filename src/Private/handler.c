@@ -18,6 +18,7 @@ WINDOW* optPlay, *gameWin;
 WINDOW* fWin, *bWin;
 
 WINDOW* prompt;
+float modifier;
 
 /* clear windows */
 void

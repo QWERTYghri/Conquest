@@ -12,6 +12,7 @@
 extern GameState* curGame;
 extern WINDOW* optPlay, *gameWin;
 extern WINDOW* fWin, *bWin;
+extern float modifier;
 
 void clearWins ( void );
 

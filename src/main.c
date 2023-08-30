@@ -166,44 +166,18 @@ windowInit ( void )
 /* Actual game part */
 /*************************************************************************/
 
-static void
-editVal ( Country* obj, float modifier )
-{
-
-}
-
-/* edit the game stats */
-static void
-editCountries ( float modifier )
-{
-	for ( int32_t i = 0; i < MAX_COUNTRY; i++ )
-	{
-		editVal ( &curGame -> countries[i], modifier );
-	}
-}
-
 /* Value updater, checks difficulty and uses editVal function */
 static void*
 valueUpdate ( void* arg )
-{	
-	float modifier;
-
-	switch ( curGame -> difficulty )
-	{
-		case 0:
-			modifier = 0.00f;
-			break;
-		case 1:
-			modifier = 0.25f;
-			break;
-		case 2:
-			modifier = 0.50f;
-			break;
-	}
-	
+{		
 	while ( 1 )
 	{
-		editCountries ( modifier );
+		// Go through all countries and apply edits to them
+		for ( int32_t i = 0; i < MAX_COUNTRY; i++ )
+		{
+			editVal ( &curGame -> countries[i], modifier );
+		}
+		
 		napms ( VAL_DELAY );
 	}
 	
@@ -239,6 +213,19 @@ thInput ( void* arg )
 		save,
 		exitGame
 	};
+	
+	switch ( curGame -> difficulty )
+	{
+		case 0:
+			modifier = 0.00f;
+			break;
+		case 1:
+			modifier = 0.25f;
+			break;
+		case 2:
+			modifier = 0.50f;
+			break;
+	}
 	
 	int32_t retVal = 0;
 	

@@ -18,6 +18,20 @@ typedef struct
 
 } factory;
 */
+
+typedef struct
+{
+	char* resource;
+	char* recipient;
+	int32_t amount;
+} Trade;
+
+typedef struct
+{
+	char* resourceType;
+	uint32_t production;
+} Factory;
+
 typedef struct
 {
         struct General
@@ -31,10 +45,23 @@ typedef struct
                                 taxIncome;
         } General;
 
-        struct Trade
+        struct Economy
         {
-                char* test;
-        } Trade;
+                Trade* tradeList[MAX_TRADES];
+                Factory* factoryList[MAX_TRADES];
+                
+                uint32_t	titanium,
+                		oil,
+                		electronics,
+                		phosphate,
+                		fertilizer,
+                		steel,
+                		copper,
+                		gold,
+                		aluminium,
+                		motorParts,
+                		planeParts;
+        } Economy;
 
         struct War
         {
@@ -99,4 +126,7 @@ int32_t		fileCheck ( char* fileName ); //Check if a filename is valid to save
 
 GameState*	loadGame ( char* fileName );
 void		saveGame ( GameState* obj, char* saveName );
+
+void		editVal ( Country* obj, float modifier );
+
 #endif /* END */
